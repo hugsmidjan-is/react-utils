@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"lib": ["dom", "esnext"],
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": false,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"declaration": true,
+		"declarationDir": "dist/__types",
+		"newLine": "LF",
+
+		"allowSyntheticDefaultImports": true,
+		"jsx": "preserve",
+
+		"isolatedModules": false,
+
+		"strict": true,
+		"strictBindCallApply": false,
+		"noImplicitThis": false
+	},
+
+	"exclude": ["node_modules", "dist"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"]
+}

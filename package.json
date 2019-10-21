@@ -1,0 +1,65 @@
+{
+	"name": "@hugsmidjan_is/react",
+	"version": "0.0.0",
+	"repository": "ssh://git@stash.hugsmidjan.is:7999/npm/react.git",
+	"author": "Hugsmiðjan ehf (http://www.hugsmidjan.is)",
+	"contributors": [
+		"Már Örlygsson <mar@hugsmidjan.is> (http://mar.anomy.net)"
+	],
+	"license": "UNLICENCED",
+	"scripts": {
+		"publishdist": "yarn run build && npm publish dist",
+		"prepublishOnly": "echo \"\nRun 'yarn run publishdist' to publish this package\n\n\"  && exit 1",
+		"build": "gulp build  &&  yarn run test",
+		"dev": "gulp dev",
+		"test": "ospec '__tests/**/*.js'",
+		"test:dev": "yarn run test  &&  onchange '__tests/**' -f add,change -- yarn run test"
+	},
+	"module_scripts": {},
+	"dependencies": {
+		"qj": "github:hugsmidjan/qj#semver:^2.6.0"
+	},
+	"peerDependencies": {
+		"react": "^16.10.2",
+		"react-dom": "^16.10.2"
+	},
+	"devDependencies": {
+		"@hugsmidjan/gulp-rollup": "^0.3.13",
+		"@hugsmidjan/hxmstyle": "^2.3.0",
+		"@types/ospec": "^4.0.0",
+		"@types/react": "^16.9.2",
+		"@typescript-eslint/eslint-plugin": "^2.3.3",
+		"@typescript-eslint/parser": "^2.3.3",
+		"del": "^5.1.0",
+		"eslint": "^6.5.1",
+		"eslint-config-prettier": "^6.4.0",
+		"eslint-plugin-destructuring": "^2.1.0",
+		"eslint-plugin-prettier": "^3.1.1",
+		"eslint-plugin-react": "^7.16.0",
+		"eslint-plugin-react-hooks": "^2.1.2",
+		"gulp": "^4.0.2",
+		"onchange": "^6.1.0",
+		"ospec": "^4.0.1",
+		"prettier": "^1.18.2",
+		"react": "^16.10.2",
+		"react-dom": "^16.10.2",
+		"typescript": "^3.6.4"
+	},
+	"hxmstyle": {
+		"options": {
+			"react": [],
+			"typescript": []
+		},
+		"dependenciesAdded": [
+			"@typescript-eslint/eslint-plugin",
+			"@typescript-eslint/parser",
+			"eslint",
+			"eslint-config-prettier",
+			"eslint-plugin-destructuring",
+			"eslint-plugin-prettier",
+			"eslint-plugin-react",
+			"eslint-plugin-react-hooks",
+			"prettier"
+		]
+	}
+}
