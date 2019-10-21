@@ -15,20 +15,20 @@ interface RowData {
 	cells: Array<CellData>;
 }
 
-export type BasicTableCols = Array<CellMeta | null>;
-export type BasicTableCell = string | CellData;
-export type BasicTableRow = Array<BasicTableCell> | { cells: Array<BasicTableCell> };
-export type BasicTableData = {
+export type TableCols = Array<CellMeta | null>;
+export type TableCell = string | CellData;
+export type TableRow = Array<TableCell> | { cells: Array<TableCell> };
+export type TableData = {
 	caption?: ReactNode;
-	thead: Array<BasicTableRow>;
-	tfoot?: Array<BasicTableRow>;
+	thead: Array<TableRow>;
+	tfoot?: Array<TableRow>;
 } & (
 	| {
-			tbody: Array<BasicTableRow>;
+			tbody: Array<TableRow>;
 			tbodies?: undefined;
 	  }
 	| {
-			tbodies: Array<Array<BasicTableRow>>;
+			tbodies: Array<Array<TableRow>>;
 			tbody?: undefined;
 	  });
 
@@ -67,7 +67,7 @@ const TableCell: FC<CellProps> = ({ data, meta, th, rowScope, rowIdx }) => {
 };
 interface SectionProps {
 	section?: Array<RowData>;
-	cols?: BasicTableCols;
+	cols?: TableCols;
 	Tag: 'thead' | 'tfoot' | 'tbody';
 }
 const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
@@ -100,7 +100,7 @@ const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
 	) : null;
 
 const normalizeTableSectData = (
-	rows: Array<Array<BasicTableCell> | { cells: Array<BasicTableCell> }>
+	rows: Array<Array<TableCell> | { cells: Array<TableCell> }>
 ): Array<{ cells: Array<CellData> }> =>
 	rows.map((row) => {
 		const cells = 'cells' in row ? row.cells : row;
@@ -111,14 +111,14 @@ const normalizeTableSectData = (
 		};
 	});
 
-interface BasicTableDataNormalized {
+interface TableDataNormalized {
 	caption?: ReactNode;
 	thead: Array<RowData>;
 	tfoot?: Array<RowData>;
 	tbodies: Array<Array<RowData>>;
 }
 
-const normalizeTableData = (tableData: BasicTableData): BasicTableDataNormalized => {
+const normalizeTableData = (tableData: TableData): TableDataNormalized => {
 	const { caption, thead, tfoot, tbody, tbodies } = tableData;
 	return {
 		caption,
@@ -128,17 +128,19 @@ const normalizeTableData = (tableData: BasicTableData): BasicTableDataNormalized
 	};
 };
 
-type TableProps = {
+export type TableProps = {
+	cols?: TableCols;
+} & TableData;
+
+type P = {
 	className: string;
 	children?: undefined;
-	cols?: BasicTableCols;
-} & BasicTableData;
+} & TableProps;
 
-const Table: FC<TableProps> = memo(
+const Table: FC<P> = memo(
 	({ className, caption, thead, tfoot, tbody, tbodies, cols }) => {
 		const data = useMemo(
-			() =>
-				normalizeTableData({ caption, thead, tfoot, tbody, tbodies } as BasicTableData),
+			() => normalizeTableData({ caption, thead, tfoot, tbody, tbodies } as TableData),
 			[caption, thead, tfoot, tbody, tbodies]
 		);
 		return (
