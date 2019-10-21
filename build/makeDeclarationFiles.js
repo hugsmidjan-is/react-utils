@@ -3,10 +3,11 @@ const { writeFileSync, existsSync, mkdirSync } = require('fs');
 const { relative } = require('path');
 const glob = require('glob');
 
-const tsExtRe = /\.tsx?$/;
-
 const isIgnoreGlob = (g) => g.charAt(0) === '!';
+const tsExtRe = /\.tsx?$/;
 const isTsFile = (file) => tsExtRe.test(file);
+const stripTsExt = (file) => file.replace(tsExtRe, '');
+const getPath = (file) => (/\//.test(file) ? file.replace(/\/[^/]+$/, '') : '');
 
 const getTsEntrypoints = () => {
 	const include = scriptGlobs.filter((g) => !isIgnoreGlob(g));
@@ -19,8 +20,6 @@ const getTsEntrypoints = () => {
 		)
 		.filter(isTsFile);
 };
-const stripTsExt = (file) => file.replace(tsExtRe, '');
-const getPath = (file) => (/\//.test(file) ? file.replace(/\/[^/]+$/, '') : '');
 
 module.exports = () => {
 	const declDir = require('../tsconfig.json').compilerOptions.declarationDir;
@@ -39,8 +38,8 @@ module.exports = () => {
 
 	getTsEntrypoints().forEach((file) => {
 		const outFile = distFolder + stripTsExt(file) + '.d.ts';
-
-		const tscDeclFile = relative(getPath(file), declDirRelative + outFile);
+		const tscDeclFile =
+			'./' + relative(getPath(file), declDirRelative + stripTsExt(file));
 
 		writeFileSync(
 			outFile,
