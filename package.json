@@ -16,6 +16,9 @@
 		"test:dev": "yarn run test  &&  onchange '__tests/**/*.tests.js' -f add,change -- ospec {{changed}}"
 	},
 	"module_scripts": {},
+	"engines": {
+		"node": ">=10"
+	},
 	"dependencies": {
 		"qj": "github:hugsmidjan/qj#semver:^2.6.0"
 	},
