@@ -12,8 +12,8 @@
 		"prepublishOnly": "echo \"\nRun 'yarn run publishdist' to publish this package\n\n\"  && exit 1",
 		"build": "gulp build  &&  yarn run test",
 		"dev": "gulp dev",
-		"test": "ospec '__tests/**/*.js'",
-		"test:dev": "yarn run test  &&  onchange '__tests/**' -f add,change -- yarn run test"
+		"test": "ospec '__tests/**/*.tests.js'",
+		"test:dev": "yarn run test  &&  onchange '__tests/**/*.tests.js' -f add,change -- ospec {{changed}}"
 	},
 	"module_scripts": {},
 	"dependencies": {

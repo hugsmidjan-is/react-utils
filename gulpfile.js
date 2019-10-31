@@ -43,6 +43,7 @@ const [testsBundle, testsWatch] = rollupTaskFactory({
 	name: 'build_tests',
 	glob: testGlobs,
 	dist: testingFolder,
+	codeSplit: false,
 	typescriptOpts: {
 		tsconfigOverride: { compilerOptions: { declaration: false } },
 	},

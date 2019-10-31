@@ -2,7 +2,7 @@ const srcFolder = 'src/';
 
 const scriptsGlobs = '**/*.{js,ts,tsx}';
 const globs = {
-	tests: '**/*.test?(s).{js,ts,tsx}',
+	tests: '**/*.tests.{js,ts,tsx}',
 	privates: '**/*.privates.{js,ts,tsx}', // `*.privates.js` contain private bits that need testing
 	testHelpers: '__testing/**/*.{js,ts,tsx}',
 	wip: '**/*.WIP.{js,ts,tsx}', // Scripts that should not be bundled/published yet
