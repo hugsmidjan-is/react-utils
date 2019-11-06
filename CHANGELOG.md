@@ -3,7 +3,13 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.3
+
+_2019-11-06_
+
 - feat: Add `InlineJavaScript` component
+- feat: Update dependencies
 
 ## 0.1.0 - 0.1.2
 
