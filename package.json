@@ -21,7 +21,7 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"qj": "github:hugsmidjan/qj#semver:^2.6.0"
+		"qj": "npm:@hugsmidjan_is/qj@^3"
 	},
 	"peerDependencies": {
 		"react": "^16.10.2",
