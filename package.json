@@ -16,7 +16,9 @@
 		"test": "ospec '__tests/**/*.tests.js'",
 		"test:dev": "yarn run test  &&  onchange '__tests/**/*.tests.js' -f add,change -- ospec {{changed}}"
 	},
-	"module_scripts": {},
+	"dist_package_json": {
+		"scripts": {}
+	},
 	"engines": {
 		"node": ">=10"
 	},

@@ -58,6 +58,8 @@ const [testsBundle, testsWatch] = rollupTaskFactory({
 	// },
 });
 
+// ===========================================================================
+
 const cleanup = () => del([distFolder, testingFolder]);
 
 const makeDTsFiles = (done) => {
@@ -69,15 +71,20 @@ const makeDTsFiles = (done) => {
 
 const makePackageJson = (done) => {
 	const pkg = require('./package.json');
-	pkg.scripts = pkg.module_scripts || {};
-	delete pkg.module_scripts;
+	const { dist_package_json } = pkg;
+	delete pkg.scripts;
+	delete pkg.engines;
 	delete pkg.devDependencies;
 	delete pkg.hxmstyle;
+	delete pkg.dist_package_json;
+	Object.assign(pkg, dist_package_json);
 	writeFile(distFolder + 'package.json', JSON.stringify(pkg, null, '\t'));
 	done();
 };
 
 const copyDocs = () => src(['README.md', 'CHANGELOG.md']).pipe(dest(distFolder));
+
+// ===========================================================================
 
 const build = parallel(scriptsBundle /* , testsBundle */);
 const watch = parallel(scriptsWatch /* , testsWatch */);
