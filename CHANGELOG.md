@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add `CarouselPaging` and `CarouselStepper` components
 - feat: Add `Modal` and `Portal` components
 - feat: Add `useOnUnmount` and `useConst`
 - feat: Add all props to `Table`'s exported `TableProps`
