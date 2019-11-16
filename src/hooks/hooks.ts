@@ -8,6 +8,10 @@ export const useDomid = () => useState(domid)[0];
 export const useOnMount = (callback: EffectCallback) => useEffect(callback, []);
 // export const useLayoutOnMount = (fn) => useLayoutEffect(fn, []);
 
+// Run callback only when component unmounts
+export const useOnUnmount = (callback: () => void | undefined) =>
+	useEffect(() => callback, [callback]);
+
 // Run callback only when component did update AND deps have changed
 export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<any>) => {
 	const isUpdate = useRef<boolean>();
@@ -22,6 +26,11 @@ export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<any>) 
 		deps
 	);
 };
+
+/** Create a static, immutable variable based on the first input given.
+ * (Runs useRef and returns it's initial .current value.)
+ */
+export const useConst = <I>(input: I) => useRef(input).current;
 
 // Run callback whenever the user hits the ESC key.
 export const useCallbackOnEsc = (callback: EffectCallback) =>
