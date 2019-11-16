@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add all props to `Table`'s exported `TableProps`
 
 ## 0.1.3
 

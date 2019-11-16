@@ -128,16 +128,13 @@ const normalizeTableData = (tableData: TableData): TableDataNormalized => {
 	};
 };
 
-export type TableProps = {
+export type TableProps = TableData & {
 	cols?: TableCols;
-} & TableData;
-
-type P = {
 	className: string;
 	children?: undefined;
-} & TableProps;
+};
 
-const Table: FC<P> = memo(
+const Table: FC<TableProps> = memo(
 	({ className, caption, thead, tfoot, tbody, tbodies, cols }) => {
 		const data = useMemo(
 			() => normalizeTableData({ caption, thead, tfoot, tbody, tbodies } as TableData),
