@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add `hooks/useShortState` and `hooks/useLaggyState` components
 - feat: Add `CarouselPaging` and `CarouselStepper` components
 - feat: Add `Modal` and `Portal` components
 - feat: Add `useOnUnmount` and `useConst`
