@@ -115,6 +115,12 @@ class Modal extends React.Component<Props, S> {
 		const open = this.state.open;
 		const domid = this.state.domid;
 		const bem = props.bem || 'Modal';
+
+		const wrapperClass = bem + 'wrapper';
+		const wrappermModifierClass = props.modifier
+			? ' ' + wrapperClass + '--' + props.modifier
+			: '';
+
 		const modifierClass = props.modifier ? ' ' + bem + '--' + props.modifier : '';
 		const flexibleClass = props.flexible ? ' ' + bem + '--flexible' : '';
 
@@ -124,7 +130,7 @@ class Modal extends React.Component<Props, S> {
 		return (
 			<Portal>
 				<div
-					className={bem + 'wrapper'}
+					className={wrapperClass + wrappermModifierClass}
 					hidden={!open}
 					role="dialog"
 					onClick={this.closeModalOnCurtainClick}
