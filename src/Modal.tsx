@@ -15,7 +15,6 @@ export interface Props {
 	startOpen?: boolean;
 	modifier?: string;
 	onClosed: () => void;
-	flexible?: boolean;
 	bodyWrap?: boolean;
 	texts?: {
 		closeButton: string;
@@ -36,7 +35,6 @@ class Modal extends React.Component<Props, S> {
 		// startOpen: false,
 		// modifier: '',
 		// onClosed: () => {};
-		// flexible: false,
 	};
 
 	modalElm?: HTMLElement | null;
@@ -122,7 +120,6 @@ class Modal extends React.Component<Props, S> {
 			: '';
 
 		const modifierClass = props.modifier ? ' ' + bem + '--' + props.modifier : '';
-		const flexibleClass = props.flexible ? ' ' + bem + '--flexible' : '';
 
 		const t = props.texts || defaultTexts;
 		const { closeButton, closeButtonLabel = t.closeButton } = t;
@@ -137,7 +134,7 @@ class Modal extends React.Component<Props, S> {
 					id={domid}
 				>
 					<div
-						className={bem + modifierClass + flexibleClass}
+						className={bem + modifierClass}
 						ref={(elm) => {
 							this.modalElm = elm;
 						}}
