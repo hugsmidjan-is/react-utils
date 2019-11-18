@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.1.4
+
+_2019-11-18_
+
 - feat: Add `hooks/useShortState` and `hooks/useLaggyState` components
 - feat: Add `CarouselPaging` and `CarouselStepper` components
 - feat: Add `Modal` and `Portal` components
