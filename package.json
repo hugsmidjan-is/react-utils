@@ -23,7 +23,8 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"qj": "npm:@hugsmidjan_is/qj@^3"
+		"qj": "npm:@hugsmidjan_is/qj@^3",
+		"tslib": "^1.10.0"
 	},
 	"peerDependencies": {
 		"react": "^16.10.2",
