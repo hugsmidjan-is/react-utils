@@ -13,7 +13,8 @@ const {
 // ===========================================================================
 
 // Returns true for local module ids (treats node_modules/*  as external)
-const isNonLocalModule = (id) => !/^(?:\0|\.|\/)/.test(id);
+const isNonLocalModule = (id) =>
+	!id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/');
 
 const baseOpts = {
 	src: srcFolder,
