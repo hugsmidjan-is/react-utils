@@ -4,7 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 
-## 0.1.4 – 0.1.8
+## 0.1.4 – 0.1.9
 
 _2019-11-18_
 
