@@ -42,7 +42,7 @@ interface CellProps {
 
 const TableCell: FC<CellProps> = ({ data, meta, th, rowScope, rowIdx }) => {
 	const Tag = th ? 'th' : 'td';
-	const { className = '', value, colSpan, number, tel, text } = { ...data, ...meta };
+	const { className = '', value, colSpan, number, tel, text } = { ...meta, ...data };
 
 	const numberClass = !number
 		? ''
