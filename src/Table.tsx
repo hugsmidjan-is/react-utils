@@ -1,22 +1,22 @@
 import React, { FC, memo, ReactNode, useMemo } from 'react';
 
-type CellMeta = { className?: string } & (
-	| { tel?: false; number?: false; text?: false }
+export type TableCellMeta = { className?: string } & (
+	| { tel?: false; number?: false; text?: false } // catch-all
 	| { number: true; tel?: false; text?: false }
 	| { tel: true; number?: false; text?: false }
 	| { text: true | 'right' | 'center'; number?: false; tel?: false });
 
-type CellData = {
+export type TableCellData = {
 	value: ReactNode | ((rowIdx: number) => ReactNode);
 	colSpan?: number;
-} & CellMeta;
+} & TableCellMeta;
 
 interface RowData {
-	cells: Array<CellData>;
+	cells: Array<TableCellData>;
 }
 
-export type TableCols = Array<CellMeta | null>;
-export type TableCell = string | CellData;
+export type TableCols = Array<TableCellMeta | null>;
+export type TableCell = string | TableCellData;
 export type TableRow = Array<TableCell> | { cells: Array<TableCell> };
 export type TableData = {
 	caption?: ReactNode;
@@ -33,9 +33,9 @@ export type TableData = {
 	  });
 
 interface CellProps {
-	data: CellData;
+	data: TableCellData;
 	rowIdx: number;
-	meta?: CellMeta | null;
+	meta?: TableCellMeta | null;
 	th?: boolean;
 	rowScope?: boolean;
 }
@@ -101,12 +101,12 @@ const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
 
 const normalizeTableSectData = (
 	rows: Array<Array<TableCell> | { cells: Array<TableCell> }>
-): Array<{ cells: Array<CellData> }> =>
+): Array<{ cells: Array<TableCellData> }> =>
 	rows.map((row) => {
 		const cells = 'cells' in row ? row.cells : row;
 		return {
 			cells: cells.map(
-				(data): CellData => (typeof data === 'string' ? { value: data } : data)
+				(data): TableCellData => (typeof data === 'string' ? { value: data } : data)
 			),
 		};
 	});

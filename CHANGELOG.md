@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat(ts): Export types `TableCellData` & `TableCellMeta`
 - fix: `Table`'s cell-level settings should override "cols" meta data
 
 ## 0.1.4 – 0.1.9
