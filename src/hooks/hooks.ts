@@ -13,7 +13,7 @@ export const useOnUnmount = (callback: () => void | undefined) =>
 	useEffect(() => callback, [callback]);
 
 // Run callback only when component did update AND deps have changed
-export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<any>) => {
+export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknown>) => {
 	const isUpdate = useRef<boolean>();
 	useEffect(
 		() => {
