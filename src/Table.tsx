@@ -67,7 +67,7 @@ const TableCell: FC<CellProps> = ({ data, meta, th, rowScope, rowIdx }) => {
 	);
 };
 interface SectionProps {
-	section?: Array<RowData>;
+	section: Array<RowData>;
 	cols?: TableCols;
 	Tag: 'thead' | 'tfoot' | 'tbody';
 }
@@ -114,8 +114,8 @@ const normalizeTableSectData = (
 
 interface TableDataNormalized {
 	caption?: ReactNode;
-	thead: Array<RowData>;
-	tfoot?: Array<RowData>;
+	thead: Array<RowData> | null | false;
+	tfoot?: Array<RowData> | null | false;
 	tbodies: Array<Array<RowData>>;
 }
 
@@ -144,8 +144,8 @@ const Table: FC<TableProps> = memo(
 		return (
 			<table className={className}>
 				{data.caption && <caption>{data.caption}</caption>}
-				<TableSection section={data.thead} cols={cols} Tag="thead" />
-				<TableSection section={data.tfoot} cols={cols} Tag="tfoot" />
+				{data.thead && <TableSection section={data.thead} cols={cols} Tag="thead" />}
+				{data.tfoot && <TableSection section={data.tfoot} cols={cols} Tag="tfoot" />}
 				{data.tbodies.map((section, i) => (
 					<TableSection key={i} section={section} cols={cols} Tag="tbody" />
 				))}
