@@ -9,6 +9,7 @@
 	"license": "UNLICENCED",
 	"scripts": {
 		"publishdist": "yarn run build && npm publish dist",
+		"publishcanary": "yarn run build && npm publish dist --tag canary",
 		"prepublishOnly": "echo \"\nRun 'yarn run publishdist' to publish this package\n\n\"  && exit 1",
 		"format": "eslint --fix  \"*.js\" \"build/*.js\" \"src/**/*.{js,ts,tsx}\"  &&  prettier --write \"*.md\" \"*.json\"  \"src/**/*.json\"",
 		"build": "gulp build  &&  yarn run test",
