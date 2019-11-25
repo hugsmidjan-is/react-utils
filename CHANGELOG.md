@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Support custom `key` property on `TableRow` objects, for caching
 - feat: Make `Table` skip empty thead and tfoot sections and relax the types
 - feat(ts): Export types `TableCellData` & `TableCellMeta`
 - feat(ts): Add `PropsOf<ComponentType>` utility type

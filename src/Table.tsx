@@ -14,11 +14,12 @@ export type TableCellData = {
 
 interface RowData {
 	cells: Array<TableCellData>;
+	key: string | undefined;
 }
 
 export type TableCols = Array<TableCellMeta | null>;
 export type TableCell = string | TableCellData;
-export type TableRow = Array<TableCell> | { cells: Array<TableCell> };
+export type TableRow = Array<TableCell> | { cells: Array<TableCell>; key?: string };
 export type TableData = {
 	caption?: ReactNode;
 	thead: Array<TableRow>;
@@ -74,19 +75,18 @@ interface SectionProps {
 const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
 	section && section.length ? (
 		<Tag>
-			{section.map((row, rowIdx) => {
+			{section.map(({ key, cells }, rowIdx) => {
 				let colIdx = 0;
 				return (
-					<tr key={rowIdx}>
-						{row.cells.map((cell, i) => {
-							const meta = cols[colIdx];
+					<tr key={key != null ? key : rowIdx}>
+						{cells.map((cell, i) => {
 							const rowScope = i === 0;
-							const th = Tag === 'thead' || rowScope;
+							const meta = cols[colIdx];
 							colIdx += cell.colSpan || 1;
 							return (
 								<TableCell
 									key={i}
-									th={th}
+									th={Tag === 'thead' || rowScope}
 									data={cell}
 									meta={meta}
 									rowIdx={rowIdx}
@@ -100,15 +100,14 @@ const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
 		</Tag>
 	) : null;
 
-const normalizeTableSectData = (
-	rows: Array<Array<TableCell> | { cells: Array<TableCell> }>
-): Array<{ cells: Array<TableCellData> }> =>
+const normalizeTableSectData = (rows: Array<TableRow>): Array<RowData> =>
 	rows.map((row) => {
 		const cells = 'cells' in row ? row.cells : row;
 		return {
 			cells: cells.map(
 				(data): TableCellData => (typeof data === 'string' ? { value: data } : data)
 			),
+			key: 'key' in row ? row.key : undefined,
 		};
 	});
 
