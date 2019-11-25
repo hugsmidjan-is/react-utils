@@ -71,7 +71,7 @@ interface SectionProps {
 	Tag: 'thead' | 'tfoot' | 'tbody';
 }
 const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
-	section ? (
+	section && section.length ? (
 		<Tag>
 			{section.map((row, rowIdx) => {
 				let colIdx = 0;

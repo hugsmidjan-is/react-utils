@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Make `Table` skip empty thead and tfoot sections
 - feat(ts): Export types `TableCellData` & `TableCellMeta`
 - fix: `Table`'s cell-level settings should override "cols" meta data
 
