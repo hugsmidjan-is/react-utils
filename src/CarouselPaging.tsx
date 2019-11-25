@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+/** @jsx createElement */
+import { createElement, FC } from 'react';
 
 export interface Props {
 	current: number;

@@ -1,4 +1,5 @@
-import React, { FC, memo, ReactNode, useMemo } from 'react';
+/** @jsx createElement */
+import { createElement, memo, useMemo, FC, ReactNode } from 'react';
 
 export type TableCellMeta = { className?: string } & (
 	| { tel?: false; number?: false; text?: false } // catch-all

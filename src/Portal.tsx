@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { createPortal } from 'react-dom';
 import removeNode from 'qj/removeNode';
 

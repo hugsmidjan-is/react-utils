@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+/** @jsx createElement */
+import { createElement, FC } from 'react';
+
 import { useIsBrowserSide } from './hooks';
 import useScrollEdgeDetect, {
 	ScrollEdgeDetectOptions,

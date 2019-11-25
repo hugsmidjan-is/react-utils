@@ -1,4 +1,5 @@
-import React, { MouseEvent } from 'react';
+/** @jsx createElement */
+import { createElement, Component, MouseEvent } from 'react';
 import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
@@ -27,7 +28,7 @@ interface S {
 	domid: string;
 }
 
-class Modal extends React.Component<Props, S> {
+class Modal extends Component<Props, S> {
 	static defaultProps = {
 		// bem: 'Modal',
 		// closeDelay: 1000,
