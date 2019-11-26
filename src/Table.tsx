@@ -34,6 +34,8 @@ export type TableData = {
 			tbody?: undefined;
 	  });
 
+// ===========================================================================
+
 interface CellProps {
 	data: TableCellData;
 	rowIdx: number;
@@ -67,6 +69,9 @@ const TableCell: FC<CellProps> = ({ data, meta, th, rowScope, rowIdx }) => {
 		</Tag>
 	);
 };
+
+// ===========================================================================
+
 interface SectionProps {
 	section: Array<RowData>;
 	cols?: TableCols;
@@ -100,6 +105,8 @@ const TableSection: FC<SectionProps> = ({ section, cols = [], Tag }) =>
 		</Tag>
 	) : null;
 
+// ===========================================================================
+
 const normalizeTableSectData = (rows: Array<TableRow>): Array<RowData> =>
 	rows.map((row) => {
 		const cells = 'cells' in row ? row.cells : row;
@@ -127,6 +134,8 @@ const normalizeTableData = (tableData: TableData): TableDataNormalized => {
 		tbodies: (tbodies || (tbody ? [tbody] : [])).map(normalizeTableSectData),
 	};
 };
+
+// ===========================================================================
 
 export type TableProps = TableData & {
 	cols?: TableCols;
