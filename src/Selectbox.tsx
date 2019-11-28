@@ -26,14 +26,17 @@ const hiddenSelectStyles: CSSProperties = {
 
 const emptyValue = '     ';
 
+type SelectElmProps = Omit<
+	JSX.IntrinsicElements['select'],
+	'value' | 'onChange' | 'className'
+>;
+
 export interface SelectboxOption<V extends string | number = string | number> {
 	value: V;
 	label?: string;
 }
 
-export type SelectboxOptionList<
-	Option extends SelectboxOption = SelectboxOption
-> = ReadonlyArray<Option>;
+// ---------------------------------------------------------------------------
 
 const getSelectedOption = <Option extends SelectboxOption>(
 	firstOpt: Option | undefined,
@@ -57,6 +60,8 @@ export type SelectboxProps<
 	EmptyOpt extends string | Option = string | Option,
 	RetOption = EmptyOpt extends string ? Option | SelectboxOption<''> : Option
 > = {
+	/** Class-name for the <span> wrapper around the <select> */
+	className?: string;
 	bem?: string;
 	modifier?: string;
 	value?: Option['value'];
@@ -68,9 +73,15 @@ export type SelectboxProps<
 		option: RetOption
 	) => void;
 	visibleFormat?: (selected: RetOption) => ReactNode;
-} & Omit<JSX.IntrinsicElements['select'], 'value' | 'onChange'>;
+} & SelectElmProps;
 
-const Selectbox = <O extends SelectboxOption>(props: SelectboxProps<O>): ReactElement => {
+// TODO: support placeholder prop as alias for emptyOption
+
+// ---------------------------------------------------------------------------
+
+const Selectbox = <Option extends SelectboxOption>(
+	props: SelectboxProps<Option>
+): ReactElement => {
 	const [focused, setFocused] = useState(false);
 
 	const {

@@ -1,7 +1,7 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
-import Selectbox, { SelectboxProps } from './Selectbox';
+import Selectbox, { SelectboxProps } from './SelectBox';
 
 type TextareaElmProps = JSX.IntrinsicElements['textarea'];
 type InputElmProps = JSX.IntrinsicElements['input'];
