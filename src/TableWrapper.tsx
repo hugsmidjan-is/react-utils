@@ -8,8 +8,10 @@ import useScrollEdgeDetect, {
 
 const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',
-	getElm: ({ firstElementChild }) =>
-		firstElementChild && firstElementChild.nodeName === 'DIV' && firstElementChild,
+	getElm: (refElm) => {
+		const { firstElementChild } = refElm || {};
+		return firstElementChild && firstElementChild.nodeName === 'DIV' && firstElementChild;
+	},
 };
 
 interface P {

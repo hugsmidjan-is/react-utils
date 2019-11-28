@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import throttle from 'qj/throttle';
 
 export type ScrollAxis = 'horizontal' | 'vertical';
@@ -8,7 +8,9 @@ export interface AtState {
 }
 export interface ScrollEdgeDetectOptions<RefElm extends HTMLElement = HTMLElement> {
 	axis: ScrollAxis;
-	getElm?: (elm: RefElm) => Element | undefined | null | false;
+	/** **NOTE:** Make sure this function is stable to avoid unnecessary re-runs */
+	getElm?: (elm: RefElm | null | undefined) => Element | undefined | null | false;
+	/** Initial `at` status */
 	startAt?: AtState;
 }
 
@@ -16,21 +18,16 @@ const tolerance = 5; // px
 const throttleMs = 100;
 
 const useScrollEdgeDetect = <RefElm extends HTMLElement = HTMLElement>(
-	/**
-	 * foobar
-	 */
 	options: ScrollAxis | ScrollEdgeDetectOptions<RefElm>
 ) => {
 	const opts: ScrollEdgeDetectOptions<RefElm> =
 		typeof options === 'string' ? { axis: options } : options;
-	const ref = useRef<RefElm>(null);
-	const lastElm = useRef<HTMLElement>();
+	const [refElm, setElmRef] = useState<RefElm | null>(null);
 	const [at, setAt] = useState(opts.startAt || { start: true, end: true });
 
 	useEffect(() => {
-		const elm = ref.current && opts.getElm ? opts.getElm(ref.current) : ref.current;
-		if (elm !== lastElm.current && elm instanceof HTMLElement) {
-			lastElm.current = elm;
+		const elm = opts.getElm ? opts.getElm(refElm) : refElm;
+		if (elm instanceof HTMLElement) {
 			const checkScroll = throttle(() => {
 				let scroll, offsetSize, totalSize;
 
@@ -72,9 +69,9 @@ const useScrollEdgeDetect = <RefElm extends HTMLElement = HTMLElement>(
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [ref.current, opts.axis, opts.getElm]);
+	}, [refElm, opts.getElm, opts.axis /*, at */]);
 
-	return [ref, at] as const;
+	return [setElmRef, at] as const;
 };
 
 export default useScrollEdgeDetect;
