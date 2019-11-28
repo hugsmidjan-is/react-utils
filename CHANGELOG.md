@@ -5,6 +5,7 @@
 - ... <!-- Add new lines here. Version number will be decided later -->
 - **BREAKING** feat: Always call `hooks/useScrollEdgeDetect`'s `getElm` even
   w/o refElm
+- **BREAKING** feat: Rename `TableWrapper`'s `modifier` prop
 - feat: Make `hooks/useScrollEdgeDetect` react to window resize events
 - feat: Add `FormField`, `Selectbox` and `Checkbox` components
 - feat: Support custom `key` property on `TableRow` objects, for caching

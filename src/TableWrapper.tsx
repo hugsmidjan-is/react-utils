@@ -15,14 +15,14 @@ const scrollOptions: ScrollEdgeDetectOptions = {
 };
 
 interface P {
-	classModifier?: string;
+	modifier?: string;
 }
 
-const TableWrapper: FC<P> = ({ children, classModifier }) => {
+const TableWrapper: FC<P> = ({ children, modifier }) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
-	const modifierClass = isBrowser ? ' TableWrapper--' + classModifier : '';
+	const modifierClass = modifier ? ' TableWrapper--' + modifier : '';
 	const activeClass = isBrowser ? ' TableWrapper--at' : '';
 	const atStartClass = isBrowser && scrollAt.start ? ' TableWrapper--at--start' : '';
 	const atEndClass = isBrowser && scrollAt.end ? ' TableWrapper--at--end' : '';
