@@ -61,10 +61,14 @@ const useScrollEdgeDetect = <RefElm extends HTMLElement = HTMLElement>(
 				}
 				setAt(newAt);
 			}, throttleMs);
+
 			elm.addEventListener('scroll', checkScroll);
+			window.addEventListener('resize', checkScroll);
 			checkScroll();
+
 			return () => {
 				elm.removeEventListener('scroll', checkScroll);
+				window.removeEventListener('resize', checkScroll);
 			};
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

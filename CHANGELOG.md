@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Make `hooks/useScrollEdgeDetect` react to window resize events
 - feat: Add `FormField`, `Selectbox` and `Checkbox` components
 - feat: Support custom `key` property on `TableRow` objects, for caching
 - feat: Make `Table` skip empty thead and tfoot sections and relax the types
