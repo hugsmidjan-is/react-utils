@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.0
+
+_2019-11-28_
+
 - **BREAKING** feat: Always call `hooks/useScrollEdgeDetect`'s `getElm` even
   w/o refElm
 - **BREAKING** feat: Rename `TableWrapper`'s `modifier` prop
