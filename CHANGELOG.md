@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Correct import filename casing (Curses VSCode!)
 
 ## 0.2.0
 
