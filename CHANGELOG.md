@@ -4,6 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - feat: Make all `modifier` props also accept array of strings
+- feat: Add simple `Button` component
 
 ## 0.2.1
 
