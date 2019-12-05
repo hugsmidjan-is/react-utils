@@ -1,12 +1,13 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
+import { getModifierClass } from './utils/getModifierClass';
 
 export interface Props {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
 	bem?: string;
-	modifier?: string;
+	modifier?: string | Array<string>;
 	texts?: {
 		prefix: string;
 	};
@@ -29,10 +30,9 @@ const CarouselStepper: FC<Props> = (props) => {
 	} = props;
 
 	const labelPrefix = texts.prefix ? texts.prefix + ' ' : '';
-	const modifierClass = modifier ? ' ' + bem + '--' + modifier : '';
 
 	return (
-		<div className={bem + modifierClass}>
+		<div className={bem + getModifierClass(bem, modifier)}>
 			{array.slice(0, itemCount).map((_, i) => {
 				const isCurrent = current === i || undefined;
 				const label = labelPrefix + (i + 1);

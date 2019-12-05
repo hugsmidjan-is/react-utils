@@ -3,6 +3,7 @@ import { createElement, Component, MouseEvent } from 'react';
 import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
+import { getModifierClass } from './utils/getModifierClass';
 
 const defaultTexts = {
 	closeButton: 'Close',
@@ -14,7 +15,7 @@ export interface Props {
 	closeDelay?: number;
 	open?: boolean;
 	startOpen?: boolean;
-	modifier?: string;
+	modifier?: string | Array<string>;
 	onClosed: () => void;
 	bodyWrap?: boolean;
 	texts?: {
@@ -120,8 +121,6 @@ class Modal extends Component<Props, S> {
 			? ' ' + wrapperClass + '--' + props.modifier
 			: '';
 
-		const modifierClass = props.modifier ? ' ' + bem + '--' + props.modifier : '';
-
 		const t = props.texts || defaultTexts;
 		const { closeButton, closeButtonLabel = t.closeButton } = t;
 
@@ -135,7 +134,7 @@ class Modal extends Component<Props, S> {
 					id={domid}
 				>
 					<div
-						className={bem + modifierClass}
+						className={bem + getModifierClass(bem, props.modifier)}
 						ref={(elm) => {
 							this.modalElm = elm;
 						}}

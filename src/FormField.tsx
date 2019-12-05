@@ -2,6 +2,7 @@
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
 import Selectbox, { SelectboxProps } from './Selectbox';
+import { getModifierClass } from './utils/getModifierClass';
 
 type TextareaElmProps = JSX.IntrinsicElements['textarea'];
 type InputElmProps = JSX.IntrinsicElements['input'];
@@ -10,7 +11,7 @@ type BaseProps<Type extends string, InputProps extends object> = {
 	type: Type;
 	label: string | JSX.Element;
 	bem?: string;
-	modifier?: string;
+	modifier?: string | string[];
 	wrapperProps?: JSX.IntrinsicElements['div'];
 } & InputProps;
 
@@ -32,14 +33,13 @@ const FormField: FC<FormFieldProps> = (props) => {
 	} = props;
 	const domid = useDomid();
 
-	const modifierClass = modifier ? ' ' + bem + '--' + modifier : '';
 	const _className = className ? className + ' ' : '';
 	const fieldProps2 = {
 		className: bem + '__field',
 		id: id || domid,
 	};
 	return (
-		<div {...wrapperProps} className={_className + bem + modifierClass}>
+		<div {...wrapperProps} className={_className + bem + getModifierClass(bem, modifier)}>
 			<label className={bem + '__label'} htmlFor={fieldProps2.id}>
 				{label}
 			</label>

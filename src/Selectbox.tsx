@@ -8,6 +8,7 @@ import {
 	ReactNode,
 	ReactElement,
 } from 'react';
+import { getModifierClass } from './utils/getModifierClass';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
@@ -63,7 +64,7 @@ export type SelectboxProps<
 	/** Class-name for the <span> wrapper around the <select> */
 	className?: string;
 	bem?: string;
-	modifier?: string;
+	modifier?: string | Array<string>;
 	value?: Option['value'];
 	options: ReadonlyArray<Option>;
 	emptyOption?: EmptyOpt;
@@ -109,7 +110,6 @@ const Selectbox = <Option extends SelectboxOption>(
 		return visibleValue || emptyValue;
 	}, [firstOpt, options, value, visibleFormat]);
 
-	const modifierClass = modifier ? ' ' + bem + '--' + modifier : '';
 	const focusedClass = focused ? ' ' + bem + '--focused' : '';
 	const disabledClass = props.disabled ? ' ' + bem + '--disabled' : '';
 	const classNm = className ? className + ' ' : '';
@@ -118,7 +118,9 @@ const Selectbox = <Option extends SelectboxOption>(
 
 	return (
 		<span
-			className={classNm + bem + modifierClass + focusedClass + disabledClass}
+			className={
+				classNm + bem + getModifierClass(bem, modifier) + focusedClass + disabledClass
+			}
 			onFocus={() => setFocused(true)}
 			onBlur={() => setFocused(false)}
 		>

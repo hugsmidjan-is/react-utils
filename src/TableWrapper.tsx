@@ -5,6 +5,7 @@ import { useIsBrowserSide } from './hooks';
 import useScrollEdgeDetect, {
 	ScrollEdgeDetectOptions,
 } from './hooks/useScrollEdgeDetect';
+import { getModifierClass } from './utils/getModifierClass';
 
 const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',
@@ -15,24 +16,27 @@ const scrollOptions: ScrollEdgeDetectOptions = {
 };
 
 interface P {
-	modifier?: string;
+	modifier?: string | Array<string>;
 }
 
 const TableWrapper: FC<P> = ({ children, modifier }) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
-	const modifierClass = modifier ? ' TableWrapper--' + modifier : '';
-	const activeClass = isBrowser ? ' TableWrapper--at' : '';
-	const atStartClass = isBrowser && scrollAt.start ? ' TableWrapper--at--start' : '';
-	const atEndClass = isBrowser && scrollAt.end ? ' TableWrapper--at--end' : '';
+	const bem = 'TableWrapper';
+	const bemPrefix = ' ' + bem + '--';
+	const activeClass = isBrowser ? bemPrefix + 'at' : '';
+	const atStartClass = isBrowser && scrollAt.start ? bemPrefix + 'at--start' : '';
+	const atEndClass = isBrowser && scrollAt.end ? bemPrefix + 'at--end' : '';
 
 	return (
 		<div
-			className={'TableWrapper' + modifierClass + activeClass + atStartClass + atEndClass}
+			className={
+				bem + getModifierClass(bem, modifier) + activeClass + atStartClass + atEndClass
+			}
 			ref={scrollerRef}
 		>
-			{isBrowser ? <div className="TableWrapper__scroller">{children}</div> : children}
+			{isBrowser ? <div className={bem + '__scroller'}>{children}</div> : children}
 		</div>
 	);
 };

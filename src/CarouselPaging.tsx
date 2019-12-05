@@ -1,12 +1,13 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
+import { getModifierClass } from './utils/getModifierClass';
 
 export interface Props {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
 	bem?: string;
-	modifier?: string;
+	modifier?: string | Array<string>;
 	texts?: {
 		next: string;
 		prev: string;
@@ -30,10 +31,9 @@ const CarouselPaging: FC<Props> = (props) => {
 	} = props;
 
 	const { next, prev, unit = '' } = texts;
-	const modifierClass = modifier ? ' ' + bem + '--' + modifier : '';
 
 	return (
-		<div className={bem + modifierClass}>
+		<div className={bem + getModifierClass(bem, modifier)}>
 			<button
 				className={bem + '__button ' + bem + '__button--next'}
 				type="button"

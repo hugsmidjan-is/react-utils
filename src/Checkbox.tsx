@@ -1,11 +1,12 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
+import { getModifierClass } from './utils/getModifierClass';
 
 export type CheckboxProps = {
 	label: JSX.Element | string;
 	bem?: string;
-	modifier?: string;
+	modifier?: string | Array<string>;
 	wrapperProps?: JSX.IntrinsicElements['div'];
 } & JSX.IntrinsicElements['input'];
 
@@ -22,11 +23,10 @@ const Checkbox: FC<CheckboxProps> = (props) => {
 	let domid = useDomid();
 	domid = id || domid;
 
-	const modifierClass = modifier ? ' ' + bem + '--' + modifier : '';
 	const classNm = className ? className + ' ' : '';
 
 	return (
-		<div {...wrapperProps} className={classNm + bem + modifierClass}>
+		<div {...wrapperProps} className={classNm + bem + getModifierClass(bem, modifier)}>
 			<input id={domid} type="checkbox" name="" {...inputProps} />{' '}
 			<label className={bem + '__label'} htmlFor={domid}>
 				{label}
