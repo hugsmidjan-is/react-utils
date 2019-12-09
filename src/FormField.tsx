@@ -11,8 +11,9 @@ type BaseProps<Type extends string, InputProps extends object> = {
 	type: Type;
 	label: string | JSX.Element;
 	bem?: string;
-	modifier?: string | string[];
+	modifier?: string | Array<string>;
 	wrapperProps?: JSX.IntrinsicElements['div'];
+	errorMessage?: string | JSX.Element;
 } & InputProps;
 
 export type FormFieldProps =
@@ -29,9 +30,18 @@ const FormField: FC<FormFieldProps> = (props) => {
 		wrapperProps,
 		id,
 		label,
+		errorMessage,
 		...fieldProps
 	} = props;
 	const domid = useDomid();
+
+	const isInvalid = fieldProps['aria-invalid'] || !!errorMessage;
+	const invalidClass = isInvalid ? ' ' + bem + '--invalid' : '';
+	fieldProps['aria-invalid'] = isInvalid;
+	if (errorMessage) {
+		const decrBy = fieldProps['aria-describedby'] || '';
+		fieldProps['aria-describedby'] = (decrBy ? decrBy + ' ' : '') + domid + '_err';
+	}
 
 	const _className = className ? className + ' ' : '';
 	const fieldProps2 = {
@@ -39,7 +49,10 @@ const FormField: FC<FormFieldProps> = (props) => {
 		id: id || domid,
 	};
 	return (
-		<div {...wrapperProps} className={_className + bem + getModifierClass(bem, modifier)}>
+		<div
+			{...wrapperProps}
+			className={_className + bem + getModifierClass(bem, modifier) + invalidClass}
+		>
 			<label className={bem + '__label'} htmlFor={fieldProps2.id}>
 				{label}
 			</label>
@@ -49,6 +62,11 @@ const FormField: FC<FormFieldProps> = (props) => {
 				<textarea {...(fieldProps as TextareaElmProps)} {...fieldProps2} />
 			) : (
 				<input type={type} {...(fieldProps as InputElmProps)} {...fieldProps2} />
+			)}
+			{!!errorMessage && (
+				<div className={bem + '__errormessage'} role="alert" id={domid + '_err'}>
+					{props.errorMessage}
+				</div>
 			)}
 		</div>
 	);

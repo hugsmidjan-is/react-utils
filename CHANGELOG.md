@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add `errorMessage` prop to `FormField`
 - feat: Make all `modifier` props also accept array of strings
 - feat: Add simple `Button` component
 
