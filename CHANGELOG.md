@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.2
+
+_2019-12-10_
+
 - feat: Add `errorMessage` prop to `FormField`
 - feat: Make all `modifier` props also accept array of strings
 - feat: Add simple `Button` component
