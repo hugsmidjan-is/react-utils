@@ -3137,10 +3137,10 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-"qj@npm:@hugsmidjan_is/qj@^3":
-  version "3.2.0"
-  resolved "https://nexus.hugsmidjan.is/repository/hxm-npm/@hugsmidjan_is/qj/-/qj-3.2.0.tgz#3fa546a64dedc09f552a36c7dcf33434e10155ee"
-  integrity sha512-m3wYQnJU0JagSm6926ixOzgwEWY+tDOPpMhwc1p0nUQ5oph82uak0eYSTevqD0ok7s6y7+j66KFOz4XtC5DQww==
+"qj@npm:@hugsmidjan_is/qj@^3.4":
+  version "3.4.0"
+  resolved "https://nexus.hugsmidjan.is/repository/hxm-npm/@hugsmidjan_is/qj/-/qj-3.4.0.tgz#a00407a5d31dee6ec45891542446fb3d0f4129e4"
+  integrity sha512-lVEfKcw2XtnKjpGVKXkqxeA6UUbdwhJuCUxd3kAF6aD/WqLgyFBCP9z8RfrCYcf+Cfg6EpYLvl1oRysXrOHWaA==
 
 rc@^1.2.7:
   version "1.2.8"

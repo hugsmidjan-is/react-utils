@@ -24,7 +24,7 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"qj": "npm:@hugsmidjan_is/qj@^3"
+		"qj": "npm:@hugsmidjan_is/qj@^3.4"
 	},
 	"peerDependencies": {
 		"react": "^16.8",
