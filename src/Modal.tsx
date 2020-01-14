@@ -116,18 +116,13 @@ class Modal extends Component<Props, S> {
 		const domid = this.state.domid;
 		const bem = props.bem || 'Modal';
 
-		const wrapperClass = bem + 'wrapper';
-		const wrappermModifierClass = props.modifier
-			? ' ' + wrapperClass + '--' + props.modifier
-			: '';
-
 		const t = props.texts || defaultTexts;
 		const { closeButton, closeButtonLabel = t.closeButton } = t;
 
 		return (
 			<Portal>
 				<div
-					className={wrapperClass + wrappermModifierClass}
+					className={bem + 'wrapper' + getModifierClass(bem + 'wrapper', props.modifier)}
 					hidden={!open}
 					role="dialog"
 					onClick={this.closeModalOnCurtainClick}

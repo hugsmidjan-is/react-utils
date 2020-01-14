@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Apply array of class-modifiers to <Modal> wrapper
 
 ## 0.2.2
 
