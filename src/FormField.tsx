@@ -14,6 +14,7 @@ type BaseProps<Type extends string, InputProps extends object> = {
 	modifier?: string | Array<string>;
 	wrapperProps?: JSX.IntrinsicElements['div'];
 	errorMessage?: string | JSX.Element;
+	requiredNote?: string;
 } & InputProps;
 
 export type FormFieldProps =
@@ -28,6 +29,7 @@ const FormField: FC<FormFieldProps> = (props) => {
 		modifier,
 		className,
 		wrapperProps,
+		requiredNote,
 		id,
 		label,
 		errorMessage,
@@ -54,6 +56,11 @@ const FormField: FC<FormFieldProps> = (props) => {
 			className={_className + bem + getModifierClass(bem, modifier) + invalidClass}
 		>
 			<label className={bem + '__label'} htmlFor={fieldProps2.id}>
+				{fieldProps.required && requiredNote && (
+					<abbr className={bem + '__label__reqnote'} aria-label={requiredNote}>
+						{'* '}
+					</abbr>
+				)}
 				{label}
 			</label>
 			{props.type === 'select' ? (
