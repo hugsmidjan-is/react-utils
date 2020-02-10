@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.4
+
+_2020-02-10_
+
 - feat: Add optional `requiredNote` prop to `FormField`
 
 ## 0.2.3
