@@ -1,6 +1,6 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
-import { getModifierClass } from './utils/getModifierClass';
+import getModifierClass from './utils/getModifierClass';
 
 export interface Props {
 	current: number;

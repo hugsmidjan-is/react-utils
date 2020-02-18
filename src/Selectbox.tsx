@@ -8,7 +8,7 @@ import {
 	ReactNode,
 	ReactElement,
 } from 'react';
-import { getModifierClass } from './utils/getModifierClass';
+import getModifierClass from './utils/getModifierClass';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,

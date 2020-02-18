@@ -5,7 +5,7 @@ import { useIsBrowserSide } from './hooks';
 import useScrollEdgeDetect, {
 	ScrollEdgeDetectOptions,
 } from './hooks/useScrollEdgeDetect';
-import { getModifierClass } from './utils/getModifierClass';
+import getModifierClass from './utils/getModifierClass';
 
 const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',

@@ -3,7 +3,7 @@ import { createElement, Component, MouseEvent } from 'react';
 import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
-import { getModifierClass } from './utils/getModifierClass';
+import getModifierClass from './utils/getModifierClass';
 
 const defaultTexts = {
 	closeButton: 'Close',

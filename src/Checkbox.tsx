@@ -1,7 +1,7 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
-import { getModifierClass } from './utils/getModifierClass';
+import getModifierClass from './utils/getModifierClass';
 
 export type CheckboxProps = {
 	label: JSX.Element | string;

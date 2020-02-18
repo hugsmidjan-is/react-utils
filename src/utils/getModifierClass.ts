@@ -1,4 +1,4 @@
-export const getModifierClass = (
+const getModifierClass = (
 	bem: string,
 	modifier: string | Array<string> | undefined
 ): string => {
@@ -8,3 +8,5 @@ export const getModifierClass = (
 	const bemPrefix = ' ' + bem + '--';
 	return bemPrefix + (typeof modifier === 'string' ? modifier : modifier.join(bemPrefix));
 };
+
+export default getModifierClass;
