@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.2.5
+
+_2020-02-18_
+
 - fix: Make `getModifierClass()` a default export of its module
 
 ## 0.2.4
