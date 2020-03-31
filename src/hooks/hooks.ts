@@ -2,7 +2,7 @@ import { useEffect, useRef, EffectCallback, useState } from 'react';
 import domid from 'qj/domid';
 
 // Returns a stable, unique ID string
-export const useDomid = () => useState(domid)[0];
+export const useDomid = (staticId?: string) => useState(staticId || domid)[0];
 
 // Run callback only when component did mount
 export const useOnMount = (callback: EffectCallback) => useEffect(callback, []);
