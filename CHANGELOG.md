@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Allow `null` and `false` as `getModifierClass()` modifier values
 - feat: Allow passing optional `staticId` to `useDomid()`
 
 ## 0.2.5
