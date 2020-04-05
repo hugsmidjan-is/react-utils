@@ -6,7 +6,13 @@ export type PropsOf<T> = T extends FC<infer P>
 	? P
 	: never;
 
-export interface BemProps {
-	bem?: string;
-	modifier?: string | ReadonlyArray<string>;
+// ---------------------------------------------------------------------------
+
+type Modifier = string | undefined | null | false;
+
+export interface BemPropsModifier {
+	modifier?: Modifier | ReadonlyArray<Modifier>;
 }
+export type BemProps = {
+	bem?: string;
+} & BemPropsModifier;
