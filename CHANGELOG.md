@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- **BREAKING**: feat: Always set `position: relative` on `.Selectbox` element
 - feat: Add `utils/getBemClass(bem, modifier, extraClass)` helper
 - feat: Allow `null` and `false` as `getModifierClass()` modifier values
 - feat: Allow passing optional `staticId` to `useDomid()`

@@ -116,6 +116,7 @@ const Selectbox = <Option extends SelectboxOption>(
 			}
 			onFocus={() => setFocused(true)}
 			onBlur={() => setFocused(false)}
+			style={{ position: 'relative' }}
 		>
 			<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
 
