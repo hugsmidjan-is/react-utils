@@ -1,17 +1,16 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
-export interface Props {
+export type Props = BemProps & {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
-	bem?: string;
-	modifier?: string | Array<string>;
 	texts?: {
 		prefix: string;
 	};
-}
+};
 
 const defaultTexts = {
 	prefix: '',

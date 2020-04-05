@@ -9,6 +9,7 @@ import {
 	ReactElement,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
@@ -58,8 +59,6 @@ export type SelectboxProps<
 > = {
 	/** Class-name for the <span> wrapper around the <select> */
 	className?: string;
-	bem?: string;
-	modifier?: string | Array<string>;
 	value?: Option['value'];
 	options: ReadonlyArray<Option>;
 	emptyOption?: EmptyOpt;
@@ -69,7 +68,8 @@ export type SelectboxProps<
 		option: RetOption
 	) => void;
 	visibleFormat?: (selected: RetOption) => ReactNode;
-} & Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
+} & BemProps &
+	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
 
 // TODO: support placeholder prop as alias for emptyOption
 

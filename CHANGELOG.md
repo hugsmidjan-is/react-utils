@@ -5,6 +5,8 @@
 - ... <!-- Add new lines here. Version number will be decided later -->
 - feat: Allow `null` and `false` as `getModifierClass()` modifier values
 - feat: Allow passing optional `staticId` to `useDomid()`
+- feat: Export type `BemProps` from `/types`
+- feat: `TableWrapper` now accepts a `bem` prop
 
 ## 0.2.5
 

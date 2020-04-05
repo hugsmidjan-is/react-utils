@@ -4,25 +4,24 @@ import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 const defaultTexts = {
 	closeButton: 'Close',
 	closeButtonLabel: 'Close this window',
 };
 
-export interface Props {
-	bem?: string;
+export type Props = {
 	closeDelay?: number;
 	open?: boolean;
 	startOpen?: boolean;
-	modifier?: string | Array<string>;
 	onClosed: () => void;
 	bodyWrap?: boolean;
 	texts?: {
 		closeButton: string;
 		closeButtonLabel?: string;
 	};
-}
+} & BemProps;
 
 interface S {
 	open: boolean;

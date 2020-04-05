@@ -1,14 +1,14 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 type ButtonElmProps = JSX.IntrinsicElements['button'];
 
 type P = {
-	bem?: string;
-	modifier?: string | Array<string>;
 	primary?: boolean;
-} & ButtonElmProps;
+} & BemProps &
+	ButtonElmProps;
 
 const Button: FC<P> = (props) => {
 	const { bem = 'Button', primary, modifier, className, ...buttonProps } = props;

@@ -2,13 +2,13 @@
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 export type CheckboxProps = {
 	label: JSX.Element | string;
-	bem?: string;
-	modifier?: string | Array<string>;
 	wrapperProps?: JSX.IntrinsicElements['div'];
-} & JSX.IntrinsicElements['input'];
+} & BemProps &
+	JSX.IntrinsicElements['input'];
 
 const Checkbox: FC<CheckboxProps> = (props) => {
 	const {

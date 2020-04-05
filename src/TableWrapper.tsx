@@ -6,6 +6,7 @@ import useScrollEdgeDetect, {
 	ScrollEdgeDetectOptions,
 } from './hooks/useScrollEdgeDetect';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',
@@ -15,15 +16,12 @@ const scrollOptions: ScrollEdgeDetectOptions = {
 	},
 };
 
-interface P {
-	modifier?: string | Array<string>;
-}
+type P = BemProps;
 
-const TableWrapper: FC<P> = ({ children, modifier }) => {
+const TableWrapper: FC<P> = ({ children, modifier, bem = 'TableWrapper' }) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
-	const bem = 'TableWrapper';
 	const bemPrefix = ' ' + bem + '--';
 	const activeClass = isBrowser ? bemPrefix + 'at' : '';
 	const atStartClass = isBrowser && scrollAt.start ? bemPrefix + 'at--start' : '';

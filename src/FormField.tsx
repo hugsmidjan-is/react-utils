@@ -3,6 +3,7 @@ import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
 import Selectbox, { SelectboxProps } from './Selectbox';
 import getModifierClass from './utils/getModifierClass';
+import { BemProps } from './types';
 
 type TextareaElmProps = JSX.IntrinsicElements['textarea'];
 type InputElmProps = JSX.IntrinsicElements['input'];
@@ -10,12 +11,11 @@ type InputElmProps = JSX.IntrinsicElements['input'];
 type BaseProps<Type extends string, InputProps extends object> = {
 	type: Type;
 	label: string | JSX.Element;
-	bem?: string;
-	modifier?: string | Array<string>;
 	wrapperProps?: JSX.IntrinsicElements['div'];
 	errorMessage?: string | JSX.Element;
 	requiredNote?: string;
-} & InputProps;
+} & BemProps &
+	InputProps;
 
 export type FormFieldProps =
 	| BaseProps<'text' | 'email' | 'tel' | 'number' | 'date', InputElmProps>

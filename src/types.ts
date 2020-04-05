@@ -5,3 +5,8 @@ export type PropsOf<T> = T extends FC<infer P>
 	: T extends Component<infer P>
 	? P
 	: never;
+
+export interface BemProps {
+	bem?: string;
+	modifier?: string | ReadonlyArray<string>;
+}
