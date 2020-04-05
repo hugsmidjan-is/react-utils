@@ -85,8 +85,8 @@ const copyDocs = () => src(['README.md', 'CHANGELOG.md']).pipe(dest(distFolder))
 
 // ===========================================================================
 
-const build = parallel(scriptsBundle /* , testsBundle */);
-const watch = parallel(scriptsWatch /* , testsWatch */);
+const build = parallel(scriptsBundle, testsBundle);
+const watch = parallel(scriptsWatch, testsWatch);
 const publishPrep = parallel(makePackageJson, makeDTsFiles, copyDocs);
 
 exports.dev = series(cleanup, build, watch);
