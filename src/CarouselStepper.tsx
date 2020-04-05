@@ -1,6 +1,6 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
-import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 export type Props = BemProps & {
@@ -31,7 +31,7 @@ const CarouselStepper: FC<Props> = (props) => {
 	const labelPrefix = texts.prefix ? texts.prefix + ' ' : '';
 
 	return (
-		<div className={bem + getModifierClass(bem, modifier)}>
+		<div className={getBemClass(bem, modifier)}>
 			{array.slice(0, itemCount).map((_, i) => {
 				const isCurrent = current === i || undefined;
 				const label = labelPrefix + (i + 1);

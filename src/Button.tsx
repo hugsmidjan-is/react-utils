@@ -1,6 +1,6 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
-import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 type ButtonElmProps = JSX.IntrinsicElements['button'];
@@ -12,12 +12,11 @@ type P = {
 
 const Button: FC<P> = (props) => {
 	const { bem = 'Button', primary, modifier, className, ...buttonProps } = props;
-	const _className = className ? className + ' ' : '';
 	const primaryClass = primary ? ' ' + bem + '--primary' : '';
 
 	return (
 		<button
-			className={_className + bem + primaryClass + getModifierClass(bem, modifier)}
+			className={getBemClass(bem, modifier, className) + primaryClass}
 			type="button"
 			{...buttonProps}
 		/>

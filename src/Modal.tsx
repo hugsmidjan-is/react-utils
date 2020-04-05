@@ -3,7 +3,7 @@ import { createElement, Component, MouseEvent } from 'react';
 import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
-import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 const defaultTexts = {
@@ -121,14 +121,14 @@ class Modal extends Component<Props, S> {
 		return (
 			<Portal>
 				<div
-					className={bem + 'wrapper' + getModifierClass(bem + 'wrapper', props.modifier)}
+					className={getBemClass(bem + 'wrapper', props.modifier)}
 					hidden={!open}
 					role="dialog"
 					onClick={this.closeModalOnCurtainClick}
 					id={domid}
 				>
 					<div
-						className={bem + getModifierClass(bem, props.modifier)}
+						className={getBemClass(bem, props.modifier)}
 						ref={(elm) => {
 							this.modalElm = elm;
 						}}

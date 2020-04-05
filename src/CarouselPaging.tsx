@@ -1,6 +1,6 @@
 /** @jsx createElement */
 import { createElement, FC } from 'react';
-import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 export type Props = BemProps & {
@@ -32,7 +32,7 @@ const CarouselPaging: FC<Props> = (props) => {
 	const { next, prev, unit = '' } = texts;
 
 	return (
-		<div className={bem + getModifierClass(bem, modifier)}>
+		<div className={getBemClass(bem, modifier)}>
 			<button
 				className={bem + '__button ' + bem + '__button--next'}
 				type="button"

@@ -6,6 +6,7 @@ import useScrollEdgeDetect, {
 	ScrollEdgeDetectOptions,
 } from './hooks/useScrollEdgeDetect';
 import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 const scrollOptions: ScrollEdgeDetectOptions = {
@@ -22,15 +23,14 @@ const TableWrapper: FC<P> = ({ children, modifier, bem = 'TableWrapper' }) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
-	const bemPrefix = ' ' + bem + '--';
-	const activeClass = isBrowser ? bemPrefix + 'at' : '';
-	const atStartClass = isBrowser && scrollAt.start ? bemPrefix + 'at--start' : '';
-	const atEndClass = isBrowser && scrollAt.end ? bemPrefix + 'at--end' : '';
-
 	return (
 		<div
 			className={
-				bem + getModifierClass(bem, modifier) + activeClass + atStartClass + atEndClass
+				getBemClass(bem, modifier) +
+				getModifierClass(
+					bem,
+					isBrowser && ['at', scrollAt.start && 'at--start', scrollAt.end && 'at--end']
+				)
 			}
 			ref={scrollerRef}
 		>

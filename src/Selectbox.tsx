@@ -9,6 +9,7 @@ import {
 	ReactElement,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 const hiddenSelectStyles: CSSProperties = {
@@ -105,16 +106,13 @@ const Selectbox = <Option extends SelectboxOption>(
 		return visibleValue || emptyValue;
 	}, [firstOpt, options, value, visibleFormat]);
 
-	const focusedClass = focused ? ' ' + bem + '--focused' : '';
-	const disabledClass = props.disabled ? ' ' + bem + '--disabled' : '';
-	const extraClass = className ? className + ' ' : '';
-
 	const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
 
 	return (
 		<span
 			className={
-				extraClass + bem + getModifierClass(bem, modifier) + focusedClass + disabledClass
+				getBemClass(bem, modifier, className) +
+				getModifierClass(bem, [focused && 'focused', props.disabled && 'disabled'])
 			}
 			onFocus={() => setFocused(true)}
 			onBlur={() => setFocused(false)}

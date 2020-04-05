@@ -2,7 +2,7 @@
 import { createElement, FC } from 'react';
 import { useDomid } from './hooks';
 import Selectbox, { SelectboxProps } from './Selectbox';
-import getModifierClass from './utils/getModifierClass';
+import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
 type TextareaElmProps = JSX.IntrinsicElements['textarea'];
@@ -45,7 +45,6 @@ const FormField: FC<FormFieldProps> = (props) => {
 		fieldProps['aria-describedby'] = (decrBy ? decrBy + ' ' : '') + domid + '_err';
 	}
 
-	const _className = className ? className + ' ' : '';
 	const fieldProps2 = {
 		className: bem + '__field',
 		id: id || domid,
@@ -53,7 +52,7 @@ const FormField: FC<FormFieldProps> = (props) => {
 	return (
 		<div
 			{...wrapperProps}
-			className={_className + bem + getModifierClass(bem, modifier) + invalidClass}
+			className={getBemClass(bem, modifier, className) + invalidClass}
 		>
 			<label className={bem + '__label'} htmlFor={fieldProps2.id}>
 				{fieldProps.required && requiredNote && (
