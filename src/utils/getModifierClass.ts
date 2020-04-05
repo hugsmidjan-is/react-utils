@@ -1,6 +1,6 @@
 const getModifierClass = (
 	bem: string,
-	modifier: string | Array<string> | undefined | null | false
+	modifier: string | ReadonlyArray<string> | undefined | null | false
 ): string => {
 	if (!modifier || !modifier.length) {
 		return '';
