@@ -27,11 +27,6 @@ const hiddenSelectStyles: CSSProperties = {
 
 const emptyValue = '     ';
 
-type SelectElmProps = Omit<
-	JSX.IntrinsicElements['select'],
-	'value' | 'onChange' | 'className'
->;
-
 export interface SelectboxOption<V extends string | number = string | number> {
 	value: V;
 	label?: string;
@@ -74,7 +69,7 @@ export type SelectboxProps<
 		option: RetOption
 	) => void;
 	visibleFormat?: (selected: RetOption) => ReactNode;
-} & SelectElmProps;
+} & Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
 
 // TODO: support placeholder prop as alias for emptyOption
 
@@ -94,7 +89,7 @@ const Selectbox = <Option extends SelectboxOption>(
 		visibleFormat,
 		onChange,
 		emptyOption,
-		...forwardingProps
+		...selectProps
 	} = props;
 
 	const firstOpt =
@@ -112,21 +107,22 @@ const Selectbox = <Option extends SelectboxOption>(
 
 	const focusedClass = focused ? ' ' + bem + '--focused' : '';
 	const disabledClass = props.disabled ? ' ' + bem + '--disabled' : '';
-	const classNm = className ? className + ' ' : '';
+	const extraClass = className ? className + ' ' : '';
 
 	const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
 
 	return (
 		<span
 			className={
-				classNm + bem + getModifierClass(bem, modifier) + focusedClass + disabledClass
+				extraClass + bem + getModifierClass(bem, modifier) + focusedClass + disabledClass
 			}
 			onFocus={() => setFocused(true)}
 			onBlur={() => setFocused(false)}
 		>
 			<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
+
 			<select
-				{...forwardingProps}
+				{...selectProps}
 				value={value != null ? value : ''}
 				style={hiddenSelectStyles}
 				data-fancy
