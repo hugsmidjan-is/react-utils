@@ -37,7 +37,7 @@ export interface SelectboxOption<V extends string | number = string | number> {
 
 const getSelectedOption = <Option extends SelectboxOption>(
 	firstOpt: Option | undefined,
-	options: ReadonlyArray<Option>,
+	options: ReadonlyArray<Readonly<Option>>,
 	value: string | undefined
 ) => {
 	let selOption;
@@ -53,14 +53,14 @@ const getSelectedOption = <Option extends SelectboxOption>(
 // ---------------------------------------------------------------------------
 
 export type SelectboxProps<
-	Option extends SelectboxOption = SelectboxOption,
+	Option extends Readonly<SelectboxOption> = Readonly<SelectboxOption>,
 	EmptyOpt extends string | Option = string | Option,
-	RetOption = EmptyOpt extends string ? Option | SelectboxOption<''> : Option
+	RetOption = Readonly<EmptyOpt extends string ? Option | SelectboxOption<''> : Option>
 > = {
 	/** Class-name for the <span> wrapper around the <select> */
 	className?: string;
 	value?: Option['value'];
-	options: ReadonlyArray<Option>;
+	options: ReadonlyArray<Readonly<Option>>;
 	emptyOption?: EmptyOpt;
 	onChange?: (
 		event: ChangeEvent<HTMLSelectElement>,

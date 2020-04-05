@@ -17,10 +17,10 @@ export type Props = {
 	startOpen?: boolean;
 	onClosed: () => void;
 	bodyWrap?: boolean;
-	texts?: {
+	texts?: Readonly<{
 		closeButton: string;
 		closeButtonLabel?: string;
-	};
+	}>;
 } & BemProps;
 
 interface S {

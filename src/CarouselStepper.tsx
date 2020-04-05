@@ -7,9 +7,9 @@ export type Props = BemProps & {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
-	texts?: {
+	texts?: Readonly<{
 		prefix: string;
-	};
+	}>;
 };
 
 const defaultTexts = {
