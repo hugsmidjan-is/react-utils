@@ -13,6 +13,6 @@ type Modifier = string | undefined | null | false;
 export interface BemPropsModifier {
 	modifier?: Modifier | ReadonlyArray<Modifier>;
 }
-export type BemProps = {
+export interface BemProps extends BemPropsModifier {
 	bem?: string;
-} & BemPropsModifier;
+}
