@@ -66,5 +66,7 @@ export const useClientState = <T, U>(
 	return state;
 };
 
-export const useIsServerSide = () => useClientState(true as const, undefined)[0];
-export const useIsBrowserSide = () => useClientState(undefined, true as const)[0];
+export const useIsServerSide = (ssrSupport: boolean | 'ssr-only' = true) =>
+	useClientState(!!ssrSupport, ssrSupport === 'ssr-only')[0] || undefined;
+export const useIsBrowserSide = (ssrSupport: boolean | 'ssr-only' = true) =>
+	useClientState(!ssrSupport, ssrSupport !== 'ssr-only')[0] || undefined;

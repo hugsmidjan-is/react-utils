@@ -4,6 +4,9 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - **BREAKING**: feat: Always set `position: relative` on `.Selectbox` element
+- feat: `useIsServerSide` and `useIsBrowserSide` accept `ssrSupport` flag – of
+  type `boolean | 'ssr-only'`. Passing `false` opts out, while `ssr-only`
+  always reports as server.
 - feat: Add `utils/getBemClass(bem, modifier, extraClass)` helper
 - feat: Allow `null` and `false` as `getModifierClass()` modifier values
 - feat: Allow passing optional `staticId` to `useDomid()`
