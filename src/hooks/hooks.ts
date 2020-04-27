@@ -55,18 +55,32 @@ export const useNotifyTopContent = (componentName: string, key = 'topContent') =
 		};
 	});
 
+/**
+ * Boolean flag indicating if server-side rendering is supported.
+ *
+ * The `ssr-only` value is useful for cases where you need
+ * to demo the ssr version in a browser.
+ */
+export type SSRSupport = boolean | 'ssr-only';
+
 export const useClientState = <T, U>(
 	serverState: T | (() => T),
-	clientState: U | (() => U)
+	clientState: U | (() => U),
+	ssrSupport: boolean | 'ssr-only' = true
 ) => {
-	const state = useState<T | U>(serverState);
+	const state = useState<T | U>(ssrSupport ? serverState : clientState);
 	useOnMount(() => {
-		state[1](clientState);
+		// Skip if ssrSupport is 'ssr-only'
+		// or if ssrSupport is false and clientState
+		// has been set already.
+		if (ssrSupport === true) {
+			state[1](clientState);
+		}
 	});
 	return state;
 };
 
-export const useIsServerSide = (ssrSupport: boolean | 'ssr-only' = true) =>
-	useClientState(!!ssrSupport, ssrSupport === 'ssr-only')[0] || undefined;
-export const useIsBrowserSide = (ssrSupport: boolean | 'ssr-only' = true) =>
-	useClientState(!ssrSupport, ssrSupport !== 'ssr-only')[0] || undefined;
+export const useIsServerSide = (ssrSupport?: boolean | 'ssr-only') =>
+	useClientState(true, false, ssrSupport)[0] || undefined;
+export const useIsBrowserSide = (ssrSupport?: boolean | 'ssr-only') =>
+	useClientState(false, true, ssrSupport)[0] || undefined;
