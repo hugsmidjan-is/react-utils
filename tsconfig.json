@@ -8,8 +8,6 @@
 		"esModuleInterop": true,
 		"module": "esnext",
 		"moduleResolution": "node",
-		"declaration": true,
-		"declarationDir": "dist/__types",
 		"newLine": "LF",
 
 		"allowSyntheticDefaultImports": true,

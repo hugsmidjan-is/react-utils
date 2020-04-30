@@ -31,7 +31,7 @@
 		"react-dom": "^16.8"
 	},
 	"devDependencies": {
-		"@hugsmidjan/gulp-rollup": "^0.3.17",
+		"@hugsmidjan/gulp-rollup": "^0.4.0",
 		"@hugsmidjan/hxmstyle": "^2.3.1",
 		"@types/ospec": "^4.0.0",
 		"@types/react": "^16.9.2",
@@ -51,7 +51,7 @@
 		"prettier": "^1.18.2",
 		"react": "^16.10.2",
 		"react-dom": "^16.10.2",
-		"typescript": "^3.6.4"
+		"typescript": "^3.8.3"
 	},
 	"hxmstyle": {
 		"options": {
