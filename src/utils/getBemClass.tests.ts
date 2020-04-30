@@ -8,7 +8,7 @@ o.spec('getBemClass', () => {
 		o(getBemClass(bem, undefined)).equals('BEM');
 		o(getBemClass(bem, 'hello')).equals('BEM BEM--hello');
 		o(getBemClass(bem, ['hello', 'world'])).equals('BEM BEM--hello BEM--world');
-		o(getBemClass(bem, 'hello', 'custom')).equals('custom BEM BEM--hello');
-		o(getBemClass(bem, null, 'custom')).equals('custom BEM');
+		o(getBemClass(bem, 'hello', 'custom')).equals('BEM BEM--hello custom');
+		o(getBemClass(bem, null, 'custom')).equals('BEM custom');
 	});
 });
