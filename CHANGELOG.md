@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.3.0
+
+_2020-05-29_
+
 - **BREAKING** feat: Rename package to `@hugsmidjan/react`
 - **BREAKING** feat: Refactor and enhance `.Selectbox`
   - Always set `position: relative` on the wrapper element
