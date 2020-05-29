@@ -6,7 +6,8 @@
 	"contributors": [
 		"Már Örlygsson <mar@hugsmidjan.is> (http://mar.anomy.net)"
 	],
-	"license": "UNLICENCED",
+	"private": true,
+	"license": "MIT",
 	"scripts": {
 		"publishdist": "yarn run build && npm publish dist",
 		"publishcanary": "yarn run build && npm publish dist --tag canary",
