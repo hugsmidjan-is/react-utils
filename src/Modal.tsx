@@ -16,6 +16,7 @@ export type Props = {
 	open?: boolean;
 	startOpen?: boolean;
 	onClosed: () => void;
+	onOpen: () => void;
 	bodyWrap?: boolean;
 	texts?: Readonly<{
 		closeButton: string;
@@ -80,6 +81,7 @@ class Modal extends Component<Props, S> {
 			setTimeout(() => {
 				this.setState({ open: true });
 				document.documentElement.classList.add('modal-open');
+				this.props.onOpen && this.props.onOpen();
 				if (this.modalElm) {
 					// @ts-ignore  (awaiting qj bugfix)
 					focusElm(this.modalElm);

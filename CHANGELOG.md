@@ -4,6 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - **BREAKING**: feat: Always set `position: relative` on `.Selectbox` element
+- feat: Add `onOpen` callback prop to `Modal`
 - feat: `useClientState`, `useIsServerSide` and `useIsBrowserSide` accept
   `ssrSupport` flag – of type `boolean | 'ssr-only'`. Passing `false` opts
   out, while `ssr-only` always reports as server.
