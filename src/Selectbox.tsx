@@ -4,13 +4,14 @@ import {
 	useState,
 	useMemo,
 	CSSProperties,
-	ChangeEvent,
 	ReactNode,
 	ReactElement,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
 import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
+import { useIsBrowserSide } from './hooks';
+import { OptionOrValue, getVisibleLabel, getOptionLabel } from './Selectbox.privates';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
@@ -27,58 +28,35 @@ const hiddenSelectStyles: CSSProperties = {
 	border: 0,
 };
 
-const emptyValue = '     ';
-
 export interface SelectboxOption<V extends string | number = string | number> {
 	value: V;
 	label?: string;
+	disabled?: boolean;
 }
-
-// ---------------------------------------------------------------------------
-
-const getSelectedOption = <Option extends SelectboxOption>(
-	firstOpt: Option | undefined,
-	options: ReadonlyArray<Readonly<Option>>,
-	value: string | undefined
-) => {
-	let selOption;
-	if (value != null) {
-		selOption =
-			firstOpt && String(firstOpt.value) === value
-				? firstOpt
-				: options.find((opt) => String(opt.value) === value);
-	}
-	return selOption || firstOpt || options[0];
-};
+export type SelectboxOptions<V extends string | number = string | number> = Array<
+	SelectboxOption<V>
+>;
 
 // ---------------------------------------------------------------------------
 
 export type SelectboxProps<
-	Option extends Readonly<SelectboxOption> = Readonly<SelectboxOption>,
-	EmptyOpt extends string | Option = string | Option,
-	RetOption = Readonly<EmptyOpt extends string ? Option | SelectboxOption<''> : Option>
+	O extends OptionOrValue = OptionOrValue,
+	V = O extends SelectboxOption ? O['value'] : O
 > = {
 	/** Class-name for the <span> wrapper around the <select> */
 	className?: string;
-	value?: Option['value'];
-	options: ReadonlyArray<Readonly<Option>>;
-	emptyOption?: EmptyOpt;
-	onChange?: (
-		event: ChangeEvent<HTMLSelectElement>,
-		value: Option['value'],
-		option: RetOption
-	) => void;
-	visibleFormat?: (selected: RetOption) => ReactNode;
+	options: ReadonlyArray<O>;
+	value?: string | V;
+	placeholder?: string;
+	onSelected?: (value: V, option: O) => void;
+	ssr?: boolean | 'ssr-only';
+	visibleFormat?: (selected: O) => ReactNode;
 } & BemProps &
 	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
 
-// TODO: support placeholder prop as alias for emptyOption
-
 // ---------------------------------------------------------------------------
 
-const Selectbox = <Option extends SelectboxOption>(
-	props: SelectboxProps<Option>
-): ReactElement => {
+const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElement => {
 	const [focused, setFocused] = useState(false);
 
 	const {
@@ -88,63 +66,85 @@ const Selectbox = <Option extends SelectboxOption>(
 		value,
 		options,
 		visibleFormat,
+		ssr,
+		onSelected,
 		onChange,
-		emptyOption,
+		placeholder,
 		...selectProps
 	} = props;
 
-	const firstOpt =
-		typeof emptyOption === 'string'
-			? ({ value: '', label: emptyOption } as const)
-			: emptyOption;
+	const isBrowser = useIsBrowserSide(ssr);
 
-	const selectedOptionText = useMemo(() => {
-		const selOption = getSelectedOption(firstOpt, options, String(value));
-		const visibleValue = visibleFormat
-			? visibleFormat(selOption)
-			: selOption.label || String(selOption.value);
-		return visibleValue || emptyValue;
-	}, [firstOpt, options, value, visibleFormat]);
+	type V = O extends SelectboxOption ? O['value'] : O;
+	const optionsNorm = useMemo(
+		() =>
+			options.map((item) =>
+				typeof item === 'string' || typeof item === 'number' ? { value: item } : item
+			),
+		[options]
+	) as SelectboxOptions<V>; // Feck!
 
-	const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
+	// TODO: DECIDE: Handle value="" and options array that doesn't include that value. What to do???
+	// Should we auto-generate option and push it to the bottom of the list?
 
-	return (
-		<span
-			className={
-				getBemClass(bem, modifier, className) +
-				getModifierClass(bem, [focused && 'focused', props.disabled && 'disabled'])
-			}
-			onFocus={() => setFocused(true)}
-			onBlur={() => setFocused(false)}
-			style={{ position: 'relative' }}
-		>
-			<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
-
-			<select
-				{...selectProps}
-				value={value != null ? value : ''}
-				style={hiddenSelectStyles}
-				data-fancy
-				// data-value={value}
-				onChange={
-					onChange &&
-					((e) => {
-						const option = getSelectedOption(firstOpt, options, e.currentTarget.value);
-						return onChange(e, option.value, option);
-					})
-				}
-			>
-				{firstOpt && (
-					<option value={firstOpt.value || ''}>{firstOpt.label || firstOpt.value}</option>
-				)}
-				{options.map((option, i) => (
-					<option key={i} value={option.value}>
-						{option.label || option.value}
-					</option>
-				))}
-			</select>
-		</span>
+	const selectedOptionText = useMemo(
+		() => isBrowser && getVisibleLabel(options, value, placeholder, visibleFormat),
+		[isBrowser, value, options, placeholder, visibleFormat]
 	);
+
+	const selectElmClass = isBrowser
+		? undefined
+		: bem
+		? getBemClass(bem, modifier, className)
+		: className;
+
+	const selectElement = (
+		<select
+			className={selectElmClass}
+			{...selectProps}
+			value={value != null ? value : ''}
+			style={isBrowser && hiddenSelectStyles}
+			data-fancy={isBrowser && ''}
+			// data-value={value} // idea?
+			onChange={
+				onSelected
+					? (e) => {
+							const idx = e.currentTarget.selectedIndex - (placeholder != null ? 1 : 0);
+							onChange && onChange(e);
+							onSelected(optionsNorm[idx].value, options[idx]);
+					  }
+					: onChange
+			}
+		>
+			{placeholder != null && <option value="">{placeholder || ''}</option>}
+
+			{optionsNorm.map((opt, i) => (
+				<option key={i} value={opt.value != null ? opt.value : ''}>
+					{getOptionLabel(opt)}
+				</option>
+			))}
+		</select>
+	);
+
+	if (isBrowser) {
+		const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
+
+		return (
+			<span
+				className={
+					getBemClass(bem, modifier, className) +
+					getModifierClass(bem, [focused && 'focused', props.disabled && 'disabled'])
+				}
+				onFocus={() => setFocused(true)}
+				onBlur={() => setFocused(false)}
+				style={{ position: 'relative' }}
+			>
+				<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
+				{selectElement}
+			</span>
+		);
+	}
+	return selectElement;
 };
 
 export default Selectbox;

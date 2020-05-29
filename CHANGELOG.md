@@ -3,7 +3,12 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
-- **BREAKING**: feat: Always set `position: relative` on `.Selectbox` element
+- **BREAKING**: feat: Refactor and enhance `.Selectbox`
+  - Always set `position: relative` on the wrapper element
+  - Accept string values for number-type options
+  - Add optional `ssr` prop to control rendering mode.
+  - Remove `emptyOption` in favour of `placeholder` string
+  - Add `onSelected(value, option)` callback prop
 - feat: Add `onOpen` callback prop to `Modal`
 - feat: `useClientState`, `useIsServerSide` and `useIsBrowserSide` accept
   `ssrSupport` flag – of type `boolean | 'ssr-only'`. Passing `false` opts
