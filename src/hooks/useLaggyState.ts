@@ -10,13 +10,13 @@ const useLaggyState = <S>(initialState: S | (() => S), delay: number) => {
 		timeout.current && clearTimeout(timeout.current);
 	};
 
-	const setState = useConst((newState: S | (() => S), customDelay?: number) => {
+	const setState = useConst((newState: S | (() => S), customDelay = delay) => {
 		setInstant(newState);
 		cancelTimeout();
 		timeout.current = setTimeout(() => {
 			timeout.current = null;
 			setLagging(newState);
-		}, customDelay || delay);
+		}, customDelay);
 	});
 
 	useOnMount(() => {

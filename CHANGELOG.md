@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Allow 0ms customDelay in `useLaggyState()`
 
 ## 0.3.0 – 0.3.1
 
