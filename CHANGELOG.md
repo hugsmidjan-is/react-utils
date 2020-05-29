@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- **BREAKING** feat: Rename package to `@hugsmidjan/react`
 - **BREAKING** feat: Refactor and enhance `.Selectbox`
   - Always set `position: relative` on the wrapper element
   - Accept string values for number-type options

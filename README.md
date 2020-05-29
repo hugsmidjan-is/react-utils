@@ -5,5 +5,5 @@ Tools, Typings, and Reusable utilty components for React.
 ## Install
 
 ```sh
-npm install --save-dev @hugsmidjan_is/react
+npm install --save-dev @hugsmidjan/react
 ```
