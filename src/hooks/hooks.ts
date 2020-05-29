@@ -32,20 +32,25 @@ export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknow
  */
 export const useConst = <I>(input: I) => useRef(input).current;
 
-// Run callback whenever the user hits the ESC key.
-export const useCallbackOnEsc = (callback: EffectCallback) =>
-	useOnMount(() => {
-		const callbackOnEsc = (e: KeyboardEvent) => {
-			if (e.which === 27) {
-				// e.preventDefault();
-				callback();
-			}
-		};
-		document.addEventListener('keydown', callbackOnEsc);
-		return () => {
-			document.removeEventListener('keydown', callbackOnEsc);
-		};
-	});
+// TODO: Create a generic useKeydownCallbacks(whichCallbackMap, deps)
+// and make useCallbackOnEsc dogfood it.
+
+/** Runs callback whenever the user hits the ESC key. */
+export const useCallbackOnEsc = (callback: () => void, deps: Array<any> = [callback]) =>
+	useEffect(
+		() => {
+			const callbackOnEsc = (e: KeyboardEvent) => {
+				if (e.which === 27) {
+					callback();
+				}
+			};
+			document.addEventListener('keydown', callbackOnEsc);
+			return () => {
+				document.removeEventListener('keydown', callbackOnEsc);
+			};
+		},
+		deps // eslint-disable-line react-hooks/exhaustive-deps
+	);
 
 export const useNotifyTopContent = (componentName: string, key = 'topContent') =>
 	useOnMount(() => {
