@@ -16,7 +16,8 @@ export type Props = {
 	open?: boolean;
 	startOpen?: boolean;
 	onClosed: () => void;
-	onOpen: () => void;
+	onOpen?: () => void;
+	onClose?: () => void;
 	bodyWrap?: boolean;
 	texts?: Readonly<{
 		closeButton: string;
@@ -93,6 +94,7 @@ class Modal extends Component<Props, S> {
 		if (this.state.open) {
 			this.setState({ open: false });
 			document.documentElement.classList.remove('modal-open');
+			this.props.onClose && this.props.onClose();
 			if (this.props.onClosed) {
 				setTimeout(() => {
 					this.props.onClosed();

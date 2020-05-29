@@ -17,7 +17,7 @@ _2020-05-29_
   - Add `onSelected(value, option)` callback prop
 - **BREAKING** feat: Make `useCallbackOnEsc` accept `deps` array – and run on
   every render by default (instead of only "on mount")
-- feat: Add `onOpen` callback prop to `Modal`
+- feat: Add `onOpen` and `onClose` callback props to `Modal`
 - feat: `useClientState`, `useIsServerSide` and `useIsBrowserSide` accept
   `ssrSupport` flag – of type `boolean | 'ssr-only'`. Passing `false` opts
   out, while `ssr-only` always reports as server.
