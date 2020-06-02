@@ -103,8 +103,8 @@ class Modal extends Component<Props, S> {
 	componentDidMount() {
 		this.setState({ domid: this.state.domid + domid() });
 		document.addEventListener('keydown', this.closeModalOnEsc);
-		if (this.props.open && !this.props.startOpen) {
-			this.open();
+		if (this.props.open) {
+			this.open(!!this.props.startOpen);
 		}
 	}
 	componentDidUpdate(oldProps: Props) {
@@ -122,12 +122,12 @@ class Modal extends Component<Props, S> {
 		document.documentElement.classList.remove('modal-open');
 	}
 
-	open() {
+	open(skipCallback?: boolean) {
 		if (!this.state.open) {
 			setTimeout(() => {
 				this.setState({ open: true });
 				document.documentElement.classList.add('modal-open');
-				this.props.onOpen && this.props.onOpen();
+				!skipCallback && this.props.onOpen && this.props.onOpen();
 				if (this.modalElm) {
 					// @ts-ignore  (awaiting qj bugfix)
 					focusElm(this.modalElm);
