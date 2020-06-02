@@ -1,5 +1,5 @@
 /** @jsx createElement */
-import { createElement, Component, MouseEvent } from 'react';
+import { createElement, Component, MouseEvent, Fragment } from 'react';
 import domid from 'qj/domid';
 import Portal from './Portal';
 import focusElm from 'qj/focusElm';
@@ -23,6 +23,7 @@ export type Props = {
 		closeButton: string;
 		closeButtonLabel?: string;
 	}>;
+	portal?: boolean;
 } & BemProps;
 
 interface S {
@@ -38,6 +39,7 @@ class Modal extends Component<Props, S> {
 		// startOpen: false,
 		// modifier: '',
 		// onClosed: () => {};
+		portal: true,
 	};
 
 	modalElm?: HTMLElement | null;
@@ -122,8 +124,10 @@ class Modal extends Component<Props, S> {
 		const t = props.texts || defaultTexts;
 		const { closeButton, closeButtonLabel = t.closeButton } = t;
 
+		const Wrapper = props.portal ? Portal : Fragment;
+
 		return (
-			<Portal>
+			<Wrapper>
 				<div
 					className={getBemClass(bem + 'wrapper', props.modifier)}
 					hidden={!open}
@@ -154,7 +158,7 @@ class Modal extends Component<Props, S> {
 						</button>
 					</div>
 				</div>
-			</Portal>
+			</Wrapper>
 		);
 	}
 }
