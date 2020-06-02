@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: `Modal`'s open/close change handling was broken
 
 ## 0.3.2 – 0.3.4
 

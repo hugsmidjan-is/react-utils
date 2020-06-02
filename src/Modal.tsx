@@ -111,9 +111,9 @@ class Modal extends Component<Props, S> {
 		const open = this.props.open;
 		if (open !== oldProps.open) {
 			if (open) {
-				this.close();
-			} else {
 				this.open();
+			} else {
+				this.close();
 			}
 		}
 	}
