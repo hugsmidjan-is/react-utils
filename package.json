@@ -1,6 +1,6 @@
 {
 	"name": "@hugsmidjan/react",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"repository": "ssh://git@stash.hugsmidjan.is:7999/npm/react.git",
 	"author": "Hugsmiðjan ehf (http://www.hugsmidjan.is)",
 	"contributors": [
