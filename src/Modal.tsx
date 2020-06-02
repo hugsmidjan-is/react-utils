@@ -34,7 +34,7 @@ interface S {
 class Modal extends Component<Props, S> {
 	static defaultProps = {
 		// bem: 'Modal',
-		// closeDelay: 1000,
+		closeDelay: 1000,
 		open: true,
 		// startOpen: false,
 		// modifier: '',
@@ -100,7 +100,7 @@ class Modal extends Component<Props, S> {
 			if (this.props.onClosed) {
 				setTimeout(() => {
 					this.props.onClosed();
-				}, this.props.closeDelay || 1000);
+				}, this.props.closeDelay);
 			}
 		}
 	}
