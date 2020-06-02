@@ -12,17 +12,60 @@ const defaultTexts = {
 };
 
 export type Props = {
+	/**
+	 * The transition delay until closing the modal triggers `onClosed()`
+	 *
+	 * Default: `1000`
+	 */
 	closeDelay?: number;
+	/**
+	 * Indicates if teh Modal should be open or closed. To trigger opening or closing, simply flip this flag.
+	 *
+	 * Default: `true`
+	 */
 	open?: boolean;
+	/**
+	 * Set this to `true` for Modals that should render as if they always existed and had already been opened.
+	 *
+	 * A Modal that "starts open" will not CSS transition in, and will not trigger its `onOpen` callback on mount.
+	 *
+	 * Default: `false`
+	 */
 	startOpen?: boolean;
-	onClosed: () => void;
+	/** Convenience callback that runs as soon as the `open` flag flips to `true` – including on initial opening.
+	 *
+	 * However, the initial `onOpen` is skipped  `startOpen` is set to `true`.
+	 */
 	onOpen?: () => void;
+	/** Convenience callback that runs as soon as the `open` flag flips to `false` */
 	onClose?: () => void;
+	/** Callback that runs when the modal close – **after** `closeDelay` has elaped. */
+	onClosed: () => void;
+	/**
+	 * Wrap the Modal's `children` in a `*__body` div container.
+	 *
+	 * Default: `false`
+	 */
 	bodyWrap?: boolean;
+	/**
+	 * Default:
+	 * ```
+	 * {
+	 *   closeButton: 'Close',
+	 *   closeButtonLabel: 'Close this window',
+	 * }
+	 * ```
+	 */
 	texts?: Readonly<{
 		closeButton: string;
 		closeButtonLabel?: string;
 	}>;
+	/**
+	 * Should the modal be mounted in a Portal component `<div/>`
+	 * located outside the ReactDOM.render root element?
+	 *
+	 * Default: `true`
+	 */
 	portal?: boolean;
 } & BemProps;
 
