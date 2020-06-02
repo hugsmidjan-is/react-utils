@@ -123,6 +123,7 @@ class Modal extends Component<Props, S> {
 	}
 
 	open() {
+		document.documentElement.classList.add('modal-open'); // Always set this, even on startOpen === true
 		if (!this.state.open) {
 			setTimeout(() => {
 				this.setState({ open: true });
