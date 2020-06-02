@@ -4,6 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - feat: Add `protal` boolean props to `Modal` component
+- fix: Skip `Modal`'s initial `onOpen` event if `startOpen === true`
 - fix: Allow 0ms customDelay in `useLaggyState()`
 
 ## 0.3.0 – 0.3.1
