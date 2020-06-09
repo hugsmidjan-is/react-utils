@@ -36,7 +36,10 @@ export const useConst = <I>(input: I) => useRef(input).current;
 // and make useCallbackOnEsc dogfood it.
 
 /** Runs callback whenever the user hits the ESC key. */
-export const useCallbackOnEsc = (callback: () => void, deps: Array<any> = [callback]) =>
+export const useCallbackOnEsc = (
+	callback: () => void,
+	deps: Array<unknown> = [callback]
+) =>
 	useEffect(
 		() => {
 			const callbackOnEsc = (e: KeyboardEvent) => {
