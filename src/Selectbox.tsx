@@ -48,7 +48,7 @@ export type SelectboxProps<
 	options: ReadonlyArray<O>;
 	value?: string | V;
 	placeholder?: string;
-	onSelected?: (value: V, option: O) => void;
+	onSelected?: (value: V | undefined, option: O) => void;
 	ssr?: boolean | 'ssr-only';
 	visibleFormat?: (selected: O) => ReactNode;
 } & BemProps &
@@ -111,7 +111,10 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 					? (e) => {
 							const idx = e.currentTarget.selectedIndex - (placeholder != null ? 1 : 0);
 							onChange && onChange(e);
-							onSelected(optionsNorm[idx].value, options[idx]);
+							onSelected(
+								optionsNorm[idx] ? optionsNorm[idx].value : undefined,
+								options[idx]
+							);
 					  }
 					: onChange
 			}
