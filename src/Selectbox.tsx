@@ -53,6 +53,41 @@ export type SelectboxProps<
 	visibleFormat?: (selected: O) => ReactNode;
 } & BemProps &
 	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
+/** /
+	// NOTE: This **should** work but for some reason it doesn't
+	// As soon as I skip the optional `placeholder` prop
+	// (making it implicitly undefined) TS immediately stops recognizing
+	// `onSelected` and decides it must be `(any) => any`
+	& (
+		| {
+				placeholder?: undefined;
+				onSelected?: (value: V, option: O) => void;
+		  }
+		| {
+				placeholder: string;
+				onSelected?: (value?: V, option?: O) => void;
+		  });
+
+const _Testing_ = () => (
+	<>
+		<Selectbox
+			options={[1, 2, 3]}
+			placeholder={undefined}
+			onSelected={(value, option) => {}}
+		/>
+		<Selectbox
+			options={[1, 2, 3]}
+			placeholder="Pick one"
+			onSelected={(value, option) => {}}
+		/>
+		// This fails!
+		<Selectbox
+			options={[1, 2, 3]}
+			onSelected={(value, option) => {}}
+		/>
+	</>
+);
+/**/
 
 // ---------------------------------------------------------------------------
 
