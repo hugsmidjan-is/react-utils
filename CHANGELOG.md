@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.3.6
+
+_2020-08-18_
+
 - fix: Handle firing `Selectbox`'s `onSelected` on (undefined) placeholders
 
 ## 0.3.2 – 0.3.5
