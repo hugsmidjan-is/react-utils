@@ -67,7 +67,14 @@ export type Props = {
 	 * Default: `true`
 	 */
 	portal?: boolean;
-} & BemProps;
+} & (
+	| {
+			/** Render function that receives a `closeModal` action dispatcher. */
+			render: (props: { closeModal(): void }) => React.ReactNode;
+			children?: undefined;
+	  }
+	| { render?: undefined; children: Exclude<React.ReactNode, undefined> }) &
+	BemProps;
 
 interface S {
 	open: boolean;
@@ -169,6 +176,10 @@ class Modal extends Component<Props, S> {
 
 		const Wrapper = props.portal ? Portal : Fragment;
 
+		const contents = props.render
+			? props.render({ closeModal: () => this.close() })
+			: props.children;
+
 		return (
 			<Wrapper>
 				<div
@@ -184,11 +195,7 @@ class Modal extends Component<Props, S> {
 							this.modalElm = elm;
 						}}
 					>
-						{props.bodyWrap ? (
-							<div className={bem + '__body'}>{props.children}</div>
-						) : (
-							props.children
-						)}
+						{props.bodyWrap ? <div className={bem + '__body'}>{contents}</div> : contents}
 						<button
 							className={bem + '__closebutton'}
 							type="button"
