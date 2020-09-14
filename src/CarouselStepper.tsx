@@ -44,6 +44,7 @@ const CarouselStepper: FC<Props> = (props) => {
 						aria-pressed={isCurrent}
 						onClick={() => setCurrent(i)}
 						aria-label={label}
+						title={label}
 					>
 						{label}
 					</button>

@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Set `title` attr on `CarouselStepper` and `CarouselPaging` buttons
 
 ## 0.3.6
 

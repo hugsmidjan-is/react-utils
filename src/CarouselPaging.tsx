@@ -39,6 +39,7 @@ const CarouselPaging: FC<Props> = (props) => {
 				disabled={current >= itemCount - 1}
 				onClick={() => setCurrent(current + 1)}
 				aria-label={next + ' ' + unit}
+				title={next + ' ' + unit}
 			>
 				{next}
 			</button>{' '}
@@ -48,6 +49,7 @@ const CarouselPaging: FC<Props> = (props) => {
 				disabled={current === 0}
 				onClick={() => setCurrent(current - 1)}
 				aria-label={prev + ' ' + unit}
+				title={prev + ' ' + unit}
 			>
 				{prev}
 			</button>
