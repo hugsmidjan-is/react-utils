@@ -7,6 +7,7 @@ export type Props = BemProps & {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
+	'aria-controls'?: string;
 	texts?: Readonly<{
 		next: string;
 		prev: string;
@@ -38,6 +39,7 @@ const CarouselPaging: FC<Props> = (props) => {
 				type="button"
 				disabled={current >= itemCount - 1}
 				onClick={() => setCurrent(current + 1)}
+				aria-controls={props['aria-controls']}
 				aria-label={next + ' ' + unit}
 				title={next + ' ' + unit}
 			>
@@ -48,6 +50,7 @@ const CarouselPaging: FC<Props> = (props) => {
 				type="button"
 				disabled={current === 0}
 				onClick={() => setCurrent(current - 1)}
+				aria-controls={props['aria-controls']}
 				aria-label={prev + ' ' + unit}
 				title={prev + ' ' + unit}
 			>

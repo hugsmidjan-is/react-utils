@@ -7,6 +7,7 @@ export type Props = BemProps & {
 	current: number;
 	itemCount: number;
 	setCurrent: (idx: number) => void;
+	'aria-controls'?: string;
 	texts?: Readonly<{
 		prefix: string;
 	}>;
@@ -42,6 +43,7 @@ const CarouselStepper: FC<Props> = (props) => {
 						type="button"
 						disabled={isCurrent}
 						aria-pressed={isCurrent}
+						aria-controls={props['aria-controls']}
 						onClick={() => setCurrent(i)}
 						aria-label={label}
 						title={label}
