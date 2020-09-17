@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat(ts): Export `Modifier` type from `types`
 
 ## 0.3.7
 

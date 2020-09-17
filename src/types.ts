@@ -8,7 +8,7 @@ export type PropsOf<T> = T extends FC<infer P>
 
 // ---------------------------------------------------------------------------
 
-type Modifier = string | undefined | null | false;
+export type Modifier = string | undefined | null | false;
 
 export interface BemPropsModifier {
 	/** List of CSS BEM --modifier's to add to the component's main wrapper.
