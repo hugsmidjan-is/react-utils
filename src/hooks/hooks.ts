@@ -12,17 +12,22 @@ export const useOnMount = (callback: EffectCallback) =>
 // export const useLayoutOnMount = (fn) => useLayoutEffect(fn, []);
 
 // Run callback only when component unmounts
-export const useOnUnmount = (callback: () => void, deps: ReadonlyArray<unknown> = []) =>
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => callback, deps);
+export const useOnUnmount = (callback: () => void) => {
+	const cb = useRef(callback);
+	cb.current = callback;
+	useEffect(() => () => cb.current(), []);
+};
 
 // Run callback only when component did update AND deps have changed
 export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknown>) => {
-	const isUpdate = useRef<boolean>();
+	const isUpdate = useRef(false);
+	const cb = useRef<EffectCallback>(callback);
+	cb.current = callback;
+
 	useEffect(
 		() => {
 			if (isUpdate.current) {
-				return callback();
+				return cb.current();
 			}
 			isUpdate.current = true;
 		},
@@ -39,24 +44,21 @@ export const useConst = <I>(input: I) => useRef(input).current;
 // and make useCallbackOnEsc dogfood it.
 
 /** Runs callback whenever the user hits the ESC key. */
-export const useCallbackOnEsc = (
-	callback: () => void,
-	deps: ReadonlyArray<unknown> = []
-) =>
-	useEffect(
-		() => {
-			const callbackOnEsc = (e: KeyboardEvent) => {
-				if (e.key === 'Escape') {
-					callback();
-				}
-			};
-			document.addEventListener('keydown', callbackOnEsc);
-			return () => {
-				document.removeEventListener('keydown', callbackOnEsc);
-			};
-		},
-		deps // eslint-disable-line react-hooks/exhaustive-deps
-	);
+export const useCallbackOnEsc = (callback: () => void) => {
+	const cb = useRef(callback);
+	cb.current = callback;
+	useOnUnmount(() => {
+		const callbackOnEsc = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				cb.current();
+			}
+		};
+		document.addEventListener('keydown', callbackOnEsc);
+		return () => {
+			document.removeEventListener('keydown', callbackOnEsc);
+		};
+	});
+};
 
 export const useNotifyTopContent = (componentName: string, key = 'topContent') =>
 	useOnMount(() => {

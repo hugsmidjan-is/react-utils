@@ -8,9 +8,10 @@
 
 _2020-11-11_
 
-- **BREAKING** feat: Make `useCallbackOnEsc` accept `deps` array (default:
-  `[]`)
-- **BREAKING** feat: Revert `useCallbackOnEsc` to "run on mount" by default
+- **BREAKING** feat: Make `useOnUnmount` always run the latest passed callback
+- **BREAKING** feat: Make `useOnUpdate` always run the latest passed callback
+- **BREAKING** feat: Remove `useCallbackOnEsc`'s `deps` array – always run the
+  latest passed callback
 - feat: Extend `useLaggyState` to accept `thenState` as third parameter
 - feat(ts): Export `Modifier` type from `types`
 
