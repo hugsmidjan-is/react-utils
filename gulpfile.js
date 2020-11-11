@@ -1,3 +1,4 @@
+/* eslint-env node */
 const { parallel, series, src, dest } = require('gulp');
 const rollupTaskFactory = require('@hugsmidjan/gulp-rollup');
 const del = require('del');
@@ -28,6 +29,9 @@ const baseOpts = {
 	format: 'cjs',
 	minify: false,
 	sourcemaps: false,
+	outputOpts: {
+		exports: 'auto',
+	},
 	inputOpts: {
 		external: isNonLocalModule,
 	},
