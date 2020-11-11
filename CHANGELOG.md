@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Extend `useLaggyState` to accept `thenState` as third parameter
 - feat(ts): Export `Modifier` type from `types`
 
 ## 0.3.7
