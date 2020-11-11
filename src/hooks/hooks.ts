@@ -5,7 +5,10 @@ import domid from 'qj/domid';
 export const useDomid = (staticId?: string) => useState(staticId || domid)[0];
 
 // Run callback only when component did mount
-export const useOnMount = (callback: EffectCallback) => useEffect(callback, []);
+export const useOnMount = (callback: EffectCallback) =>
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(callback, []);
+
 // export const useLayoutOnMount = (fn) => useLayoutEffect(fn, []);
 
 // Run callback only when component unmounts
@@ -22,8 +25,7 @@ export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknow
 			}
 			isUpdate.current = true;
 		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		deps
+		deps // eslint-disable-line react-hooks/exhaustive-deps
 	);
 };
 
