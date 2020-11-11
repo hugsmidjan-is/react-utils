@@ -23,17 +23,16 @@ const TableWrapper: FC<P> = ({ children, modifier, bem = 'TableWrapper' }) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
+	const scrollClasses = isBrowser
+		? getModifierClass(bem, [
+				'at',
+				scrollAt.start && 'at--start',
+				scrollAt.end && 'at--end',
+		  ])
+		: '';
+
 	return (
-		<div
-			className={
-				getBemClass(bem, modifier) +
-				getModifierClass(
-					bem,
-					isBrowser && ['at', scrollAt.start && 'at--start', scrollAt.end && 'at--end']
-				)
-			}
-			ref={scrollerRef}
-		>
+		<div className={getBemClass(bem, modifier) + scrollClasses} ref={scrollerRef}>
 			{isBrowser ? <div className={bem + '__scroller'}>{children}</div> : children}
 		</div>
 	);
