@@ -63,7 +63,7 @@ const FormField: FC<FormFieldProps> = (props) => {
 				{label}
 			</label>
 			{props.type === 'select' ? (
-				<Selectbox id={domid} {...(fieldProps as SelectboxProps)} {...fieldProps2} />
+				<Selectbox {...(fieldProps as SelectboxProps)} {...fieldProps2} />
 			) : props.type === 'textarea' ? (
 				<textarea {...(fieldProps as TextareaElmProps)} {...fieldProps2} />
 			) : (
