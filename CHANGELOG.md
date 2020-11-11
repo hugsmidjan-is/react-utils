@@ -3,6 +3,8 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- **BREAKING** feat: Make `useCallbackOnEsc` accept `deps` array (default:
+  `[]`)
 - **BREAKING** feat: Revert `useCallbackOnEsc` to "run on mount" by default
 - feat: Extend `useLaggyState` to accept `thenState` as third parameter
 - feat(ts): Export `Modifier` type from `types`

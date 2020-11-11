@@ -12,8 +12,9 @@ export const useOnMount = (callback: EffectCallback) =>
 // export const useLayoutOnMount = (fn) => useLayoutEffect(fn, []);
 
 // Run callback only when component unmounts
-export const useOnUnmount = (callback: () => void | undefined) =>
-	useEffect(() => callback, [callback]);
+export const useOnUnmount = (callback: () => void, deps: ReadonlyArray<unknown> = []) =>
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => callback, deps);
 
 // Run callback only when component did update AND deps have changed
 export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknown>) => {
