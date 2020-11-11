@@ -40,12 +40,12 @@ export const useConst = <I>(input: I) => useRef(input).current;
 /** Runs callback whenever the user hits the ESC key. */
 export const useCallbackOnEsc = (
 	callback: () => void,
-	deps: Array<unknown> = [callback]
+	deps: ReadonlyArray<unknown> = []
 ) =>
 	useEffect(
 		() => {
 			const callbackOnEsc = (e: KeyboardEvent) => {
-				if (e.which === 27) {
+				if (e.key === 'Escape') {
 					callback();
 				}
 			};
