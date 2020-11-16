@@ -9,7 +9,7 @@ type LaggyStateHook = <S>(
 ) => [
 	currentState: S,
 	nextState: S,
-	setState: (newState: S | (() => S), customDelay?: number) => void,
+	setState: (newState: S | (() => S), customDelay?: number | false) => void,
 	isTransitioning: true | undefined
 ];
 
@@ -27,15 +27,22 @@ const useLaggyState: LaggyStateHook = (initialState, delay, thenState) => {
 
 	type S = typeof currentState;
 
-	const setState = useConst((newState: S | (() => S), customDelay = delay) => {
-		setNext(newState);
-		cancelTimeout();
-		setIsTransitioning(true);
-		timeout.current = setTimeout(() => {
-			setCurrent(newState);
-			setIsTransitioning(undefined);
-		}, customDelay);
-	});
+	const setState = useConst(
+		(newState: S | (() => S), customDelay: number | false = delay) => {
+			setNext(newState);
+			cancelTimeout();
+			const setNewState = () => {
+				setCurrent(newState);
+				setIsTransitioning(undefined);
+			};
+			if (customDelay === false) {
+				setNewState();
+			} else {
+				setIsTransitioning(true);
+				timeout.current = setTimeout(setNewState, customDelay);
+			}
+		}
+	);
 
 	useEffect(
 		() => {
