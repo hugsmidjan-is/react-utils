@@ -3,6 +3,9 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- `useLaggyState` changes:
+  - feat: Allow setting `customDelay` to `false` to emulate `useState()`
+  - fix: Only set initial `thenState` once
 
 ## 0.4.0 – 0.4.1
 
