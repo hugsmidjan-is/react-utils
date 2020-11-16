@@ -18,6 +18,7 @@ type LaggyStateHook = <S>(
 const useLaggyState: LaggyStateHook = (initialState, delay, thenState) => {
 	const [currentState, setCurrent] = useState(initialState);
 	const [nextState, setNext] = useState(initialState);
+	const [isTransitioning, setIsTransitioning] = useState<true | undefined>();
 	const timeout = useRef<NodeJS.Timeout | null>();
 
 	const cancelTimeout = () => {
@@ -29,9 +30,10 @@ const useLaggyState: LaggyStateHook = (initialState, delay, thenState) => {
 	const setState = useConst((newState: S | (() => S), customDelay = delay) => {
 		setNext(newState);
 		cancelTimeout();
+		setIsTransitioning(true);
 		timeout.current = setTimeout(() => {
-			timeout.current = null;
 			setCurrent(newState);
+			setIsTransitioning(undefined);
 		}, customDelay);
 	});
 
@@ -43,9 +45,6 @@ const useLaggyState: LaggyStateHook = (initialState, delay, thenState) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	);
-
-	// This is more reliable than laggingState !== instantState
-	const isTransitioning = !!timeout.current || undefined;
 
 	return [currentState, nextState, setState, isTransitioning];
 };
