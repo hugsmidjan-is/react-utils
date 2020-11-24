@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.2
+
+_2020-11-24_
+
 - feat: Add `utils/mergeRef` helper
 - feat: Add prop `wrapperRef` to `TableWrapper`
 - `useLaggyState` changes:
