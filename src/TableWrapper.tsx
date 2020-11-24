@@ -1,5 +1,5 @@
 /** @jsx createElement */
-import { createElement, FC } from 'react';
+import { createElement, FC, RefObject } from 'react';
 
 import { useIsBrowserSide } from './hooks';
 import useScrollEdgeDetect, {
@@ -11,15 +11,16 @@ import { BemProps } from './types';
 
 const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',
-	getElm: (refElm) => {
-		const { firstElementChild } = refElm || {};
-		return firstElementChild && firstElementChild.nodeName === 'DIV' && firstElementChild;
-	},
 };
 
-type P = BemProps;
+type P = BemProps & { wrapperRef: RefObject<HTMLElement> };
 
-const TableWrapper: FC<P> = ({ children, modifier, bem = 'TableWrapper' }) => {
+const TableWrapper: FC<P> = ({
+	children,
+	modifier,
+	bem = 'TableWrapper',
+	wrapperRef,
+}) => {
 	const isBrowser = useIsBrowserSide();
 	const [scrollerRef, scrollAt] = useScrollEdgeDetect<HTMLDivElement>(scrollOptions);
 
@@ -32,8 +33,17 @@ const TableWrapper: FC<P> = ({ children, modifier, bem = 'TableWrapper' }) => {
 		: '';
 
 	return (
-		<div className={getBemClass(bem, modifier) + scrollClasses} ref={scrollerRef}>
-			{isBrowser ? <div className={bem + '__scroller'}>{children}</div> : children}
+		<div
+			className={getBemClass(bem, modifier) + scrollClasses}
+			ref={wrapperRef as RefObject<HTMLDivElement>}
+		>
+			{isBrowser ? (
+				<div className={bem + '__scroller'} ref={scrollerRef}>
+					{children}
+				</div>
+			) : (
+				children
+			)}
 		</div>
 	);
 };
