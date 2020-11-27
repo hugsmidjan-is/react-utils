@@ -13,7 +13,7 @@ const scrollOptions: ScrollEdgeDetectOptions = {
 	axis: 'horizontal',
 };
 
-type P = BemProps & { wrapperRef: RefObject<HTMLElement> };
+type P = BemProps & { wrapperRef?: RefObject<HTMLElement> };
 
 const TableWrapper: FC<P> = ({
 	children,
