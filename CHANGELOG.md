@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.3
+
+_2020-11-27_
+
 - fix(ts): Make flag `TableWrapper`'s `wreapperRef` prop optional
 
 ## 0.4.2
