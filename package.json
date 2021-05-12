@@ -1,7 +1,7 @@
 {
 	"name": "@hugsmidjan/react",
 	"version": "0.4.3",
-	"repository": "ssh://git@stash.hugsmidjan.is:7999/npm/react.git",
+	"repository": "ssh://git@github.com:hugsmidjan-is/react-utils.git",
 	"author": "Hugsmiðjan ehf (http://www.hugsmidjan.is)",
 	"contributors": [
 		"Már Örlygsson <mar@hugsmidjan.is> (http://mar.anomy.net)"

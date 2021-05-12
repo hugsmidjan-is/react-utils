@@ -1,4 +1,4 @@
-# @hugsmidjan_is/react
+# @hugsmidjan/react
 
 Tools, Typings, and Reusable utilty components for React.
 
