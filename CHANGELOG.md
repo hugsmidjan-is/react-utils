@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.4
+
+_2021-07-09_
+
 - docs: Add JSDoc for `hooks`'s `useShortState`
 - chore: De-alias `qj` dependency to prevent downstream issues
 
