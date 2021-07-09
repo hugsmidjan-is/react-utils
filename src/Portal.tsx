@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from 'react';
 import { createPortal } from 'react-dom';
-import removeNode from 'qj/removeNode';
+import removeNode from '@hugsmidjan/qj/removeNode';
 
 const defaultGetRoot = () => {
 	const rootElm = document.createElement('div');

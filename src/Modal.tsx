@@ -1,8 +1,8 @@
 /** @jsx createElement */
 import { createElement, Component, MouseEvent, Fragment } from 'react';
-import domid from 'qj/domid';
+import domid from '@hugsmidjan/qj/domid';
 import Portal from './Portal';
-import focusElm from 'qj/focusElm';
+import focusElm from '@hugsmidjan/qj/focusElm';
 import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
@@ -73,7 +73,8 @@ export type Props = {
 			render: (props: { closeModal(): void }) => React.ReactNode;
 			children?: undefined;
 	  }
-	| { render?: undefined; children: Exclude<React.ReactNode, undefined> }) &
+	| { render?: undefined; children: Exclude<React.ReactNode, undefined> }
+) &
 	BemProps;
 
 interface S {

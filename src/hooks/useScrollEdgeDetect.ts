@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import throttle from 'qj/throttle';
+import throttle from '@hugsmidjan/qj/throttle';
 
 export type ScrollAxis = 'horizontal' | 'vertical';
 export interface AtState {

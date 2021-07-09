@@ -25,11 +25,11 @@
 		"node": ">=10"
 	},
 	"dependencies": {
-		"qj": "npm:@hugsmidjan/qj@^4.1.1"
+		"@hugsmidjan/qj": "^4.1.1"
 	},
 	"peerDependencies": {
-		"react": "^16.8",
-		"react-dom": "^16.8"
+		"react": ">=16.8 <19",
+		"react-dom": ">=16.8 <19"
 	},
 	"devDependencies": {
 		"@hugsmidjan/gulp-rollup": "^0.8",

@@ -1,5 +1,5 @@
 import { useEffect, useRef, EffectCallback, useState } from 'react';
-import domid from 'qj/domid';
+import domid from '@hugsmidjan/qj/domid';
 
 // Returns a stable, unique ID string
 export const useDomid = (staticId?: string) => useState(staticId || domid)[0];
