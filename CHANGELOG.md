@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- docs: Add JSDoc for `hooks`'s `useShortState`
 - chore: De-alias `qj` dependency to prevent downstream issues
 
 ## 0.4.3
