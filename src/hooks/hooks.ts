@@ -47,7 +47,7 @@ export const useConst = <I>(input: I) => useRef(input).current;
 export const useCallbackOnEsc = (callback: () => void) => {
 	const cb = useRef(callback);
 	cb.current = callback;
-	useOnUnmount(() => {
+	useOnMount(() => {
 		const callbackOnEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
 				cb.current();
