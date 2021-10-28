@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.5
+
+_2021-10-28_
+
 - fix: Regression in `useCallbackOnEsc` hook
 
 ## 0.4.4
