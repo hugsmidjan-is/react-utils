@@ -1,4 +1,4 @@
-import { MutableRefObject, RefObject, useEffect } from 'react';
+import { MutableRefObject, RefObject, useEffect, useMemo } from 'react';
 
 type Ref<E extends HTMLElement> = MutableRefObject<E> | RefObject<E>;
 
@@ -6,11 +6,14 @@ const useOnClickOutside = <E extends HTMLElement>(
 	ref: Ref<E> | Array<Ref<E>>,
 	handler: (event: globalThis.MouseEvent | globalThis.TouchEvent) => void
 ) => {
+	const refs = useMemo(() => {
+		return Array.isArray(ref) ? ref : [ref];
+	}, [ref]);
+	const stableRefs = useMemo(() => refs, [refs]);
+
 	useEffect(() => {
 		const listener = (event: globalThis.MouseEvent | globalThis.TouchEvent) => {
-			const refs = Array.isArray(ref) ? ref : [ref];
-
-			const shouldTrigger = !refs.some((r) => {
+			const shouldTrigger = !stableRefs.some((r) => {
 				const node = r.current;
 
 				if (!node) {
@@ -34,9 +37,7 @@ const useOnClickOutside = <E extends HTMLElement>(
 			document.removeEventListener('mousedown', listener);
 			document.removeEventListener('touchstart', listener);
 		};
-		// Assume refs are stable
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [handler]);
+	}, [handler, stableRefs]);
 };
 
 export { useOnClickOutside };
