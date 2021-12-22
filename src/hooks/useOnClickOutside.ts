@@ -6,10 +6,9 @@ const useOnClickOutside = <E extends HTMLElement>(
 	ref: Ref<E> | Array<Ref<E>>,
 	handler: (event: globalThis.MouseEvent | globalThis.TouchEvent) => void
 ) => {
-	const refs = useMemo(() => {
-		return Array.isArray(ref) ? ref : [ref];
-	}, [ref]);
-	const stableRefs = useMemo(() => refs, [refs]);
+	const refs = Array.isArray(ref) ? ref : [ref];
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const stableRefs = useMemo(() => refs, refs);
 
 	useEffect(() => {
 		const listener = (event: globalThis.MouseEvent | globalThis.TouchEvent) => {
