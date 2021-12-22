@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
+/**
+ *
+ * @param ref ref to check for hovering state
+ * @returns boolean indicating if the ref is being hovered
+ */
 export const useIsHovering = (ref: React.RefObject<HTMLElement>) => {
 	const [isHovering, setHovering] = useState(false);
 

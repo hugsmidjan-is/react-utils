@@ -2,6 +2,11 @@ import { MutableRefObject, RefObject, useEffect, useMemo } from 'react';
 
 type Ref<E extends HTMLElement> = MutableRefObject<E> | RefObject<E>;
 
+/**
+ *
+ * @param ref single or array of refs to check for click outside
+ * @param handler callback to run when clicked outside of the ref
+ */
 const useOnClickOutside = <E extends HTMLElement>(
 	ref: Ref<E> | Array<Ref<E>>,
 	handler: (event: globalThis.MouseEvent | globalThis.TouchEvent) => void
