@@ -19,9 +19,7 @@ const useOnClickOutside = <E extends HTMLElement>(
 					return false;
 				}
 
-				if (node.contains(event.target as Node)) {
-					return true;
-				}
+				return node.contains(event.target as Node);
 			});
 
 			if (shouldTrigger) {
