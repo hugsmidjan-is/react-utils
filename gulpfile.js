@@ -2,6 +2,7 @@
 const { parallel, series, src, dest } = require('gulp');
 const rollupTaskFactory = require('@hugsmidjan/gulp-rollup');
 const del = require('del');
+const { readdirSync, unlinkSync, statSync, readFileSync } = require('fs');
 const writeFile = require('fs').writeFileSync;
 
 // ===========================================================================
@@ -83,11 +84,28 @@ const makePackageJson = (done) => {
 
 const copyDocs = () => src(['README.md', 'CHANGELOG.md']).pipe(dest(distFolder));
 
+const removeTypesOnlyModules = (done) => {
+	readdirSync(distFolder).forEach((filename) => {
+		filename = distFolder + filename;
+		if (
+			filename.endsWith('.js') &&
+			statSync(filename).size < 20 &&
+			readFileSync(filename)
+				.toString()
+				.replace(/^\s*["']use strict["'];?/, '')
+				.trim() === ''
+		) {
+			unlinkSync(filename);
+		}
+	});
+	done();
+};
+
 // ===========================================================================
 
 const build = parallel(scriptsBundle, testsBundle);
 const watch = parallel(scriptsWatch, testsWatch);
-const publishPrep = parallel(makePackageJson, copyDocs);
+const publishPrep = parallel(makePackageJson, copyDocs, removeTypesOnlyModules);
 
 exports.dev = series(cleanup, build, watch);
 exports.build = series(cleanup, build, publishPrep);
