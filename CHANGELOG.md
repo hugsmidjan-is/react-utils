@@ -2,10 +2,14 @@
 
 ## Upcoming...
 
+- ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.6
+
+_2021-12-27_
+
 - feat: add `useOnClickOutside` hook
 - feat: add `useIsHovering` hook
-
-- ... <!-- Add new lines here. Version number will be decided later -->
 
 ## 0.4.5
 
