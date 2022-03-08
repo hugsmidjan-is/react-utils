@@ -18,12 +18,14 @@ export type Props = {
 	 * Default: `1000`
 	 */
 	closeDelay?: number;
+
 	/**
 	 * Indicates if teh Modal should be open or closed. To trigger opening or closing, simply flip this flag.
 	 *
 	 * Default: `true`
 	 */
 	open?: boolean;
+
 	/**
 	 * Set this to `true` for Modals that should render as if they always existed and had already been opened.
 	 *
@@ -32,21 +34,30 @@ export type Props = {
 	 * Default: `false`
 	 */
 	startOpen?: boolean;
+
 	/** Convenience callback that runs as soon as the `open` flag flips to `true` – including on initial opening.
 	 *
 	 * However, the initial `onOpen` is skipped  `startOpen` is set to `true`.
 	 */
 	onOpen?: () => void;
-	/** Convenience callback that runs as soon as the `open` flag flips to `false` */
+
+	/**
+	 * Convenience callback that runs as soon as the `open` flag flips to `false`
+	 */
 	onClose?: () => void;
-	/** Callback that runs when the modal close – **after** `closeDelay` has elaped. */
+
+	/**
+	 * Callback that runs when the modal close – **after** `closeDelay` has elaped.
+	 */
 	onClosed: () => void;
+
 	/**
 	 * Wrap the Modal's `children` in a `*__body` div container.
 	 *
 	 * Default: `false`
 	 */
 	bodyWrap?: boolean;
+
 	/**
 	 * Default:
 	 * ```
@@ -60,6 +71,7 @@ export type Props = {
 		closeButton: string;
 		closeButtonLabel?: string;
 	}>;
+
 	/**
 	 * Should the modal be mounted in a Portal component `<div/>`
 	 * located outside the ReactDOM.render root element?
@@ -71,9 +83,9 @@ export type Props = {
 	| {
 			/** Render function that receives a `closeModal` action dispatcher. */
 			render: (props: { closeModal(): void }) => React.ReactNode;
-			children?: undefined;
+			children?: never;
 	  }
-	| { render?: undefined; children: Exclude<React.ReactNode, undefined> }
+	| { render?: never; children: Exclude<React.ReactNode, undefined> }
 ) &
 	BemProps;
 
