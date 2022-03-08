@@ -3,14 +3,14 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
-- fix: Handle better when `Modal`'s `open` and `startOpen` props conflict
 
-## 0.4.7
+## 0.4.7 – 0.4.8
 
 _2022-03-08_
 
 - feat: Add prop `fickle` to `Modal` (default: `true`)
 - feat: Expand `BemPropsModifier` props to tolerate `0` as falsy value
+- fix: Handle better when `Modal`'s `open` and `startOpen` props conflict
 
 ## 0.4.6
 
@@ -54,7 +54,7 @@ _2020-11-11_
 
 - **BREAKING** feat: Make `useOnUnmount` always run the latest passed callback
 - **BREAKING** feat: Make `useOnUpdate` always run the latest passed callback
-- **BREAKING** feat: Remove `useCallbackOnEsc`'s `deps` array – always run the
+- **BREAKING** feat: Remove `useCallbackOnEsc`'s `deps` array — always run the
   latest passed callback
 - feat: Extend `useLaggyState` to accept `thenState` as third parameter
 - feat(ts): Export `Modifier` type from `types`
@@ -93,7 +93,7 @@ _2020-05-29_
   - Add optional `ssr` prop to control rendering mode.
   - Remove `emptyOption` in favour of `placeholder` string
   - Add `onSelected(value, option)` callback prop
-- **BREAKING** feat: Make `useCallbackOnEsc` accept `deps` array – and run on
+- **BREAKING** feat: Make `useCallbackOnEsc` accept `deps` array — and run on
   every render by default (instead of only "on mount")
 - feat: Add `onOpen` and `onClose` callback props to `Modal`
 - feat: `useClientState`, `useIsServerSide` and `useIsBrowserSide` accept
