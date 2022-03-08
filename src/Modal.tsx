@@ -122,7 +122,7 @@ class Modal extends Component<Props, S> {
 		this.closeModalOnEsc = this.closeModalOnEsc.bind(this);
 
 		this.state = {
-			open: !!props.startOpen,
+			open: !!props.startOpen && props.open !== false,
 			domid: 'Modal',
 		};
 	}
@@ -130,7 +130,7 @@ class Modal extends Component<Props, S> {
 	componentDidMount() {
 		this.setState({ domid: this.state.domid + domid() });
 		document.addEventListener('keydown', this.closeModalOnEsc);
-		if (this.props.open) {
+		if (this.props.open || this.state.open) {
 			this.open();
 		}
 	}

@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Handle better when `Modal`'s `open` and `startOpen` props conflict
 
 ## 0.4.7
 
