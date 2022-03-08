@@ -35,6 +35,13 @@ export type Props = {
 	 */
 	startOpen?: boolean;
 
+	/**
+	 * Fickle modals close on ESC and outside clicks
+	 *
+	 * Default: `true`
+	 */
+	fickle?: boolean;
+
 	/** Convenience callback that runs as soon as the `open` flag flips to `true` – including on initial opening.
 	 *
 	 * However, the initial `onOpen` is skipped  `startOpen` is set to `true`.
@@ -173,7 +180,7 @@ class Modal extends Component<Props, S> {
 		}
 	}
 	closeModalOnEsc(e: KeyboardEvent) {
-		if (e.which === 27) {
+		if (this.props.fickle !== false && e.which === 27) {
 			this.close();
 		}
 	}
@@ -183,6 +190,7 @@ class Modal extends Component<Props, S> {
 		const open = this.state.open;
 		const domid = this.state.domid;
 		const bem = props.bem || 'Modal';
+		const fickle = props.fickle !== false || undefined;
 
 		const t = props.texts || defaultTexts;
 		const { closeButton, closeButtonLabel = t.closeButton } = t;
@@ -199,7 +207,7 @@ class Modal extends Component<Props, S> {
 					className={getBemClass(bem + 'wrapper', props.modifier)}
 					hidden={!open}
 					role="dialog"
-					onClick={this.closeModalOnCurtainClick}
+					onClick={fickle && this.closeModalOnCurtainClick}
 					id={domid}
 				>
 					<div
