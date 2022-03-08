@@ -156,7 +156,6 @@ class Modal extends Component<Props, S> {
 				this.setState({ open: true });
 				this.props.onOpen && this.props.onOpen();
 				if (this.modalElm) {
-					// @ts-ignore  (awaiting qj bugfix)
 					focusElm(this.modalElm);
 				}
 			}, 100);
