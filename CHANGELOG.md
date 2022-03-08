@@ -3,6 +3,12 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.7
+
+_2022-03-08_
+
+- feat: Add prop `fickle` to `Modal` (default: `true`)
 - feat: Expand `BemPropsModifier` props to tolerate `0` as falsy value
 
 ## 0.4.6
