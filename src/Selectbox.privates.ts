@@ -9,7 +9,7 @@ export type OptionOrValue = string | number | SelectboxOption;
 
 const getSelectedOption = <O extends OptionOrValue>(
 	options: ReadonlyArray<O>,
-	value: (O extends SelectboxOption ? O['value'] : O) | string | undefined
+	value: (O extends SelectboxOption ? O['value'] : O) | string | number | undefined
 ): O | undefined => {
 	if (value != null) {
 		const strValue = String(value);
@@ -32,9 +32,9 @@ export const EMPTY_LABEL = '     ';
 
 export const getVisibleLabel = <O extends OptionOrValue | string>(
 	options: ReadonlyArray<O>,
-	value: (O extends SelectboxOption ? O['value'] : O) | string | undefined,
+	value: (O extends SelectboxOption ? O['value'] : O) | string | number | undefined,
 	placeholder?: string,
-	labelFormatter?: (selected: O) => ReactNode
+	labelFormatter?: (selected: O) => Exclude<ReactNode, null | undefined>
 ): ReactNode => {
 	const selOption =
 		getSelectedOption(options, value) || (placeholder == null && options[0]);

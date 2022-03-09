@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Handling of `defaultValue` by `Selectbox` was badly broken
 
 ## 0.4.7 – 0.4.8
 

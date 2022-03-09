@@ -6,6 +6,7 @@ import {
 	CSSProperties,
 	ReactNode,
 	ReactElement,
+	useRef,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
 import getBemClass from './utils/getBemClass';
@@ -50,7 +51,7 @@ export type SelectboxProps<
 	placeholder?: string;
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
-	visibleFormat?: (selected: O) => ReactNode;
+	visibleFormat?: (selected: O) => Exclude<ReactNode, null | undefined>;
 } & BemProps &
 	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
 /** /
@@ -99,6 +100,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		bem = 'Selectbox',
 		modifier,
 		value,
+		defaultValue,
 		options,
 		visibleFormat,
 		ssr,
@@ -109,6 +111,14 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 	} = props;
 
 	const isBrowser = useIsBrowserSide(ssr);
+
+	const [currVal, setCurrVal] = useState(() =>
+		value != null
+			? value
+			: Array.isArray(defaultValue) || defaultValue == null
+			? undefined
+			: String(defaultValue)
+	);
 
 	type V = O extends SelectboxOption ? O['value'] : O;
 	const optionsNorm = useMemo(
@@ -123,8 +133,8 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 	// Should we auto-generate option and push it to the bottom of the list?
 
 	const selectedOptionText = useMemo(
-		() => isBrowser && getVisibleLabel(options, value, placeholder, visibleFormat),
-		[isBrowser, value, options, placeholder, visibleFormat]
+		() => isBrowser && getVisibleLabel(options, currVal, placeholder, visibleFormat),
+		[isBrowser, currVal, options, placeholder, visibleFormat]
 	);
 
 	const selectElmClass = isBrowser
@@ -137,21 +147,20 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		<select
 			className={selectElmClass}
 			{...selectProps}
-			value={value != null ? value : ''}
+			value={value}
 			style={isBrowser && hiddenSelectStyles}
 			data-fancy={isBrowser && ''}
 			// data-value={value} // idea?
-			onChange={
-				onSelected
-					? (e) => {
-							const idx = e.currentTarget.selectedIndex - (placeholder != null ? 1 : 0);
-							onChange && onChange(e);
-							optionsNorm[idx]
-								? onSelected(optionsNorm[idx].value, options[idx])
-								: onSelected();
-					  }
-					: onChange
-			}
+			onChange={(e) => {
+				const idx = e.currentTarget.selectedIndex - (placeholder != null ? 1 : 0);
+				setCurrVal(optionsNorm[idx].value);
+				onChange && onChange(e);
+				if (onSelected) {
+					optionsNorm[idx]
+						? onSelected(optionsNorm[idx].value, options[idx])
+						: onSelected();
+				}
+			}}
 		>
 			{placeholder != null && <option value="">{placeholder || ''}</option>}
 
