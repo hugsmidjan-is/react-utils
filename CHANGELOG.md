@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- fix: Regression in `Selectbox` — externally sourced `value` changes failed
 
 ## 0.4.9
 

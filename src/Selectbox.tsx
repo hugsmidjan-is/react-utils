@@ -172,6 +172,23 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		</select>
 	);
 
+	// Deal with incoming changes to props.value
+	const lastValue = useRef(value);
+	if (lastValue.current !== value) {
+		// NOTE: This little known pattern of updating state during render happens to be
+		// the idiomatic way to avoid using useEffect and thus triggering double rendering.
+		//
+		// When you call the set function during render, React will re-render that
+		// component immediately after your component exits with a return statement,
+		// and before rendering the children. This way, children don’t need to render twice.
+		// The rest of your component function will still execute (and the result will be
+		// thrown away), but if your condition is below all the calls to Hooks, you may add
+		// return null inside it to restart rendering earlier.
+		setCurrVal(value);
+		lastValue.current = value;
+		return <>.</>;
+	}
+
 	if (isBrowser) {
 		const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
 
