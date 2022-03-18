@@ -51,7 +51,7 @@ export type SelectboxProps<
 	placeholder?: string;
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
-	visibleFormat?: (selected: O) => Exclude<ReactNode, null | undefined>;
+	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
 } & BemProps &
 	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
 /** /

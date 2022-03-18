@@ -34,7 +34,7 @@ export const getVisibleLabel = <O extends OptionOrValue | string>(
 	options: ReadonlyArray<O>,
 	value: (O extends SelectboxOption ? O['value'] : O) | string | number | undefined,
 	placeholder?: string,
-	labelFormatter?: (selected: O) => Exclude<ReactNode, null | undefined>
+	labelFormatter?: (selected: O) => NonNullable<ReactNode>
 ): ReactNode => {
 	const selOption =
 		getSelectedOption(options, value) || (placeholder == null && options[0]);

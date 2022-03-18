@@ -1,5 +1,5 @@
 /** @jsx createElement */
-import { createElement, Component, MouseEvent, Fragment } from 'react';
+import { createElement, Component, MouseEvent, Fragment, ReactNode } from 'react';
 import domid from '@hugsmidjan/qj/domid';
 import Portal from './Portal';
 import focusElm from '@hugsmidjan/qj/focusElm';
@@ -89,10 +89,10 @@ export type Props = {
 } & (
 	| {
 			/** Render function that receives a `closeModal` action dispatcher. */
-			render: (props: { closeModal(): void }) => React.ReactNode;
+			render: (props: { closeModal(): void }) => ReactNode;
 			children?: never;
 	  }
-	| { render?: never; children: Exclude<React.ReactNode, undefined> }
+	| { render?: never; children: NonNullable<ReactNode> }
 ) &
 	BemProps;
 
