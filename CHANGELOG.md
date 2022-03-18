@@ -4,6 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - feat: Add prop `placeholderDisabled` to `Selectbox`
+- fix: `SelectboxOption.disabled` was ignored
 
 ## 0.4.10 — 0.4.11
 

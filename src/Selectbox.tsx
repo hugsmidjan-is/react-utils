@@ -170,7 +170,11 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 			)}
 
 			{optionsNorm.map((opt, i) => (
-				<option key={i} value={opt.value != null ? opt.value : ''}>
+				<option
+					key={i}
+					value={opt.value != null ? opt.value : ''}
+					disabled={opt.disabled}
+				>
 					{getOptionLabel(opt)}
 				</option>
 			))}
