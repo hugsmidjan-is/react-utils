@@ -48,12 +48,16 @@ export type SelectboxProps<
 	className?: string;
 	options: ReadonlyArray<O>;
 	value?: string | V;
+	defaultValue?: string | V;
 	placeholder?: string;
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
 	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
 } & BemProps &
-	Omit<JSX.IntrinsicElements['select'], 'value' | 'multiple' | 'className'>;
+	Omit<
+		JSX.IntrinsicElements['select'],
+		'value' | 'defaultValue' | 'multiple' | 'className'
+	>;
 /** /
 	// NOTE: This **should** work but for some reason it doesn't
 	// As soon as I skip the optional `placeholder` prop
@@ -113,11 +117,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 	const isBrowser = useIsBrowserSide(ssr);
 
 	const [currVal, setCurrVal] = useState(() =>
-		value != null
-			? value
-			: Array.isArray(defaultValue) || defaultValue == null
-			? undefined
-			: String(defaultValue)
+		value != null ? value : defaultValue != null ? String(defaultValue) : undefined
 	);
 
 	type V = O extends SelectboxOption ? O['value'] : O;
