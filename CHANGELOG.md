@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add prop `placeholderDisabled` to `Selectbox`
 
 ## 0.4.10 — 0.4.11
 

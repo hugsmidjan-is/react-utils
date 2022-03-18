@@ -50,6 +50,7 @@ export type SelectboxProps<
 	value?: string | V;
 	defaultValue?: string | V;
 	placeholder?: string;
+	placeholderDisabled?: boolean;
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
 	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
@@ -162,7 +163,11 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				}
 			}}
 		>
-			{placeholder != null && <option value="">{placeholder || ''}</option>}
+			{placeholder != null && (
+				<option value="" disabled={props.placeholderDisabled}>
+					{placeholder}
+				</option>
+			)}
 
 			{optionsNorm.map((opt, i) => (
 				<option key={i} value={opt.value != null ? opt.value : ''}>
