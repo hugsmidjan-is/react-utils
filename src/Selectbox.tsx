@@ -186,7 +186,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		// return null inside it to restart rendering earlier.
 		setCurrVal(value);
 		lastValue.current = value;
-		return <>.</>;
+		return (null as unknown) as ReactElement; // Harmless lie because we're doing immediate synchronous re-render
 	}
 
 	if (isBrowser) {
