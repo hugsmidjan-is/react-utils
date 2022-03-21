@@ -182,7 +182,7 @@ class Modal extends Component<ModalProps, S> {
 		}
 	}
 	closeModalOnEsc(e: KeyboardEvent) {
-		if (this.props.fickle !== false && e.which === 27) {
+		if (this.props.fickle !== false && e.key === 'Esc') {
 			this.close();
 		}
 	}
