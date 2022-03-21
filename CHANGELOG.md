@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+
+## 0.4.12
+
+_2022-03-21_
+
 - feat: Add prop `selectRef` to `SelectboxProps`
 - feat: Add prop `placeholderDisabled` to `Selectbox`
 - feat(ts): Rename `ModalProps` (deprecate the old `Props` type)
