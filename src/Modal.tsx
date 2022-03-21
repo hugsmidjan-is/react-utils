@@ -92,7 +92,7 @@ export type Props = {
 			render: (props: { closeModal(): void }) => ReactNode;
 			children?: never;
 	  }
-	| { render?: never; children: NonNullable<ReactNode> }
+	| { render?: never; children: ReactNode }
 ) &
 	BemProps;
 
