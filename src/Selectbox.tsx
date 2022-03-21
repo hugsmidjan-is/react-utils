@@ -7,6 +7,7 @@ import {
 	ReactNode,
 	ReactElement,
 	useRef,
+	RefObject,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
 import getBemClass from './utils/getBemClass';
@@ -54,6 +55,8 @@ export type SelectboxProps<
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
 	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
+	/** Ref object that points to the native <select/> element */
+	selectRef?: RefObject<HTMLSelectElement>;
 } & BemProps &
 	Omit<
 		JSX.IntrinsicElements['select'],
@@ -112,6 +115,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		onSelected,
 		onChange,
 		placeholder,
+		selectRef,
 		...selectProps
 	} = props;
 
@@ -146,6 +150,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 
 	const selectElement = (
 		<select
+			ref={selectRef}
 			className={selectElmClass}
 			{...selectProps}
 			value={value}

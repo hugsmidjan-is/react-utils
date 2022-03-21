@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number will be decided later -->
+- feat: Add prop `selectRef` to `SelectboxProps`
 - feat: Add prop `placeholderDisabled` to `Selectbox`
 - feat(ts): Rename `ModalProps` (deprecate the old `Props` type)
 - fix: `SelectboxOption.disabled` was ignored
