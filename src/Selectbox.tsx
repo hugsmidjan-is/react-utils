@@ -54,6 +54,13 @@ export type SelectboxProps<
 	placeholderDisabled?: boolean;
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
+	/**
+	 * Custom visual label formatter.
+	 *
+	 * NOTE: The formatter is only called for non-empty labels
+	 * in order to make a `<Selectbox/>`'s "visibly empty" status more predictably
+	 * inferrable by reading `selectRef.current?.selectedOptions[0].textContent`
+	 */
 	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
 	/** Ref object that points to the native <select/> element */
 	selectRef?: RefObject<HTMLSelectElement>;
@@ -162,9 +169,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				setCurrVal(optionsNorm[idx].value);
 				onChange && onChange(e);
 				if (onSelected) {
-					optionsNorm[idx]
-						? onSelected(optionsNorm[idx].value, options[idx])
-						: onSelected();
+					onSelected(optionsNorm[idx].value, options[idx]);
 				}
 			}}
 		>
@@ -180,7 +185,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 					value={opt.value != null ? opt.value : ''}
 					disabled={opt.disabled}
 				>
-					{getOptionLabel(opt)}
+					{getOptionLabel(opt).trimRight()}
 				</option>
 			))}
 		</select>

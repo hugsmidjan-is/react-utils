@@ -53,6 +53,11 @@ o.spec('getVisibleLabel', () => {
 			'finds and formats non-first option'
 		);
 		o(getVisibleLabel(opts, '101', 'hi')).equals('101')('Accepts values as string');
+		// This behavior is important to make a Selectbox's "empty" status more predictably
+		// inferrable by reading selectRef.current?.selectedOptions[0].textContent
+		o(getVisibleLabel(['22', '33', ''], '', undefined, (opt) => 'USD' + opt)).equals(
+			EMPTY_LABEL
+		)('skips custom label formatter for empty labels');
 	});
 
 	o('works for object options', () => {

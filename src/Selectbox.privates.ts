@@ -38,12 +38,17 @@ export const getVisibleLabel = <O extends OptionOrValue | string>(
 ): ReactNode => {
 	const selOption =
 		getSelectedOption(options, value) || (placeholder == null && options[0]);
-	const visibleLabel = !selOption
-		? undefined
-		: labelFormatter
-		? labelFormatter(selOption)
-		: typeof selOption === 'object'
-		? getOptionLabel(selOption as SelectboxOption)
-		: String(selOption);
+	let visibleLabel: ReactNode;
+	if (selOption !== false && selOption != null) {
+		let optionLabel =
+			typeof selOption === 'object'
+				? getOptionLabel(selOption as SelectboxOption)
+				: String(selOption);
+		optionLabel = optionLabel.trimRight();
+
+		visibleLabel =
+			labelFormatter && optionLabel ? labelFormatter(selOption) : optionLabel;
+	}
+
 	return (visibleLabel != null ? visibleLabel : placeholder) || EMPTY_LABEL;
 };
