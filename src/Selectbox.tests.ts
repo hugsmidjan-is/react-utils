@@ -76,6 +76,24 @@ o.spec('getVisibleLabel', () => {
 		o(getVisibleLabel(opts, 'hola', 'hi', formatter)).equals('HOLA')(
 			'finds and formats non-first option'
 		);
+
+		const opts2 = [
+			{ value: 'a', label: 'Apple' },
+			{ value: 'b', label: 'Banana' },
+			{ value: '', label: 'Empty' },
+		];
+		o(getVisibleLabel(opts2, '', 'Placeholder')).equals('Placeholder')(
+			'empty value should prefer placeholder over in-list empty-value option'
+		);
+		o(getVisibleLabel(opts2, undefined, 'Placeholder')).equals('Placeholder')(
+			'undefined value should prefer placeholder over in-list empty-value option'
+		);
+		o(getVisibleLabel(opts2, '', '')).equals(EMPTY_LABEL)(
+			'empty value should prefer, even empty placeholder over in-list empty-value option'
+		);
+		o(getVisibleLabel(opts2, undefined, '')).equals(EMPTY_LABEL)(
+			'undefined value should prefer, even empty placeholder over in-list empty-value option'
+		);
 	});
 
 	o('works for number object options', () => {

@@ -37,7 +37,9 @@ export const getVisibleLabel = <O extends OptionOrValue | string>(
 	labelFormatter?: (selected: O) => NonNullable<ReactNode>
 ): ReactNode => {
 	const selOption =
-		getSelectedOption(options, value) ?? (placeholder == null && options[0]);
+		(value == null || value === '') && placeholder != null
+			? false
+			: getSelectedOption(options, value) ?? (placeholder == null && options[0]);
 	let visibleLabel: ReactNode;
 	if (selOption !== false && selOption != null) {
 		let optionLabel =
