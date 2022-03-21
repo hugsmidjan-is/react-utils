@@ -50,8 +50,14 @@ export type SelectboxProps<
 	options: ReadonlyArray<O>;
 	value?: string | V;
 	defaultValue?: string | V;
+	/** Generates a <option value="" /> at the start of the select's option list */
 	placeholder?: string;
 	placeholderDisabled?: boolean;
+	/**
+	 * Sugar alternative to `onChange`.
+	 *
+	 * If placeholder option was selected, then `value === undefined`
+	 */
 	onSelected?: (value?: V, option?: O) => void;
 	ssr?: boolean | 'ssr-only';
 	/**
