@@ -6,6 +6,7 @@
 - feat: Add prop `selectRef` to `SelectboxProps`
 - feat: Add prop `placeholderDisabled` to `Selectbox`
 - feat(ts): Rename `ModalProps` (deprecate the old `Props` type)
+- fix: `Selectbox` treating `0` as empty/nully value
 - fix: `SelectboxProps.visibleFormat` should skip over empty/invisible labels
 - fix: `SelectboxOption.disabled` was ignored
 - fix: Relax typing of props.children, allow nullable `ReactNode`s — even when

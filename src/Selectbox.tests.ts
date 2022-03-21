@@ -40,7 +40,7 @@ o.spec('getVisibleLabel', () => {
 	});
 
 	o('works for number options', () => {
-		const opts = [99, 101];
+		const opts = [99, 101, 0];
 		const formatter = (opt: number) => 'USD' + opt;
 		o(getVisibleLabel(opts, undefined)).equals('99')('defaults to first option');
 		o(getVisibleLabel(opts, undefined, 'hi')).equals('hi')(
@@ -53,6 +53,9 @@ o.spec('getVisibleLabel', () => {
 			'finds and formats non-first option'
 		);
 		o(getVisibleLabel(opts, '101', 'hi')).equals('101')('Accepts values as string');
+		o(getVisibleLabel(opts, 0, 'hi', formatter)).equals('USD0')(
+			'finds and formats zero-value non-first option'
+		);
 		// This behavior is important to make a Selectbox's "empty" status more predictably
 		// inferrable by reading selectRef.current?.selectedOptions[0].textContent
 		o(getVisibleLabel(['22', '33', ''], '', undefined, (opt) => 'USD' + opt)).equals(
