@@ -11,7 +11,10 @@ const defaultTexts = {
 	closeButtonLabel: 'Close this window',
 };
 
-export type Props = {
+/**@deprecated  Use `ModalProps` instead.  (Will be removed in v0.5) */
+export type Props = ModalProps;
+
+export type ModalProps = {
 	/**
 	 * The transition delay until closing the modal triggers `onClosed()`
 	 *
@@ -101,7 +104,7 @@ interface S {
 	domid: string;
 }
 
-class Modal extends Component<Props, S> {
+class Modal extends Component<ModalProps, S> {
 	static defaultProps = {
 		// bem: 'Modal',
 		closeDelay: 1000,
@@ -114,7 +117,7 @@ class Modal extends Component<Props, S> {
 
 	modalElm?: HTMLElement | null;
 
-	constructor(props: Props) {
+	constructor(props: ModalProps) {
 		super(props);
 
 		this.close = this.close.bind(this);
@@ -134,7 +137,7 @@ class Modal extends Component<Props, S> {
 			this.open();
 		}
 	}
-	componentDidUpdate(oldProps: Props) {
+	componentDidUpdate(oldProps: ModalProps) {
 		const open = this.props.open;
 		if (open !== oldProps.open) {
 			if (open) {

@@ -4,6 +4,7 @@
 
 - ... <!-- Add new lines here. Version number will be decided later -->
 - feat: Add prop `placeholderDisabled` to `Selectbox`
+- feat(ts): Rename `ModalProps` (deprecate the old `Props` type)
 - fix: `SelectboxOption.disabled` was ignored
 - fix: Relax typing of props.children, allow nullable `ReactNode`s — even when
   children are required
