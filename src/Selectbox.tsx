@@ -223,8 +223,6 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 	);
 
 	if (isBrowser) {
-		const emptyValueClass = !value && value !== 0 ? ' ' + bem + '__value--empty' : '';
-
 		return (
 			<span
 				className={
@@ -233,7 +231,11 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				}
 				style={{ position: 'relative' }}
 			>
-				<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
+				<span
+					className={getBemClass(bem + '__value', !currVal && currVal !== 0 && 'empty')}
+				>
+					{selectedOptionText}
+				</span>
 				{selectElement}
 			</span>
 		);
