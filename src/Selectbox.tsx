@@ -135,10 +135,6 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 
 	const isBrowser = useIsBrowserSide(ssr);
 
-	const [currVal, setCurrVal] = useState(() =>
-		value != null ? value : defaultValue != null ? String(defaultValue) : undefined
-	);
-
 	const optionsNorm = useMemo(
 		() =>
 			options.map((item) =>
@@ -147,12 +143,14 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		[options]
 	) as SelectboxOptions<O extends SelectboxOption ? O['value'] : O>; // Feck!
 
+	const [currVal, setCurrVal] = useState(() => (value != null ? value : defaultValue));
+
 	// TODO: DECIDE: Handle value="" and options array that doesn't include that value. What to do???
 	// Should we auto-generate option and push it to the bottom of the list?
 
 	const selectedOptionText = useMemo(
-		() => isBrowser && getVisibleLabel(options, currVal, placeholder, visibleFormat),
-		[isBrowser, currVal, options, placeholder, visibleFormat]
+		() => getVisibleLabel(options, currVal, placeholder, visibleFormat),
+		[currVal, options, placeholder, visibleFormat]
 	);
 
 	// Deal with incoming changes to props.value
