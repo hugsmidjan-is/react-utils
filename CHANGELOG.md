@@ -2,7 +2,10 @@
 
 ## Upcoming...
 
-- ... <!-- Add new lines here. Version number will be decided later -->
+- ... <!-- Add new lines here. Version number comes later -->
+- fix: Attempt to Better capture weird <Selectbox> edge cases — Where the
+  browser (or React) snap value to something unexpected because of mismatching
+  value and/or options.
 
 ## 0.4.12 — 0.4.13
 

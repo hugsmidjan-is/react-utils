@@ -8,6 +8,7 @@ import {
 	ReactElement,
 	useRef,
 	RefObject,
+	useEffect,
 } from 'react';
 import getModifierClass from './utils/getModifierClass';
 import getBemClass from './utils/getBemClass';
@@ -116,6 +117,7 @@ const _Testing_ = () => (
 /** Sugar wrapper for standard `<select/>` elements offering more fancy styling */
 const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElement => {
 	const [focused, setFocused] = useState(false);
+	const _selectRef = useRef<HTMLSelectElement>(null);
 
 	const {
 		className,
@@ -129,7 +131,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		onSelected,
 		onChange,
 		placeholder,
-		selectRef,
+		selectRef = _selectRef,
 		...selectProps
 	} = props;
 
@@ -153,22 +155,36 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		[currVal, options, placeholder, visibleFormat]
 	);
 
-	// Deal with incoming changes to props.value
-	const lastValue = useRef(value);
-	if (lastValue.current !== value) {
-		// NOTE: This little known pattern of updating state during render happens to be
-		// the idiomatic way to avoid using useEffect and thus triggering double rendering.
-		//
-		// When you call the set function during render, React will re-render that
-		// component immediately after your component exits with a return statement,
-		// and before rendering the children. This way, children don’t need to render twice.
-		// The rest of your component function will still execute (and the result will be
-		// thrown away), but if your condition is below all the calls to Hooks, you may add
-		// return null inside it to restart rendering earlier.
-		setCurrVal(value);
-		lastValue.current = value;
-		return (null as unknown) as ReactElement; // Harmless lie because we're doing immediate synchronous re-render
-	}
+	const hasPlaceholder = placeholder != null;
+	useEffect(
+		() => {
+			// capture if browser (or React's <select> handling) auto-selected something
+			// unexpected becasue of disabled first option...
+			// or if the value and options don't match up, then set currVal to something
+			// that's actually available.
+			// NOTE: When setCurrVal() sets a value that's the same as the current currVal
+			// then no re-redering occurs.
+			if (value == null) {
+				selectRef.current && setCurrVal(selectRef.current.value);
+				return;
+			}
+			if (value === '' && hasPlaceholder) {
+				setCurrVal('');
+				return;
+			}
+			if (optionsNorm.find((o) => o.value === value)) {
+				setCurrVal(value);
+				return;
+			}
+			if (hasPlaceholder) {
+				setCurrVal('');
+				return;
+			}
+			setCurrVal(optionsNorm[0]?.value ?? '');
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[value, optionsNorm, hasPlaceholder]
+	);
 
 	const selectElmClass = isBrowser
 		? undefined
@@ -189,7 +205,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				props.onBlur?.(e);
 				setFocused(false);
 			}}
-			value={value}
+			value={value != null ? currVal : undefined}
 			style={isBrowser && hiddenSelectStyles}
 			data-fancy={isBrowser && ''}
 			// data-value={value} // idea?
