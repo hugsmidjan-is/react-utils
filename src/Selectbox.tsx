@@ -166,6 +166,14 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 			ref={selectRef}
 			className={selectElmClass}
 			{...selectProps}
+			onFocus={(e) => {
+				props.onFocus?.(e);
+				setFocused(true);
+			}}
+			onBlur={(e) => {
+				props.onBlur?.(e);
+				setFocused(false);
+			}}
 			value={value}
 			style={isBrowser && hiddenSelectStyles}
 			data-fancy={isBrowser && ''}
@@ -223,8 +231,6 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 					getBemClass(bem, modifier, className) +
 					getModifierClass(bem, [focused && 'focused', props.disabled && 'disabled'])
 				}
-				onFocus={() => setFocused(true)}
-				onBlur={() => setFocused(false)}
 				style={{ position: 'relative' }}
 			>
 				<span className={bem + '__value' + emptyValueClass}>{selectedOptionText}</span>
