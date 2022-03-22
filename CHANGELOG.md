@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.14
+
+_2022-03-22_
+
 - fix: Attempt to Better capture weird <Selectbox> edge cases — Where the
   browser (or React) snap value to something unexpected because of mismatching
   value and/or options.
