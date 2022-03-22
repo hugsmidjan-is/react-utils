@@ -75,7 +75,7 @@ export type SelectboxProps<
 		JSX.IntrinsicElements['select'],
 		'value' | 'defaultValue' | 'multiple' | 'className'
 	>;
-/** /
+/* * /
 	// NOTE: This **should** work but for some reason it doesn't
 	// As soon as I skip the optional `placeholder` prop
 	// (making it implicitly undefined) TS immediately stops recognizing
@@ -113,6 +113,7 @@ const _Testing_ = () => (
 
 // ---------------------------------------------------------------------------
 
+/** Sugar wrapper for standard `<select/>` elements offering more fancy styling */
 const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElement => {
 	const [focused, setFocused] = useState(false);
 
