@@ -138,14 +138,13 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		value != null ? value : defaultValue != null ? String(defaultValue) : undefined
 	);
 
-	type V = O extends SelectboxOption ? O['value'] : O;
 	const optionsNorm = useMemo(
 		() =>
 			options.map((item) =>
 				typeof item === 'string' || typeof item === 'number' ? { value: item } : item
 			),
 		[options]
-	) as SelectboxOptions<V>; // Feck!
+	) as SelectboxOptions<O extends SelectboxOption ? O['value'] : O>; // Feck!
 
 	// TODO: DECIDE: Handle value="" and options array that doesn't include that value. What to do???
 	// Should we auto-generate option and push it to the bottom of the list?
