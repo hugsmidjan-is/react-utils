@@ -3,6 +3,8 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: `getModifierClass`, `getBemClass` now accept nested modifier arrays
+- feat: `BemProps.modifier` now accepts nested modifier arrays
 
 ## 0.4.14
 

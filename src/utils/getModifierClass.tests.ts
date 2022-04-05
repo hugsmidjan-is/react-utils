@@ -18,6 +18,19 @@ o.spec('getModifierClass', () => {
 		);
 	});
 
+	o('Accepts nested arrays', () => {
+		o(
+			getModifierClass(bem, [
+				null,
+				['hello'],
+				[
+					[undefined, 'cruel', false],
+					['', undefined, [null, 0, ['world']]],
+				],
+			])
+		).equals(' BEM--hello BEM--cruel BEM--world');
+	});
+
 	o('Does NOT trim or otherwise clean up strings', () => {
 		o(getModifierClass(bem, ' borked ')).equals(' BEM-- borked ');
 		o(getModifierClass(bem, [' borked '])).equals(' BEM-- borked ');

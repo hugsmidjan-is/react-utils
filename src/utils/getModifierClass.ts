@@ -1,17 +1,18 @@
-import { BemProps } from '../types';
+import { BemProps, Modifiers } from '../types';
 
 const getModifierClass = (
 	/** BEM prefix */
 	bem: string,
 	modifier: BemProps['modifier']
 ): string => {
-	if (!modifier || !modifier.length) {
-		return '';
-	}
-	const bemPrefix = ' ' + bem + '--';
-	return typeof modifier === 'string'
-		? bemPrefix + modifier
-		: modifier.map((item) => (item ? bemPrefix + item : '')).join('');
+	const flattenModifiers = (modifier: Modifiers): string =>
+		!modifier || !modifier.length
+			? ''
+			: typeof modifier === 'string'
+			? ' ' + bem + '--' + modifier
+			: modifier.map(flattenModifiers).join('');
+
+	return flattenModifiers(modifier);
 };
 
 export default getModifierClass;
