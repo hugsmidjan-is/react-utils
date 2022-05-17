@@ -205,7 +205,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				props.onBlur?.(e);
 				setFocused(false);
 			}}
-			value={value != null ? currVal : undefined}
+			value={currVal}
 			style={isBrowser && hiddenSelectStyles}
 			data-fancy={isBrowser && ''}
 			// data-value={value} // idea?

@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- fix: `<Selectbox />` ignoring `defaultValue`
 
 ## 0.4.15
 
@@ -15,7 +16,7 @@ _2022-04-05_
 
 _2022-03-22_
 
-- fix: Attempt to Better capture weird <Selectbox> edge cases — Where the
+- fix: Attempt to Better capture weird `<Selectbox />` edge cases — Where the
   browser (or React) snap value to something unexpected because of mismatching
   value and/or options.
 
