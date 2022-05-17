@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.16
+
+_2022-05-17_
+
 - fix: `<Selectbox />` ignoring `defaultValue`
 
 ## 0.4.15
