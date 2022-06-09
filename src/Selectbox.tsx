@@ -15,6 +15,7 @@ import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 import { useIsBrowserSide } from './hooks';
 import { OptionOrValue, getVisibleLabel, getOptionLabel } from './Selectbox.privates';
+import { render } from 'react-dom';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
@@ -34,11 +35,17 @@ const hiddenSelectStyles: CSSProperties = {
 export interface SelectboxOption<V extends string | number = string | number> {
 	value: V;
 	label?: string;
+	group?: string;
 	disabled?: boolean;
 }
 export type SelectboxOptions<V extends string | number = string | number> = Array<
 	SelectboxOption<V>
 >;
+
+type OptGroup<V extends string | number = string | number> = {
+	title: string;
+	options: SelectboxOptions<V>;
+};
 
 // ---------------------------------------------------------------------------
 
@@ -137,13 +144,31 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 
 	const isBrowser = useIsBrowserSide(ssr);
 
-	const optionsNorm = useMemo(
-		() =>
-			options.map((item) =>
-				typeof item === 'string' || typeof item === 'number' ? { value: item } : item
-			),
-		[options]
-	) as SelectboxOptions<O extends SelectboxOption ? O['value'] : O>; // Feck!
+	type Value = O extends SelectboxOption ? O['value'] : O;
+	const { optionsNorm, groupedOptions } = useMemo(() => {
+		const optionsNorm = options.map((item) =>
+			typeof item === 'string' || typeof item === 'number' ? { value: item } : item
+		) as SelectboxOptions<Value>;
+
+		const groupedOptions = optionsNorm.reduce((list, opt, i) => {
+			if (!opt.group) {
+				list.push(opt);
+				return list;
+			}
+			const lastItem = list[list.length - 1];
+			const currGroup = lastItem && 'title' in lastItem ? lastItem : undefined;
+			if (currGroup && currGroup.title === opt.group) {
+				currGroup.options.push(opt);
+			} else {
+				list.push({
+					title: opt.group,
+					options: [opt],
+				});
+			}
+			return list;
+		}, [] as Array<SelectboxOption<Value> | OptGroup<Value>>);
+		return { optionsNorm, groupedOptions };
+	}, [options]);
 
 	const [currVal, setCurrVal] = useState(() => (value != null ? value : defaultValue));
 
@@ -192,6 +217,12 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		? getBemClass(bem, modifier, className)
 		: className;
 
+	const renderOption = (opt: SelectboxOption<Value>, key: number) => (
+		<option key={key} value={opt.value != null ? opt.value : ''} disabled={opt.disabled}>
+			{getOptionLabel(opt).trimRight()}
+		</option>
+	);
+
 	const selectElement = (
 		<select
 			ref={selectRef}
@@ -224,15 +255,15 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 				</option>
 			)}
 
-			{optionsNorm.map((opt, i) => (
-				<option
-					key={i}
-					value={opt.value != null ? opt.value : ''}
-					disabled={opt.disabled}
-				>
-					{getOptionLabel(opt).trimRight()}
-				</option>
-			))}
+			{groupedOptions.map((item, i) =>
+				'title' in item ? (
+					<optgroup label={item.title} key={i}>
+						{item.options.map(renderOption)}
+					</optgroup>
+				) : (
+					renderOption(item, i)
+				)
+			)}
 		</select>
 	);
 
