@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.17
+
+_2022-06-09_
+
 - feat: Add optional `group` prop to `SelectboxOptions` items
 
 ## 0.4.16
