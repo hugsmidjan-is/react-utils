@@ -8,7 +8,9 @@ export type PropsOf<T> = T extends FC<infer P>
 
 // ---------------------------------------------------------------------------
 
-export type Modifier = string | undefined | null | false | 0;
+type Falsy = undefined | null | false | 0;
+export type Modifier = string | Falsy;
+
 export type Modifiers = Modifier | Array<Modifiers>;
 
 export interface BemPropsModifier {
