@@ -66,7 +66,7 @@ export type SelectboxProps<
 	 *
 	 * If placeholder option was selected, then `value === undefined`
 	 */
-	onSelected?: (value?: V, option?: O) => void;
+	onSelected?: (value: V, option: O) => void;
 	ssr?: boolean | 'ssr-only';
 	/**
 	 * Custom visual label formatter.
