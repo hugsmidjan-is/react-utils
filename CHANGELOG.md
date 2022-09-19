@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.18
+
+_2022-09-19_
+
 - fix(ts): `SelectboxProps.onSelected`'s arguments are never `undefined`
 
 ## 0.4.17
