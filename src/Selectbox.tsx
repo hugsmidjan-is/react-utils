@@ -15,7 +15,6 @@ import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 import { useIsBrowserSide } from './hooks';
 import { OptionOrValue, getVisibleLabel, getOptionLabel } from './Selectbox.privates';
-import { render } from 'react-dom';
 
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
@@ -78,6 +77,8 @@ export type SelectboxProps<
 	visibleFormat?: (selected: O) => NonNullable<ReactNode>;
 	/** Ref object that points to the native <select/> element */
 	selectRef?: RefObject<HTMLSelectElement>;
+	/** Disables all options except the currently selected one. */
+	readOnly?: boolean;
 } & BemProps &
 	Omit<
 		JSX.IntrinsicElements['select'],
@@ -138,17 +139,33 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 		onSelected,
 		onChange,
 		placeholder,
+		readOnly,
 		selectRef = _selectRef,
 		...selectProps
 	} = props;
 
 	const isBrowser = useIsBrowserSide(ssr);
 
+	const [currVal, setCurrVal] = useState(() => (value != null ? value : defaultValue));
+
 	type Value = O extends SelectboxOption ? O['value'] : O;
 	const { optionsNorm, groupedOptions } = useMemo(() => {
-		const optionsNorm = options.map((item) =>
-			typeof item === 'string' || typeof item === 'number' ? { value: item } : item
-		) as SelectboxOptions<Value>;
+		const optionsNorm = options.map(
+			(item: OptionOrValue) =>
+				(typeof item === 'string' || typeof item === 'number'
+					? { value: item }
+					: { ...item }) as SelectboxOption<Value>
+		);
+		if (readOnly) {
+			let found = false;
+			const currValStr = currVal + '';
+			optionsNorm.forEach((option) => {
+				if (found || String(option.value) !== currValStr) {
+					option.disabled = true;
+					found = true;
+				}
+			});
+		}
 
 		const groupedOptions = optionsNorm.reduce((list, opt, i) => {
 			if (!opt.group) {
@@ -168,9 +185,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 			return list;
 		}, [] as Array<SelectboxOption<Value> | OptGroup<Value>>);
 		return { optionsNorm, groupedOptions };
-	}, [options]);
-
-	const [currVal, setCurrVal] = useState(() => (value != null ? value : defaultValue));
+	}, [options, currVal, readOnly]);
 
 	// TODO: DECIDE: Handle value="" and options array that doesn't include that value. What to do???
 	// Should we auto-generate option and push it to the bottom of the list?

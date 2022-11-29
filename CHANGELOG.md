@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Add prop `readOnly` to `SelectBox` — disabling non-selected options
 
 ## 0.4.18
 
