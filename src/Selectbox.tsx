@@ -16,6 +16,17 @@ import { BemProps } from './types';
 import { useIsBrowserSide } from './hooks';
 import { OptionOrValue, getVisibleLabel, getOptionLabel } from './Selectbox.privates';
 
+const getReadonlyVal = <T,>(
+	readOnly: boolean | undefined,
+	value: T,
+	currVal: T
+): string | true | undefined => {
+	if (!readOnly) {
+		return;
+	}
+	return value != null ? String(value) : currVal != null ? String(currVal) : true;
+};
+
 const hiddenSelectStyles: CSSProperties = {
 	opacity: 0.0001,
 	position: 'absolute',
@@ -148,6 +159,8 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 
 	const [currVal, setCurrVal] = useState(() => (value != null ? value : defaultValue));
 
+	const readOnlyVal = getReadonlyVal(readOnly, value, currVal);
+
 	type Value = O extends SelectboxOption ? O['value'] : O;
 	const { optionsNorm, groupedOptions } = useMemo(() => {
 		const optionsNorm = options.map(
@@ -156,14 +169,16 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 					? { value: item }
 					: { ...item }) as SelectboxOption<Value>
 		);
-		if (readOnly) {
+		if (readOnlyVal != null) {
 			let found = false;
-			const currValStr = currVal + '';
+			const currValStr =
+				typeof readOnlyVal === 'string' ? readOnlyVal : optionsNorm[0].value;
 			optionsNorm.forEach((option) => {
-				if (found || String(option.value) !== currValStr) {
-					option.disabled = true;
+				if (String(option.value) === currValStr && !found) {
 					found = true;
+					return;
 				}
+				option.disabled = true;
 			});
 		}
 
@@ -185,7 +200,7 @@ const Selectbox = <O extends OptionOrValue>(props: SelectboxProps<O>): ReactElem
 			return list;
 		}, [] as Array<SelectboxOption<Value> | OptGroup<Value>>);
 		return { optionsNorm, groupedOptions };
-	}, [options, currVal, readOnly]);
+	}, [options, readOnlyVal]);
 
 	// TODO: DECIDE: Handle value="" and options array that doesn't include that value. What to do???
 	// Should we auto-generate option and push it to the bottom of the list?
