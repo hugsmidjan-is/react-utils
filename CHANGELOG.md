@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.20
+
+_2022-12-07_
+
 - fix: Correctly capture updates to `value` on `readOnly` `Selectbox`
 
 ## 0.4.19
