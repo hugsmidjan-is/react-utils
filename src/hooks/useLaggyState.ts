@@ -1,41 +1,51 @@
 import { useState, useRef, useEffect } from 'react';
 import { useConst } from './hooks';
 
-type LaggyStateHook = <S>(
-	initialState: S | (() => S),
-	defaultDelay: number,
-	/** The state that should be automatically transitioned to after mounting */
-	thenState?: S | (() => S)
-) => [
+type LaggyStateRet<S> = [
 	currentState: S,
 	nextState: S,
 	setState: (newState: S | (() => S), customDelay?: number | false) => void,
 	isTransitioning: true | undefined
 ];
 
+type LocalState<S> = [currentState: S, nextState: S];
+
+const getStateValue = <S>(state: S | (() => S)) =>
+	typeof state === 'function' ? (state as () => S)() : state;
+
 // ---------------------------------------------------------------------------
 
-const useLaggyState: LaggyStateHook = (initialState, defaultDelay, thenState) => {
-	const [currentState, setCurrent] = useState(initialState);
-	const [nextState, setNext] = useState(initialState);
-	const [isTransitioning, setIsTransitioning] = useState<true | undefined>();
+const useLaggyState = <S>(
+	initialState: S | (() => S),
+	/** Default delay in milliseconds */
+	defaultDelay: number,
+	/** Sugar! A state that should be automatically transitioned to after mounting */
+	thenState?: S | (() => S)
+): LaggyStateRet<S> => {
 	const timeout = useRef<NodeJS.Timeout | null>();
-
-	type S = typeof currentState;
+	const [[currentState, nextState], setLocalState] = useState<LocalState<S>>(() => {
+		const initial = getStateValue(initialState);
+		return [initial, initial];
+	});
 
 	const setState = useConst(
 		(newState: S | (() => S), customDelay: number | false = defaultDelay) => {
-			setNext(newState);
 			timeout.current && clearTimeout(timeout.current);
-			const updateState = () => {
-				setCurrent(newState);
-				setIsTransitioning(undefined);
-			};
+
+			const newValue = getStateValue(newState);
+			if (newValue === currentState) {
+				return;
+			}
 			if (customDelay === false) {
-				updateState();
+				// Instant update!
+				setLocalState([newValue, newValue]);
 			} else {
-				setIsTransitioning(true);
-				timeout.current = setTimeout(updateState, customDelay);
+				// Debounced update!
+				setLocalState([currentState, newValue]);
+				timeout.current = setTimeout(
+					() => setLocalState([newValue, newValue]),
+					customDelay
+				);
 			}
 		}
 	);
@@ -50,7 +60,11 @@ const useLaggyState: LaggyStateHook = (initialState, defaultDelay, thenState) =>
 		[] // eslint-disable-line react-hooks/exhaustive-deps
 	);
 
+	const isTransitioning = currentState !== nextState || undefined;
+
 	return [currentState, nextState, setState, isTransitioning];
+	// TODO: In the next major version:
+	// return [currentState, setState, nextState, isTransitioning];
 };
 
 export default useLaggyState;

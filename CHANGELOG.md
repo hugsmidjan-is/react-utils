@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Improve performance of `useLaggyState`
 
 ## 0.4.20
 
