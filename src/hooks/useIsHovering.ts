@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  *
@@ -8,13 +8,12 @@ import { useCallback, useEffect, useState } from 'react';
 export const useIsHovering = (ref: React.RefObject<HTMLElement>) => {
 	const [isHovering, setHovering] = useState(false);
 
-	const handleMouseOver = useCallback(() => setHovering(true), []);
-	const handleMouseOut = useCallback(() => setHovering(false), []);
-
 	useEffect(() => {
 		const node = ref.current;
 
 		if (node) {
+			const handleMouseOver = () => setHovering(true);
+			const handleMouseOut = () => setHovering(false);
 			node.addEventListener('mouseover', handleMouseOver);
 			node.addEventListener('mouseout', handleMouseOut);
 
@@ -23,7 +22,7 @@ export const useIsHovering = (ref: React.RefObject<HTMLElement>) => {
 				node.removeEventListener('mouseout', handleMouseOut);
 			};
 		}
-	}, [ref, handleMouseOver, handleMouseOut]);
+	}, [ref]);
 
 	return isHovering;
 };
