@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.21
+
+_2022-12-16_
+
 - feat: Let `useCallbackOnEsc(undefined)` remove the event listener
 - feat: Improve performance of `useLaggyState`
 
