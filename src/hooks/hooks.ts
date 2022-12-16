@@ -43,21 +43,29 @@ export const useConst = <I>(input: I) => useRef(input).current;
 // TODO: Create a generic useKeydownCallbacks(whichCallbackMap, deps)
 // and make useCallbackOnEsc dogfood it.
 
-/** Runs callback whenever the user hits the ESC key. */
-export const useCallbackOnEsc = (callback: () => void) => {
+/**
+ * Performs a callback whenever the user hits the ESC key.
+ *
+ * Pass `undefined` to remove the event listener
+ */
+export const useCallbackOnEsc = (callback: (() => void) | undefined) => {
 	const cb = useRef(callback);
+	const active = !!callback;
 	cb.current = callback;
-	useOnMount(() => {
+	useEffect(() => {
+		if (!active) {
+			return;
+		}
 		const callbackOnEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
-				cb.current();
+				cb.current && cb.current();
 			}
 		};
 		document.addEventListener('keydown', callbackOnEsc);
 		return () => {
 			document.removeEventListener('keydown', callbackOnEsc);
 		};
-	});
+	}, [active]);
 };
 
 export const useNotifyTopContent = (componentName: string, key = 'topContent') =>
