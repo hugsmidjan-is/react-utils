@@ -68,6 +68,7 @@ export const useCallbackOnEsc = (callback: (() => void) | undefined) => {
 	}, [active]);
 };
 
+/** @deprecated Uhm... Something, something, hacky-hack?  (Might get removed in v0.5) */
 export const useNotifyTopContent = (componentName: string, key = 'topContent') =>
 	useOnMount(() => {
 		document.documentElement.dataset[key] = componentName;

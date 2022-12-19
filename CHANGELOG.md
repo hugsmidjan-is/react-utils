@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Mark `useNotifyTopContent` as @deprecated
 
 ## 0.4.21
 
