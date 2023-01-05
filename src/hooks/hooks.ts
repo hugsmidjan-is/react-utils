@@ -1,24 +1,22 @@
 import { useEffect, useRef, EffectCallback, useState } from 'react';
 import domid from '@hugsmidjan/qj/domid';
 
-// Returns a stable, unique ID string
+/** Returns a stable, unique ID string */
 export const useDomid = (staticId?: string) => useState(staticId || domid)[0];
 
-// Run callback only when component did mount
+/** Run callback only when component did mount */
 export const useOnMount = (callback: EffectCallback) =>
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(callback, []);
 
-// export const useLayoutOnMount = (fn) => useLayoutEffect(fn, []);
-
-// Run callback only when component unmounts
+/** Run callback only when component unmounts */
 export const useOnUnmount = (callback: () => void) => {
 	const cb = useRef(callback);
 	cb.current = callback;
 	useEffect(() => () => cb.current(), []);
 };
 
-// Run callback only when component did update AND deps have changed
+/** Run callback only when component did update AND deps have changed */
 export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknown>) => {
 	const isUpdate = useRef(false);
 	const cb = useRef<EffectCallback>(callback);
@@ -35,7 +33,8 @@ export const useOnUpdate = (callback: EffectCallback, deps: ReadonlyArray<unknow
 	);
 };
 
-/** Create a static, immutable variable based on the first input given.
+/**
+ * Create a static, immutable variable based on the first input given.
  * (Runs useRef and returns it's initial .current value.)
  */
 export const useConst = <I>(input: I) => useRef(input).current;
@@ -78,17 +77,32 @@ export const useNotifyTopContent = (componentName: string, key = 'topContent') =
 	});
 
 /**
- * Boolean flag indicating if server-side rendering is supported.
+ * Indicates whether server-side rendering is supported or not.
  *
  * The `ssr-only` value is useful for cases where you need
- * to demo the ssr version in a browser.
+ * to demo the server-rendered version in a browser.
  */
 export type SSRSupport = boolean | 'ssr-only';
 
+/**
+ * Low-level useState wrapper that initializes the state to one value
+ * during initial render and then updates it to another value
+ * once the component has been mounted.
+ *
+ * After that it's just a normal [value, setValue] pair.
+ *
+ * NOTE: The optional `ssrSupport` parameter is ignored after the initial render
+ */
 export const useClientState = <T, U>(
 	serverState: T | (() => T),
 	clientState: U | (() => U),
-	ssrSupport: boolean | 'ssr-only' = true
+	/**
+	 * Indicates whether server-side rendering is supported or not.
+	 *
+	 * The `ssr-only` value is useful for cases where you need
+	 * to demo the server-rendered version in a browser.
+	 */
+	ssrSupport: SSRSupport = true
 ) => {
 	const state = useState<T | U>(ssrSupport ? serverState : clientState);
 	useOnMount(() => {
@@ -102,7 +116,22 @@ export const useClientState = <T, U>(
 	return state;
 };
 
-export const useIsServerSide = (ssrSupport?: boolean | 'ssr-only') =>
+/**
+ * Returns `true` if `useEffect` has not executed yet.
+ *
+ * This signals that we're in "server-side rendering" mode
+ * and it's not yet appropriate to do JS-driven UI enhancements.
+ *
+ * NOTE: The optional `ssrSupport` parameter is ignored after the initial render
+ */
+export const useIsServerSide = (ssrSupport?: SSRSupport) =>
 	useClientState(true, false, ssrSupport)[0] || undefined;
-export const useIsBrowserSide = (ssrSupport?: boolean | 'ssr-only') =>
+/**
+ * Returns `true` when `useEffect` has executed.
+ *
+ * This signals the time to apply Progressive Enhancement.
+ *
+ * NOTE: The optional `ssrSupport` parameter is ignored after the initial render
+ */
+export const useIsBrowserSide = (ssrSupport?: SSRSupport) =>
 	useClientState(false, true, ssrSupport)[0] || undefined;
