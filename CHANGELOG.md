@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.22
+
+_2023-01-05_
+
 - feat: Add `setDefaultSSR` helper and `DEFAULT_SSR_SUPPORT` variable
 - feat: Mark `useNotifyTopContent` as @deprecated
 
