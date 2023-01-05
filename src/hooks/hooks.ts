@@ -129,7 +129,33 @@ export const useClientState = <T, U>(
  * This signals that we're in "server-side rendering" mode
  * and it's not yet appropriate to do JS-driven UI enhancements.
  *
- * NOTE: The optional `ssrSupport` parameter is ignored after the initial render
+ * ```js
+ * const Knob = (props) => {
+ *   const [visible, setVisible] = useState(false);
+ *   const isServer = useIsServerSide();
+ *   const handleClick = () => {
+ *     setVisible(!visible);
+ *     props.onClick && props.onClick(!visible);
+ *   };
+ *
+ *   if (isServer) {
+ *     return <span className="Knob">{props.label}</span>
+ *   }
+ *   return (
+ *     <button className="Knob" aria-pressed={visible} onClick={handleClick}>
+ *       {props.label}
+ *     </button>
+ *   );
+ * }
+ * ```
+ *
+ * SSR support mode can optionally be set to:
+ *
+ * - `true` (the default) enables the serve-side phase (returns `true` then `undefined`).
+ * - `false` disables (skips) the serve-side phase (always returns `undefined`).
+ * - `"ssr-only"` disables (skips) the browser-side phase (always returns `true`).
+ *
+ * NOTE: The `ssrSupport` parameter is ignored after the initial render.
  */
 export const useIsServerSide = (ssrSupport?: SSRSupport) =>
 	useClientState(true, false, ssrSupport)[0] || undefined;
@@ -138,7 +164,33 @@ export const useIsServerSide = (ssrSupport?: SSRSupport) =>
  *
  * This signals the time to apply Progressive Enhancement.
  *
- * NOTE: The optional `ssrSupport` parameter is ignored after the initial render
+ * ```js
+ * const Knob = (props) => {
+ *   const [visible, setVisible] = useState(false);
+ *   const isBrowser = useIsBrowserSide();
+ *   const handleClick = () => {
+ *     setVisible(!visible);
+ *     props.onClick && props.onClick(!visible);
+ *   };
+ *
+ *   if (isBrowser) {
+ *     return (
+ *       <button className="Knob" aria-pressed={visible} onClick={handleClick}>
+ *         {props.label}
+ *       </button>
+ *     );
+ *   }
+ *   return <span className="Knob">{props.label}</span>
+ * }
+ * ```
+ *
+ * SSR support mode can optionally be set to:
+ *
+ * - `true` (the default) enables the serve-side phase (returns `true` then `undefined`).
+ * - `false` disables (skips) the serve-side phase (always returns `true`).
+ * - `"ssr-only"` disables (skips) the browser-side phase (always returns `undefined`).
+ *
+ * NOTE: The `ssrSupport` parameter is ignored after the initial render.
  */
 export const useIsBrowserSide = (ssrSupport?: SSRSupport) =>
 	useClientState(false, true, ssrSupport)[0] || undefined;
