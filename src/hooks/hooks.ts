@@ -84,6 +84,13 @@ export const useNotifyTopContent = (componentName: string, key = 'topContent') =
  */
 export type SSRSupport = boolean | 'ssr-only';
 
+const defaultSSRSupport: SSRSupport = true;
+/**
+ * The default value use for the optional `ssrSupport` parameter
+ * on the `useIsBRowserSide` and `useIsServerSide` hooks.`
+ */
+export let DEFAULT_SSR_SUPPORT: SSRSupport = defaultSSRSupport;
+
 /**
  * Low-level useState wrapper that initializes the state to one value
  * during initial render and then updates it to another value
@@ -102,7 +109,7 @@ export const useClientState = <T, U>(
 	 * The `ssr-only` value is useful for cases where you need
 	 * to demo the server-rendered version in a browser.
 	 */
-	ssrSupport: SSRSupport = true
+	ssrSupport: SSRSupport = DEFAULT_SSR_SUPPORT
 ) => {
 	const state = useState<T | U>(ssrSupport ? serverState : clientState);
 	useOnMount(() => {
@@ -135,3 +142,47 @@ export const useIsServerSide = (ssrSupport?: SSRSupport) =>
  */
 export const useIsBrowserSide = (ssrSupport?: SSRSupport) =>
 	useClientState(false, true, ssrSupport)[0] || undefined;
+
+// ===========================================================================
+
+const _history: Array<SSRSupport> = [];
+
+/**
+ * Allows you to set a the default SSRSupport value for the `useIsBRowserSide`
+ * and `useIsServerSide` hooks.
+ *
+ * Example use:
+ *
+ * ```js
+ * setDefaultSSR(false);
+ * ```
+ *
+ * The values are pushed to a simple stack, and if you want to revert
+ * a temporarily set value, use the `setDefaultSSR.pop()` method
+ * to go back to the previous value. Example:
+ *
+ * ```js
+ * setDefaultSSR('ssr-only');
+ * // ...render some components...
+ * setDefaultSSR.pop(); // go back to the previous state
+ * ```
+ *
+ * You explicitly switch to using the library's default by passing `undefined`
+ * as an argument — like so:
+ *
+ * ```js
+ * setDefaultSSR(undefined);
+ * ```
+ */
+export const setDefaultSSR = (ssrSupport: SSRSupport | undefined) => {
+	DEFAULT_SSR_SUPPORT = ssrSupport != null ? ssrSupport : defaultSSRSupport;
+	_history.unshift(DEFAULT_SSR_SUPPORT);
+};
+
+/**
+ * Unsets the last pushed defaultSSR value
+ */
+setDefaultSSR.pop = () => {
+	_history.shift();
+	DEFAULT_SSR_SUPPORT = _history[0] != null ? _history[0] : defaultSSRSupport;
+};
