@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Export new `useLaggedState` to `hooks` module — a refactoring of
+  `useLaggyState` with a default defaultDelay of `0` and updated return value
+  signature.
+- feat: Flag old `useLaggyState` as deprecated
+- fix: Edge case regressions in `useLaggyState()`
 
 ## 0.4.22
 
