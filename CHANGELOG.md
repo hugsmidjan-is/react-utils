@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.23
+
+_2023-01-06_
+
 - feat: Export new `useLaggedState` to `hooks` module — a refactoring of
   `useLaggyState` with a default defaultDelay of `0` and updated return value
   signature.
