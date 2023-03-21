@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Change `useDomid` to use React@18's `useId` hook when available
 
 ## 0.4.23
 
