@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.24
+
+_2023-03-21_
+
 - feat: Change `useDomid` to use React@18's `useId` hook when available
 
 ## 0.4.23
