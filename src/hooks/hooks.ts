@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, EffectCallback, useState } from 'react';
+import * as React from 'react';
+import { useEffect, useRef, EffectCallback, useState } from 'react';
 import domid from '@hugsmidjan/qj/domid';
 
 // @ts-expect-error  (transparently feature-detect useId hook, which is introduced in React@18)
