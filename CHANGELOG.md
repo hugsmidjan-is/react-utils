@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- fix: Prevent nested/multpile `Modal`s from clashing with each other
 
 ## 0.4.24
 

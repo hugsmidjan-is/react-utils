@@ -6,6 +6,11 @@ import focusElm from '@hugsmidjan/qj/focusElm';
 import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
+const win = window as { $$modalStack?: Array<Modal> } & Window & typeof globalThis;
+const modalStack = win && (win.$$modalStack || (win.$$modalStack = []));
+
+const modalOpenClass = 'modal-open';
+
 const defaultTexts = {
 	closeButton: 'Close',
 	closeButtonLabel: 'Close this window',
@@ -149,11 +154,13 @@ class Modal extends Component<ModalProps, S> {
 	}
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.closeModalOnEsc);
-		document.documentElement.classList.remove('modal-open');
+		modalStack.shift();
+		document.documentElement.classList.remove(modalOpenClass);
 	}
 
 	open() {
-		document.documentElement.classList.add('modal-open'); // Always set this, even on startOpen === true
+		document.documentElement.classList.add(modalOpenClass); // Always set this, even on startOpen === true
+		modalStack.unshift(this);
 		if (!this.state.open) {
 			setTimeout(() => {
 				this.setState({ open: true });
@@ -167,7 +174,10 @@ class Modal extends Component<ModalProps, S> {
 	close() {
 		if (this.state.open) {
 			this.setState({ open: false });
-			document.documentElement.classList.remove('modal-open');
+			modalStack.shift();
+			if (modalStack.length <= 0) {
+				document.documentElement.classList.remove(modalOpenClass);
+			}
 			this.props.onClose && this.props.onClose();
 			if (this.props.onClosed) {
 				setTimeout(() => {
@@ -182,7 +192,7 @@ class Modal extends Component<ModalProps, S> {
 		}
 	}
 	closeModalOnEsc(e: KeyboardEvent) {
-		if (this.props.fickle !== false && e.key === 'Esc') {
+		if (modalStack[0] === this && this.props.fickle !== false && e.key === 'Esc') {
 			this.close();
 		}
 	}
