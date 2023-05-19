@@ -4,7 +4,7 @@
 
 - ... <!-- Add new lines here. Version number comes later -->
 
-## 0.4.25
+## 0.4.25 – 0.4.26
 
 _2023-05-19_
 
