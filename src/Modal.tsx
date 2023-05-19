@@ -174,7 +174,10 @@ class Modal extends Component<ModalProps, S> {
 	close() {
 		if (this.state.open) {
 			this.setState({ open: false });
-			modalStack.shift();
+			const stackPos = modalStack.indexOf(this);
+			if (stackPos > -1) {
+				modalStack.splice(stackPos, 1);
+			}
 			if (modalStack.length <= 0) {
 				document.documentElement.classList.remove(modalOpenClass);
 			}
