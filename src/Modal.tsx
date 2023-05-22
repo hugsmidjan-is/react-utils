@@ -6,8 +6,11 @@ import focusElm from '@hugsmidjan/qj/focusElm';
 import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
-const win = window as { $$modalStack?: Array<Modal> } & Window & typeof globalThis;
-const modalStack = win && (win.$$modalStack || (win.$$modalStack = []));
+const win =
+	typeof window !== 'undefined'
+		? (window as { $$modalStack?: Array<Modal> } & Window & typeof globalThis)
+		: undefined;
+const modalStack = win ? win.$$modalStack || (win.$$modalStack = []) : [];
 
 const modalOpenClass = 'modal-open';
 
