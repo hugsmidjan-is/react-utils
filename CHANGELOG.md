@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.27
+
+_2023-05-22_
+
 - fix: Un-guarded root-level `window` reference in Modal module file
 
 ## 0.4.25 – 0.4.26
