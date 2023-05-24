@@ -105,7 +105,7 @@ const makePackageJson = (done) => {
 	Object.assign(pkg, dist_package_json);
 	pkg.exports = Object.fromEntries(
 		entryTokens.map((token) => {
-			const expToken = token === 'index' ? '.' : `./${token}`;
+			const expToken = `./${token}`.replace(/\/index$/, '');
 			return [expToken, `./${token}.js`];
 		})
 	);
