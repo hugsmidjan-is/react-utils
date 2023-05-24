@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.28
+
+_2023-05-24_
+
 - feat: Add `pkg.exports` to improve ESM (and TS) `import` resolutions
 
 ## 0.4.27
