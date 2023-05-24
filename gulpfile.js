@@ -2,8 +2,9 @@
 const { parallel, series, src, dest } = require('gulp');
 const rollupTaskFactory = require('@hugsmidjan/gulp-rollup');
 const del = require('del');
-const { readdirSync, unlinkSync, statSync, readFileSync } = require('fs');
+const { readdirSync, unlinkSync, statSync, readFileSync, writeFileSync } = require('fs');
 const writeFile = require('fs').writeFileSync;
+const globSync = require('glob').sync;
 
 // ===========================================================================
 
@@ -12,13 +13,18 @@ const distFolder = 'dist/';
 const testingFolder = '__tests/';
 
 const testGlobs = '**/*.tests.{js,ts,tsx}';
-const scriptGlobs = [
-	'**/*.{js,ts,tsx}',
-	'!' + testGlobs,
-	'!**/*.privates.{js,ts,tsx}', // `*.privates.js` contain private bits that need testing
-	'!__testing/**/*.{js,ts,tsx}',
-	'!**/*.WIP.{js,ts,tsx}', // Scripts that should not be bundled/published yet
+const entryGlob = '**/*.{js,ts,tsx}';
+const ignoreGlobs = [
+	'' + testGlobs,
+	'**/*.privates.{js,ts,tsx}', // `*.privates.js` contain private bits that need testing
+	'__testing/**/*.{js,ts,tsx}',
+	'**/*.WIP.{js,ts,tsx}', // Scripts that should not be bundled/published yet
 ];
+
+const entryTokens = globSync(entryGlob, {
+	cwd: srcFolder,
+	ignore: ignoreGlobs,
+}).map((file) => file.replace(/\.(?:js|tsx?)$/, ''));
 
 // ===========================================================================
 
@@ -43,7 +49,7 @@ const baseOpts = {
 const [scriptsBundle, scriptsWatch] = rollupTaskFactory({
 	...baseOpts,
 	name: 'scripts',
-	glob: scriptGlobs,
+	glob: [entryGlob, ...ignoreGlobs.map((glob) => '!' + glob)],
 	dist: distFolder,
 	typescriptOpts: { declaration: true },
 });
@@ -68,6 +74,25 @@ const [testsBundle, testsWatch] = rollupTaskFactory({
 
 const cleanup = () => del([distFolder, testingFolder]);
 
+const addReferenePathsToIndex = (done) => {
+	const hasIndexFile = entryTokens.some((token) => token === 'index');
+
+	if (hasIndexFile) {
+		const extraEntryPaths = entryTokens
+			.filter((token) => token !== 'index')
+			.map((token) => `/// <reference path="./${token}.d.ts" />`);
+		if (extraEntryPaths.length > 0) {
+			const indexDeclFile = `${distFolder}/index.d.ts`;
+			writeFileSync(
+				indexDeclFile,
+				extraEntryPaths.join('\n') + `\n\n` + readFileSync(indexDeclFile)
+			);
+		}
+	}
+
+	done();
+};
+
 const makePackageJson = (done) => {
 	const pkg = require('./package.json');
 	const { dist_package_json } = pkg;
@@ -78,6 +103,12 @@ const makePackageJson = (done) => {
 	delete pkg.hxmstyle;
 	delete pkg.dist_package_json;
 	Object.assign(pkg, dist_package_json);
+	pkg.exports = Object.fromEntries(
+		entryTokens.map((token) => {
+			const expToken = token === 'index' ? '.' : `./${token}`;
+			return [expToken, `./${token}.js`];
+		})
+	);
 	writeFile(distFolder + 'package.json', JSON.stringify(pkg, null, '\t'));
 	done();
 };
@@ -105,7 +136,12 @@ const removeTypesOnlyModules = (done) => {
 
 const build = parallel(scriptsBundle, testsBundle);
 const watch = parallel(scriptsWatch, testsWatch);
-const publishPrep = parallel(makePackageJson, copyDocs, removeTypesOnlyModules);
+const publishPrep = parallel(
+	makePackageJson,
+	addReferenePathsToIndex,
+	copyDocs,
+	removeTypesOnlyModules
+);
 
 exports.dev = series(cleanup, build, watch);
 exports.build = series(cleanup, build, publishPrep);
