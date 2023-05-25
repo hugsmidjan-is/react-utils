@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- fix: Explicitly eport `OptionOrValue` from `Selectbox`
 
 ## 0.4.28 – 0.4.29
 

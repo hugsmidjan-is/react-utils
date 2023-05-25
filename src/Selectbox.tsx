@@ -42,6 +42,8 @@ const hiddenSelectStyles: CSSProperties = {
 	border: 0,
 };
 
+export type { OptionOrValue };
+
 export interface SelectboxOption<V extends string | number = string | number> {
 	value: V;
 	label?: string;
