@@ -2,7 +2,7 @@
 import { createElement, Component, MouseEvent, Fragment, ReactNode } from 'react';
 import domid from '@hugsmidjan/qj/domid';
 import Portal from './Portal';
-import focusElm from '@hugsmidjan/qj/focusElm';
+import { focusElm } from '@hugsmidjan/qj/focusElm';
 import getBemClass from './utils/getBemClass';
 import { BemProps } from './types';
 
