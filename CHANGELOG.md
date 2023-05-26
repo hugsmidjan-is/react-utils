@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.31
+
+_2023-05-26_
+
 - fix: Use named import from commonjs dependency
 
 ## 0.4.30
