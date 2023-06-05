@@ -12,6 +12,24 @@ const win =
 		: undefined;
 const modalStack = win ? win.$$modalStack || (win.$$modalStack = []) : [];
 
+// ---------------------------------------------------------------------------
+// Methods to manage the modalStack and the setting/unsetting modalOpenClass
+//
+const addToModalStack = (instance: Modal) => {
+	document.documentElement.classList.add(modalOpenClass); // Always set this, even on startOpen === true
+	modalStack.unshift(instance);
+};
+const removeFromModalStack = (instance: Modal) => {
+	const stackPos = modalStack.indexOf(instance);
+	if (stackPos > -1) {
+		modalStack.splice(stackPos, 1);
+	}
+	if (modalStack.length <= 0) {
+		document.documentElement.classList.remove(modalOpenClass);
+	}
+};
+// ---------------------------------------------------------------------------
+
 const modalOpenClass = 'modal-open';
 
 const defaultTexts = {
@@ -157,13 +175,11 @@ class Modal extends Component<ModalProps, S> {
 	}
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.closeModalOnEsc);
-		modalStack.shift();
-		document.documentElement.classList.remove(modalOpenClass);
+		removeFromModalStack(this);
 	}
 
 	open() {
-		document.documentElement.classList.add(modalOpenClass); // Always set this, even on startOpen === true
-		modalStack.unshift(this);
+		addToModalStack(this);
 		if (!this.state.open) {
 			setTimeout(() => {
 				this.setState({ open: true });
@@ -177,13 +193,7 @@ class Modal extends Component<ModalProps, S> {
 	close() {
 		if (this.state.open) {
 			this.setState({ open: false });
-			const stackPos = modalStack.indexOf(this);
-			if (stackPos > -1) {
-				modalStack.splice(stackPos, 1);
-			}
-			if (modalStack.length <= 0) {
-				document.documentElement.classList.remove(modalOpenClass);
-			}
+			removeFromModalStack(this);
 			this.props.onClose && this.props.onClose();
 			if (this.props.onClosed) {
 				setTimeout(() => {
