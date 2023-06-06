@@ -3,6 +3,11 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+
+## 0.4.32
+
+_2023-06-06_
+
 - fix: `Modal`s must always check the modal stack before removing global class
 
 ## 0.4.31
