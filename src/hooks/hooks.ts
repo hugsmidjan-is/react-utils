@@ -99,6 +99,8 @@ export const useNotifyTopContent = (componentName: string, key = 'topContent') =
  */
 export type SSRSupport = boolean | 'ssr-only';
 
+let alreadyBrowserSide = false;
+
 const defaultSSRSupport: SSRSupport = true;
 /**
  * The default value use for the optional `ssrSupport` parameter
@@ -126,16 +128,21 @@ export const useClientState = <T, U>(
 	 */
 	ssrSupport: SSRSupport = DEFAULT_SSR_SUPPORT
 ) => {
-	const state = useState<T | U>(ssrSupport ? serverState : clientState);
+	const stateTuple = useState<T | U>(
+		() =>
+			(ssrSupport === 'ssr-only'
+				? serverState
+				: ssrSupport && !alreadyBrowserSide
+				? serverState
+				: clientState) as T | U // TODO: Remove this type assertion once @types/react and typescript have been updated
+	);
 	useOnMount(() => {
-		// Skip if ssrSupport is 'ssr-only'
-		// or if ssrSupport is false and clientState
-		// has been set already.
-		if (ssrSupport === true) {
-			state[1](clientState);
+		alreadyBrowserSide = true;
+		if (ssrSupport !== 'ssr-only') {
+			stateTuple[1](clientState);
 		}
 	});
-	return state;
+	return stateTuple;
 };
 
 /**

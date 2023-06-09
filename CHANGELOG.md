@@ -3,6 +3,7 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Optimize performance of `useClientState`/`useIsBrowserSide`/etc.
 
 ## 0.4.32
 
