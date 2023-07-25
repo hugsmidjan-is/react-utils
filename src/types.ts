@@ -8,9 +8,17 @@ export type PropsOf<T> = T extends FC<infer P>
 
 // ---------------------------------------------------------------------------
 
-type Falsy = undefined | null | false | 0;
+type Falsy = undefined | null | false | 0 | '';
+/** @deprecated (Will be removed in v0.5)
+ *
+ * Otherwise access it as `Exclude<BemPropsModifier['modifier'], Array<any>>`
+ */
 export type Modifier = string | Falsy;
 
+/** @deprecated Instead `import { Modifiers } from '@hugsmidjan/qj/classUtils';`  (Will be removed in v0.5)
+ *
+ * Otherwise access it as `BemPropsModifier['modifier']`
+ */
 export type Modifiers = Modifier | Array<Modifiers>;
 
 export interface BemPropsModifier {

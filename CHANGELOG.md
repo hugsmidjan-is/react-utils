@@ -3,6 +3,8 @@
 ## Upcoming...
 
 - ... <!-- Add new lines here. Version number comes later -->
+- feat: Deprecate `getModifierClasses` and `getBemClass` — in favor of
+  `{ modifiedClass } from '@hugsmidjan/qj/classUtils';`
 - feat: Optimize performance of `useClientState`/`useIsBrowserSide`/etc.
 
 ## 0.4.32
