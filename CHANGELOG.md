@@ -6,6 +6,7 @@
 - feat: Deprecate `getModifierClasses` and `getBemClass` — in favor of
   `{ modifiedClass } from '@hugsmidjan/qj/classUtils';`
 - feat: Optimize performance of `useClientState`/`useIsBrowserSide`/etc.
+- fix: Correctly remove `Portal`'s root element on unmount (affects `Modal`)
 
 ## 0.4.32
 
