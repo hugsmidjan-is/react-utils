@@ -12,6 +12,13 @@ const win =
 		: undefined;
 const modalStack = win ? win.$$modalStack || (win.$$modalStack = []) : [];
 
+const modalOpenClass = 'modal-open';
+
+const defaultTexts = {
+	closeButton: 'Close',
+	closeButtonLabel: 'Close this window',
+};
+
 // ---------------------------------------------------------------------------
 // Methods to manage the modalStack and the setting/unsetting modalOpenClass
 //
@@ -29,13 +36,6 @@ const removeFromModalStack = (instance: Modal) => {
 	}
 };
 // ---------------------------------------------------------------------------
-
-const modalOpenClass = 'modal-open';
-
-const defaultTexts = {
-	closeButton: 'Close',
-	closeButtonLabel: 'Close this window',
-};
 
 /**@deprecated  Use `ModalProps` instead.  (Will be removed in v0.5) */
 export type Props = ModalProps;

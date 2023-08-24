@@ -1,6 +1,5 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import removeNode from '@hugsmidjan/qj/removeNode';
 
 const defaultGetRoot = () => {
 	const rootElm = document.createElement('div');
@@ -8,20 +7,20 @@ const defaultGetRoot = () => {
 	return rootElm;
 };
 
-interface P {
+interface PortalProps {
 	getRoot?: () => Element;
+	children: ReactNode;
 }
 
-const Portal: FC<P> = ({ getRoot, children }) => {
+const Portal = ({ getRoot, children }: PortalProps) => {
 	const [rootElm, setRootElm] = useState<Element | null>(null);
 	useEffect(() => {
-		setRootElm((getRoot || defaultGetRoot)());
-		return () => {
-			rootElm && removeNode(rootElm);
-		};
+		const newRoot = (getRoot || defaultGetRoot)();
+		setRootElm(newRoot);
+		return () => newRoot.remove();
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	return rootElm ? createPortal(children, rootElm) : null;
+	return rootElm && createPortal(children, rootElm);
 };
 
 export default Portal;
